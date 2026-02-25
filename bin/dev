@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -o errexit
+
+exec foreman start --root . -f Procfile.dev "$@"

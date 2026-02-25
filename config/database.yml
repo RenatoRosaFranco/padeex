@@ -1,0 +1,53 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+# Dev/test: Unix socket (peer auth). Set POSTGRES_HOST to force TCP.
+development:
+  <<: *default
+  database: padeex_development
+  username: <%= ENV.fetch("POSTGRES_USER", ENV["USER"]) %>
+  host: <%= ENV["POSTGRES_HOST"] %>
+  port: <%= ENV["POSTGRES_PORT"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+
+test:
+  <<: *default
+  database: padeex_test
+  username: <%= ENV.fetch("POSTGRES_USER", ENV["USER"]) %>
+  host: <%= ENV["POSTGRES_HOST"] %>
+  port: <%= ENV["POSTGRES_PORT"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+
+# Production: set DATABASE_URL or individual POSTGRES_* vars.
+production:
+  primary:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    database: <%= ENV.fetch("POSTGRES_DB", "padeex_production") %>
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
+    host: <%= ENV.fetch("POSTGRES_HOST", "localhost") %>
+    port: <%= ENV.fetch("POSTGRES_PORT", "5432").to_i %>
+  cache:
+    <<: *default
+    database: padeex_production_cache
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
+    host: <%= ENV.fetch("POSTGRES_HOST", "localhost") %>
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *default
+    database: padeex_production_queue
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
+    host: <%= ENV.fetch("POSTGRES_HOST", "localhost") %>
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: padeex_production_cable
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
+    host: <%= ENV.fetch("POSTGRES_HOST", "localhost") %>
+    migrations_paths: db/cable_migrate

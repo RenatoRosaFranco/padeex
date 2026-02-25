@@ -1,0 +1,24 @@
+<%= turbo_stream.replace "waitlist-cta" do %>
+  <% if @success %>
+    <div class="cta-success animate-fade-up">
+      <div class="cta-success-icon-wrap">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+      <p class="cta-success-title">Você está na lista!</p>
+      <p class="cta-success-sub">Avisaremos você assim que o PADEEX chegar.</p>
+    </div>
+  <% else %>
+    <% if @error_msg %>
+      <p class="cta-error-msg"><i class="bi bi-exclamation-circle-fill me-1"></i><%= @error_msg %></p>
+    <% end %>
+    <%= form_with url: "/waitlist", method: :post, class: "cta-input-group" do |f| %>
+      <%= f.email_field :email,
+            name: "email",
+            placeholder: "Seu melhor e-mail",
+            class: "cta-input",
+            required: true,
+            autocomplete: "email" %>
+      <%= f.submit "Entrar na lista", class: "cta-btn" %>
+    <% end %>
+  <% end %>
+<% end %>

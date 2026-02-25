@@ -1,0 +1,16 @@
+features:
+  - icon: bi-lightning-charge-fill
+    title: Jogos
+    description: Organize partidas, desafie adversários e acompanhe seus resultados em tempo real.
+
+  - icon: bi-bar-chart-fill
+    title: Rankings
+    description: Acompanhe sua evolução e dispute posições no ranking nacional e regional.
+
+  - icon: bi-people-fill
+    title: Comunidade
+    description: Conecte-se com atletas, clubes e amantes do padel em todo o Brasil.
+
+  - icon: bi-building-fill
+    title: Gestão
+    description: Gerencie quadras, agendamentos e torneios com ferramentas profissionais.
