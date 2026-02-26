@@ -3,6 +3,8 @@
    Palette: near-black bg · brand-purple #3628c5 · brand-green #4ade80
    ====================================================== */
 
+@use "chat_widget";
+
 :root {
   --px-bg:          #07080f;
   --px-surface:     #0f1022;

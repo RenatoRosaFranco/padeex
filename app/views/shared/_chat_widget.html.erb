@@ -1,0 +1,48 @@
+<% responses = YAML.load_file(Rails.root.join("config", "chat_assistant.yml"))["responses"] %>
+<div class="chat-widget"
+     data-controller="chat-widget"
+     data-chat-widget-responses-value="<%= responses.to_json %>">
+  <button type="button"
+          class="chat-widget-toggle"
+          data-chat-widget-target="toggle"
+          data-action="click->chat-widget#toggle"
+          aria-label="Abrir chat">
+    <i class="bi bi-chat-text-fill"></i>
+  </button>
+
+  <aside class="chat-drawer" data-chat-widget-target="drawer">
+    <header class="chat-drawer__header">
+      <div class="chat-drawer__title">
+        <i class="bi bi-robot"></i>
+        <span>Assistente Padeex</span>
+      </div>
+      <button type="button"
+              class="chat-drawer__close"
+              data-action="click->chat-widget#close"
+              aria-label="Fechar">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </header>
+
+    <div class="chat-drawer__messages" data-chat-widget-target="messages">
+      <div class="chat-message chat-message--assistant">
+        <span class="chat-message__bubble">
+          Olá! Sou o assistente virtual do Padeex. Como posso ajudar?
+        </span>
+      </div>
+    </div>
+
+    <form class="chat-drawer__form" data-action="submit->chat-widget#sendMessage">
+      <div class="chat-drawer__input-wrap">
+        <input type="text"
+               class="chat-drawer__input"
+               data-chat-widget-target="input"
+               placeholder="Digite sua mensagem..."
+               autocomplete="off">
+        <button type="submit" class="chat-drawer__send" aria-label="Enviar">
+          <i class="bi bi-send-fill"></i>
+        </button>
+      </div>
+    </form>
+  </aside>
+</div>
