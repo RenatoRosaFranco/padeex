@@ -6,6 +6,12 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get "healthcheck", to: "healthcheck#show"
+
+      namespace :auth do
+        post "sign_in", to: "sessions#create"
+        delete "sign_out", to: "sessions#destroy"
+        get "me", to: "me#show"
+      end
     end
   end
 

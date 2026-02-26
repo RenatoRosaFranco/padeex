@@ -6,6 +6,8 @@ class User < ApplicationRecord
   # Devise
   devise :database_authenticatable, :registerable, :recoverable,
          :rememberable, :validatable, :omniauthable,
+         :jwt_authenticatable,
+         jwt_revocation_strategy: Devise::JWT::RevocationStrategies::JTIMatcher,
          omniauth_providers: %i[google_oauth2 facebook]
 
   # Validations

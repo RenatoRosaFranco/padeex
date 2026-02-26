@@ -25,6 +25,7 @@ gem "resend"
 
 # Auth
 gem "devise"
+gem "devise-jwt"
 gem "devise-two-factor"
 gem "omniauth-google-oauth2"
 gem "omniauth-facebook"
@@ -39,6 +40,9 @@ gem "aws-sdk-s3"
 
 # Friendly URLs (slugs)
 gem "friendly_id", "~> 5.5"
+
+# API serializers
+gem "active_model_serializers", "~> 0.10"
 
 # View components
 gem "view_component"

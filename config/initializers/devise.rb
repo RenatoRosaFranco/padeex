@@ -30,4 +30,20 @@ Devise.setup do |config|
       ENV["FACEBOOK_APP_SECRET"],
       scope: "email,public_profile"
   end
+
+  config.warden do |manager|
+    manager.failure_app = ApiFailureApp
+  end
+
+  # JWT for API authentication
+  config.jwt do |jwt|
+    jwt.secret = Rails.application.credentials.secret_key_base
+    jwt.expiration_time = 24.hours.to_i
+    jwt.dispatch_requests = [
+      ["POST", %r{^/api/v1/auth/sign_in$}]
+    ]
+    jwt.revocation_requests = [
+      ["DELETE", %r{^/api/v1/auth/sign_out$}]
+    ]
+  end
 end
