@@ -19,7 +19,7 @@
         <%= image_tag "logo_padex_branco.png", alt: "PADEX", class: "dash-logo" %>
       <% end %>
       <div class="dash-navbar-center">
-        <%= link_to "Blog", blog_path, class: "dash-navbar-link" %>
+        <%= link_to "Blog", blog_posts_path, class: "dash-navbar-link" %>
       </div>
       <div class="dash-user-menu">
         <span class="dash-user-name">Olá, <%= current_user.name.split.first %></span>
