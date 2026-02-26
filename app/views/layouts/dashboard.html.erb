@@ -13,9 +13,11 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="dashboard-body">
+  <body class="dashboard-body <%= controller_name %>-<%= action_name %>">
     <nav class="dash-navbar">
-      <%= image_tag "logo_padex_branco.png", alt: "PADEEX", class: "dash-logo" %>
+      <%= link_to dashboard_path do %>
+        <%= image_tag "logo_padex_branco.png", alt: "PADEEX", class: "dash-logo" %>
+      <% end %>
       <div class="dash-user-menu">
         <span class="dash-user-name">Olá, <%= current_user.name.split.first %></span>
         <div class="dash-avatar"><%= current_user.initials %></div>
@@ -23,8 +25,11 @@
       </div>
     </nav>
 
-    <main class="dash-content">
-      <%= yield %>
-    </main>
+    <div class="dash-layout">
+      <%= render "layouts/dashboard/sidebar" %>
+      <main class="dash-content">
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>

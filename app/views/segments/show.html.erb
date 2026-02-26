@@ -1,0 +1,5 @@
+<% content_for :title, "#{@segment.titleize} — Padeex" %>
+<%= render Landing::SegmentHeroComponent.new(segment: @segment) %>
+<%= render Landing::SegmentFeaturesComponent.new(segment: @segment) %>
+<%= render Landing::SegmentComingSoonComponent.new(segment: @segment) %>
+<%= render Landing::FooterComponent.new %>

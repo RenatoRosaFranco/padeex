@@ -3,6 +3,6 @@
 # Landing page components.
 module Landing
   # Hero section for the landing page.
-  class HeroComponent < ViewComponent::Base
+  class HeroComponent < ::ApplicationComponent
   end
 end

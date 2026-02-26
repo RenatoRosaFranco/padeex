@@ -4,15 +4,15 @@
   <% end %>
 
   <div class="navbar-nav-links">
-    <%= link_to para_atletas_path, class: "navbar-nav-link" do %>
+    <%= link_to para_atletas_path, class: "navbar-nav-link #{'active' if @segment == 'athletes'}" do %>
       <span class="navbar-nav-prefix">para</span>
       <span class="navbar-nav-label">Atletas</span>
     <% end %>
-    <%= link_to para_clubes_path, class: "navbar-nav-link" do %>
+    <%= link_to para_clubes_path, class: "navbar-nav-link #{'active' if @segment == 'clubes'}" do %>
       <span class="navbar-nav-prefix">para</span>
       <span class="navbar-nav-label">Clubes</span>
     <% end %>
-    <%= link_to para_empresas_path, class: "navbar-nav-link" do %>
+    <%= link_to para_empresas_path, class: "navbar-nav-link #{'active' if @segment == 'empresas'}" do %>
       <span class="navbar-nav-prefix">para</span>
       <span class="navbar-nav-label">Empresas</span>
     <% end %>
@@ -36,22 +36,24 @@
       <div class="row justify-content-center">
         <div class="col-lg-9 col-xl-8 text-center hero-inner">
 
-          <%= image_tag "logo_padex_branco.png",
-                alt: "PADEEX",
-                class: "hero-logo animate-fade-up" %>
+          <%= link_to root_path do %>
+            <%= image_tag "logo_padex_branco.png",
+                  alt: "PADEEX",
+                  class: "hero-logo animate-fade-up" %>
+          <% end %>
 
           <h1 class="hero-headline animate-fade-up delay-1">
-            O ecossistema do padel<br>
-            <span class="text-accent">a um clique de distância</span>
+            <%= hero[:headline] || "O ecossistema do padel" %><br>
+            <span class="text-accent"><%= hero[:headline_accent] || "a um clique de distância" %></span>
           </h1>
 
           <p class="hero-sub animate-fade-up delay-2">
-            Tudo que você precisa para jogar, evoluir e se conectar no padel —
-            em um único lugar.
+            <%= hero[:subheadline] || "Tudo que você precisa para jogar, evoluir e se conectar no padel — em um único lugar." %>
           </p>
 
           <div id="waitlist-cta" class="cta-form-wrapper animate-fade-up delay-3">
             <%= form_with url: "/waitlist", method: :post, class: "cta-input-group" do |f| %>
+              <%= f.hidden_field :segment, value: @segment, name: "segment" %>
               <%= f.email_field :email,
                     name: "email",
                     placeholder: "Seu melhor e-mail",
@@ -63,10 +65,9 @@
           </div>
 
           <div class="feature-tags animate-fade-up delay-4">
-            <span class="feature-tag"><i class="bi bi-lightning-charge-fill me-1"></i>Jogos</span>
-            <span class="feature-tag"><i class="bi bi-bar-chart-fill me-1"></i>Rankings</span>
-            <span class="feature-tag"><i class="bi bi-people-fill me-1"></i>Comunidade</span>
-            <span class="feature-tag"><i class="bi bi-building-fill me-1"></i>Gestão</span>
+            <% feature_tags.each do |tag| %>
+              <span class="feature-tag"><i class="bi <%= tag[:icon] %> me-1"></i><%= tag[:label] %></span>
+            <% end %>
           </div>
 
         </div>

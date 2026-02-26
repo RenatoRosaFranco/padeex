@@ -3,6 +3,6 @@
 # Landing page components.
 module Landing
   # Coming soon section for the landing page.
-  class ComingSoonComponent < ViewComponent::Base
+  class ComingSoonComponent < ::ApplicationComponent
   end
 end

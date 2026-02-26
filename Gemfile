@@ -26,6 +26,9 @@ gem "resend"
 # Auth
 gem "devise"
 gem "devise-two-factor"
+gem "omniauth-google-oauth2"
+gem "omniauth-facebook"
+gem "omniauth-rails_csrf_protection"
 gem "rqrcode"
 
 # Search

@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include Omniauthable
 
   # Devise
   devise :database_authenticatable, :registerable, :recoverable,
-         :rememberable, :validatable
+         :rememberable, :validatable, :omniauthable,
+         omniauth_providers: %i[google_oauth2 facebook]
 
   # Validations
   validates :name, presence: true
+  validates :password, presence: true, if: :password_required?
 
   # Returns user initials.
   # @return [String] User initials.

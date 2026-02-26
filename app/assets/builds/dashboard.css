@@ -1,26 +1,30 @@
+@charset "UTF-8";
 /* ======================================================
    PADEEX — Dashboard
    ====================================================== */
-
 :root {
-  --px-bg:          #07080f;
-  --px-surface:     #0f1022;
-  --px-purple:      #3628c5;
-  --px-purple-dim:  rgba(54, 40, 197, 0.18);
-  --px-green:       #4ade80;
-  --px-text:        #f0f4ff;
-  --px-muted:       #8892b0;
-  --px-border:      rgba(255, 255, 255, 0.07);
+  --px-bg: #07080f;
+  --px-surface: #0f1022;
+  --px-purple: #3628c5;
+  --px-purple-dim: rgba(54, 40, 197, 0.18);
+  --px-green: #4ade80;
+  --px-text: #f0f4ff;
+  --px-muted: #8892b0;
+  --px-border: rgba(255, 255, 255, 0.07);
 }
 
 *,
 *::before,
-*::after { box-sizing: border-box; margin: 0; padding: 0; }
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 .dashboard-body {
   background: var(--px-bg);
   color: var(--px-text);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
 }
@@ -80,8 +84,9 @@
   color: rgba(136, 146, 176, 0.5);
   text-decoration: none;
   transition: color 0.2s;
-
-  &:hover { color: #f87171; }
+}
+.dash-logout:hover {
+  color: #f87171;
 }
 
 /* ---- Layout (sidebar + content) ---- */
@@ -144,27 +149,26 @@
   text-decoration: none;
   border-radius: 8px;
   transition: color 0.2s, background 0.2s;
-
-  i {
-    font-size: 1rem;
-    opacity: 0.8;
-    flex-shrink: 0;
-  }
-
-  &:hover {
-    color: var(--px-text);
-    background: rgba(255, 255, 255, 0.04);
-
-    i { opacity: 1; }
-  }
-
-  &.active {
-    color: var(--px-green);
-    background: rgba(74, 222, 128, 0.08);
-    font-weight: 500;
-
-    i { opacity: 1; }
-  }
+}
+.dash-sidebar-link i {
+  font-size: 1rem;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+.dash-sidebar-link:hover {
+  color: var(--px-text);
+  background: rgba(255, 255, 255, 0.04);
+}
+.dash-sidebar-link:hover i {
+  opacity: 1;
+}
+.dash-sidebar-link.active {
+  color: var(--px-green);
+  background: rgba(74, 222, 128, 0.08);
+  font-weight: 500;
+}
+.dash-sidebar-link.active i {
+  opacity: 1;
 }
 
 /* ---- Content area ---- */
@@ -197,7 +201,7 @@
 }
 
 .dash-welcome-title {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: "Barlow Condensed", sans-serif;
   font-weight: 800;
   font-size: 2.4rem;
   text-transform: uppercase;
@@ -239,11 +243,10 @@
   padding: 1.75rem;
   transition: border-color 0.25s, transform 0.2s;
   cursor: default;
-
-  &:hover {
-    border-color: rgba(74, 222, 128, 0.22);
-    transform: translateY(-3px);
-  }
+}
+.dash-card:hover {
+  border-color: rgba(74, 222, 128, 0.22);
+  transform: translateY(-3px);
 }
 
 .dash-card-icon {
@@ -267,7 +270,7 @@
 }
 
 .dash-card-title {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: "Barlow Condensed", sans-serif;
   font-weight: 700;
   font-size: 1.1rem;
   text-transform: uppercase;
@@ -299,16 +302,15 @@
   padding: 4px 11px;
   border-radius: 20px;
   margin-top: auto;
-
-  &::before {
-    content: '';
-    display: inline-block;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--px-green);
-    opacity: 0.7;
-  }
+}
+.dash-badge-soon::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--px-green);
+  opacity: 0.7;
 }
 
 /* ---- Analytics ---- */
@@ -353,7 +355,7 @@
 }
 
 .analytics-stat-value {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: "Barlow Condensed", sans-serif;
   font-weight: 800;
   font-size: 1.5rem;
   color: var(--px-text);
@@ -371,10 +373,15 @@
 .analytics-stat-change {
   font-size: 0.72rem;
   margin-top: 0.25rem;
-
-  &.positive { color: var(--px-green); }
-  &.neutral { color: var(--px-muted); }
-  &.negative { color: #f87171; }
+}
+.analytics-stat-change.positive {
+  color: var(--px-green);
+}
+.analytics-stat-change.neutral {
+  color: var(--px-muted);
+}
+.analytics-stat-change.negative {
+  color: #f87171;
 }
 
 .analytics-charts {
@@ -438,28 +445,24 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 0.88rem;
-
-  th, td {
-    padding: 0.75rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid var(--px-border);
-  }
-
-  th {
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--px-muted);
-  }
-
-  td {
-    color: var(--px-text);
-  }
-
-  tbody tr:hover td {
-    background: rgba(255, 255, 255, 0.02);
-  }
+}
+.analytics-table th, .analytics-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--px-border);
+}
+.analytics-table th {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--px-muted);
+}
+.analytics-table td {
+  color: var(--px-text);
+}
+.analytics-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
 }
 
 /* ---- Responsive ---- */
@@ -467,26 +470,21 @@
   .dash-sidebar {
     width: 220px;
   }
-
   .dash-content {
     margin-left: 220px;
   }
-
   .dash-cards {
     grid-template-columns: repeat(2, 1fr);
   }
-
   .analytics-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
 @media (max-width: 768px) {
   .dash-layout {
     flex-direction: column;
     padding-top: 64px;
   }
-
   .dash-sidebar {
     position: relative;
     top: 0;
@@ -495,31 +493,31 @@
     border-bottom: 1px solid var(--px-border);
     padding: 1rem;
   }
-
   .dash-sidebar-nav {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem;
   }
-
   .dash-sidebar-section {
     flex: 1;
     min-width: 140px;
   }
-
   .dash-content {
     margin-left: 0;
     padding: 2rem 1.25rem 3rem;
   }
-
-  .dash-navbar { padding: 0 1.25rem; }
-  .dash-user-name { display: none; }
-  .dash-welcome-title { font-size: 1.8rem; }
-
+  .dash-navbar {
+    padding: 0 1.25rem;
+  }
+  .dash-user-name {
+    display: none;
+  }
+  .dash-welcome-title {
+    font-size: 1.8rem;
+  }
   .dash-cards {
     grid-template-columns: 1fr;
   }
-
   .analytics-grid {
     grid-template-columns: 1fr;
   }

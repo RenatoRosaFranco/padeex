@@ -1,0 +1,45 @@
+<aside class="dash-sidebar">
+  <nav class="dash-sidebar-nav">
+    <section class="dash-sidebar-section">
+      <h3 class="dash-sidebar-title">Explore</h3>
+      <ul class="dash-sidebar-links">
+        <li><%= link_to dashboard_torneios_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_torneios_path)}" do %><i class="bi bi-trophy-fill"></i> Torneios<% end %></li>
+        <li><%= link_to dashboard_encontrar_clubes_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_encontrar_clubes_path)}" do %><i class="bi bi-building-fill"></i> Encontrar clubes<% end %></li>
+        <li><%= link_to dashboard_encontrar_partidas_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_encontrar_partidas_path)}" do %><i class="bi bi-search"></i> Encontrar Partidas<% end %></li>
+        <li><%= link_to dashboard_reservar_partida_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_reservar_partida_path)}" do %><i class="bi bi-calendar-check"></i> Reservar Partida<% end %></li>
+      </ul>
+    </section>
+
+    <section class="dash-sidebar-section">
+      <h3 class="dash-sidebar-title">Academy</h3>
+      <ul class="dash-sidebar-links">
+        <li><%= link_to dashboard_artigos_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_artigos_path)}" do %><i class="bi bi-journal-text"></i> Artigos<% end %></li>
+        <li><%= link_to dashboard_glossario_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_glossario_path)}" do %><i class="bi bi-book"></i> Glossário<% end %></li>
+      </ul>
+    </section>
+
+    <section class="dash-sidebar-section">
+      <h3 class="dash-sidebar-title">Aprenda</h3>
+      <ul class="dash-sidebar-links">
+        <li><%= link_to dashboard_aulas_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_aulas_path)}" do %><i class="bi bi-easel"></i> Aulas<% end %></li>
+        <li><%= link_to dashboard_instrutores_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_instrutores_path)}" do %><i class="bi bi-person-badge"></i> Instrutores<% end %></li>
+      </ul>
+    </section>
+
+    <section class="dash-sidebar-section">
+      <h3 class="dash-sidebar-title">Analytics</h3>
+      <ul class="dash-sidebar-links">
+        <li><%= link_to dashboard_analytics_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_analytics_path)}" do %><i class="bi bi-graph-up-arrow"></i> Analytics<% end %></li>
+      </ul>
+    </section>
+
+    <section class="dash-sidebar-section">
+      <h3 class="dash-sidebar-title">Perfil</h3>
+      <ul class="dash-sidebar-links">
+        <li><%= link_to dashboard_ranking_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_ranking_path)}" do %><i class="bi bi-bar-chart-fill"></i> Ranking<% end %></li>
+        <li><%= link_to dashboard_minhas_partidas_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_minhas_partidas_path)}" do %><i class="bi bi-calendar-range"></i> Minhas Partidas<% end %></li>
+        <li><%= link_to dashboard_meu_perfil_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_meu_perfil_path)}" do %><i class="bi bi-person-fill"></i> Meu Perfil<% end %></li>
+      </ul>
+    </section>
+  </nav>
+</aside>

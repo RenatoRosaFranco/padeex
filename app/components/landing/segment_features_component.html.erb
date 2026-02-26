@@ -1,0 +1,23 @@
+<section class="features-section" data-controller="scroll-reveal">
+  <div class="container">
+    <div class="row justify-content-center text-center mb-5">
+      <div class="col-lg-7">
+        <p class="section-eyebrow"><%= section_eyebrow %></p>
+        <h2 class="section-headline"><%= raw section_headline %></h2>
+        <p class="section-sub"><%= section_sub %></p>
+      </div>
+    </div>
+
+    <div class="features-grid" id="features-grid">
+      <% features.each_with_index do |feat, i| %>
+        <div class="feature-card" data-scroll-reveal-target="item" style="animation-delay: <%= i * 0.12 %>s">
+          <div class="feature-icon-box">
+            <i class="bi <%= feat[:icon] %>"></i>
+          </div>
+          <h3 class="feature-card-title"><%= feat[:title] %></h3>
+          <p class="feature-card-text"><%= feat[:description] %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

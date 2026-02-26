@@ -3,8 +3,9 @@
 # Landing page components.
 module Landing
   # Features section for the landing page.
-  class FeaturesComponent < ViewComponent::Base
-    # Returns features list from app config. @return [Array]
+  class FeaturesComponent < ::ApplicationComponent
+    # Returns features list from app config.
+    # @return [Array]
     def features
       @features ||= AppConfigService.fetch(:features, default: [])
     end

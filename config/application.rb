@@ -14,7 +14,9 @@ module Padeex
 
     config.dartsass.builds = {
       "application.scss" => "application.css",
-      "landing.scss"     => "landing.css"
+      "landing.scss"     => "landing.css",
+      "auth.scss"        => "auth.css",
+      "dashboard.scss"   => "dashboard.css"
     }
   end
 end

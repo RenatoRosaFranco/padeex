@@ -1,0 +1,5 @@
+pt-BR:
+  devise:
+    omniauth_callbacks:
+      failure: "Não foi possível autenticar com %{kind}. Verifique se o e-mail está disponível na sua conta."
+      success: "Autenticado com sucesso através da conta %{kind}."

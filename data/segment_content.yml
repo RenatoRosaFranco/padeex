@@ -1,0 +1,105 @@
+---
+athletes:
+  title: "Para Atletas"
+  section_eyebrow: "Em desenvolvimento"
+  cta_hint: "Registre seu e-mail acima e seja um dos primeiros atletas na plataforma."
+  section_headline: "Tudo que o atleta<br>precisa, num só app"
+  section_sub: "Funcionalidades pensadas para quem joga e quer evoluir no esporte."
+  hero:
+    headline: "O ecossistema do padel"
+    headline_accent: "feito para quem joga"
+    subheadline: "Organize partidas, acompanhe rankings e conecte-se com a comunidade — tudo em um único lugar."
+  feature_tags:
+    - icon: bi-lightning-charge-fill
+      label: Jogos
+    - icon: bi-bar-chart-fill
+      label: Rankings
+    - icon: bi-people-fill
+      label: Comunidade
+    - icon: bi-trophy-fill
+      label: Torneios
+  features:
+    - icon: bi-lightning-charge-fill
+      title: Jogos
+      description: Organize partidas, desafie adversários e acompanhe seus resultados em tempo real.
+    - icon: bi-bar-chart-fill
+      title: Rankings
+      description: Acompanhe sua evolução e dispute posições no ranking nacional e regional.
+    - icon: bi-people-fill
+      title: Comunidade
+      description: Conecte-se com atletas e amantes do padel em todo o Brasil.
+    - icon: bi-trophy-fill
+      title: Torneios
+      description: Participe de competições e acompanhe sua trajetória no esporte.
+
+clubs:
+  title: "Para Clubes"
+  section_eyebrow: "Em desenvolvimento"
+  cta_hint: "Registre seu e-mail acima e seja um dos primeiros clubes a usar o Padeex."
+  section_headline: "Tudo que o clube<br>precisa, num só app"
+  section_sub: "Ferramentas profissionais para gestão de quadras, torneios e muito mais."
+  hero:
+    headline: "O ecossistema do padel"
+    headline_accent: "feito para quem gerencia"
+    subheadline: "Quadras, agendamentos, torneios e gestão financeira — ferramentas profissionais para o seu clube."
+  feature_tags:
+    - icon: bi-calendar3
+      label: Agendamentos
+    - icon: bi-building-fill
+      label: Quadras
+    - icon: bi-trophy-fill
+      label: Torneios
+    - icon: bi-graph-up-arrow
+      label: Gestão
+  features:
+    - icon: bi-calendar3
+      title: Agendamentos
+      description: Sistema completo de reserva de quadras com confirmação e lembretes automáticos.
+    - icon: bi-building-fill
+      title: Gestão de Quadras
+      description: Controle de disponibilidade, preços e horários de todas as suas quadras.
+    - icon: bi-trophy-fill
+      title: Torneios
+      description: Organize e gerencie torneios com chaveamento, inscrições e resultados.
+    - icon: bi-graph-up-arrow
+      title: Relatórios
+      description: Acompanhe ocupação, faturamento e métricas do seu clube em tempo real.
+
+companies:
+  title: "Para Empresas"
+  section_eyebrow: "Em desenvolvimento"
+  cta_hint: "Registre seu e-mail acima e descubra como conectar sua marca ao padel."
+  section_headline: "Tudo que sua empresa<br>precisa, num só app"
+  section_sub: "Soluções para conectar sua marca ao universo do padel."
+  hero:
+    headline: "O ecossistema do padel"
+    headline_accent: "feito para negócios"
+    subheadline: "Patrocínios, eventos corporativos e visibilidade — conecte sua marca ao universo do padel."
+  feature_tags:
+    - icon: bi-megaphone-fill
+      label: Visibilidade
+    - icon: bi-calendar-event
+      label: Eventos
+    - icon: bi-people-fill
+      label: Networking
+    - icon: bi-graph-up
+      label: ROI
+  features:
+    - icon: bi-megaphone-fill
+      title: Visibilidade de Marca
+      description: Exponha sua empresa para milhares de atletas e clubes na plataforma.
+    - icon: bi-calendar-event
+      title: Eventos Corporativos
+      description: Organize torneios e eventos que fortalecem o relacionamento com clientes e parceiros.
+    - icon: bi-people-fill
+      title: Networking
+      description: Conecte-se com decisores e influenciadores do ecossistema de padel.
+    - icon: bi-graph-up
+      title: Métricas
+      description: Acompanhe o retorno e o impacto das suas ações na plataforma.
+
+default:
+  section_eyebrow: "Em desenvolvimento"
+  cta_hint: "Registre seu e-mail acima e garanta seu lugar na lista de espera."
+  section_headline: "Tudo que o padel<br>exige, num só app"
+  section_sub: "Funcionalidades pensadas para atletas, clubes e apaixonados pelo esporte."

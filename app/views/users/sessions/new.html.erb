@@ -35,8 +35,19 @@
         <%= link_to "Esqueci minha senha", new_user_password_path, class: "auth-forgot" %>
       </div>
 
-      <%= f.submit "Entrar na conta", class: "auth-btn" %>
+      <%= f.submit "Entrar", class: "auth-btn" %>
     <% end %>
+
+    <div class="auth-divider">— ou —</div>
+
+    <div class="auth-oauth auth-oauth-row">
+      <%= button_to user_google_oauth2_omniauth_authorize_path, method: :post, class: "auth-btn-oauth auth-btn-google", data: { turbo: false } do %>
+        <i class="bi bi-google"></i> Google
+      <% end %>
+      <%= button_to user_facebook_omniauth_authorize_path, method: :post, class: "auth-btn-oauth auth-btn-facebook", data: { turbo: false } do %>
+        <i class="bi bi-facebook"></i> Facebook
+      <% end %>
+    </div>
   </div>
 
   <p class="auth-footer">

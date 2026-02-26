@@ -16,4 +16,18 @@ Devise.setup do |config|
   config.sign_out_via = :delete
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
+
+  if ENV["GOOGLE_CLIENT_ID"].present?
+    config.omniauth :google_oauth2,
+      ENV["GOOGLE_CLIENT_ID"],
+      ENV["GOOGLE_CLIENT_SECRET"],
+      scope: "email,profile"
+  end
+
+  if ENV["FACEBOOK_APP_ID"].present?
+    config.omniauth :facebook,
+      ENV["FACEBOOK_APP_ID"],
+      ENV["FACEBOOK_APP_SECRET"],
+      scope: "email,public_profile"
+  end
 end

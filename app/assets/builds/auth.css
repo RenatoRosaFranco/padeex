@@ -1,25 +1,29 @@
+@charset "UTF-8";
 /* ======================================================
    PADEEX — Auth Pages (Login / Cadastro)
    ====================================================== */
-
 :root {
-  --px-bg:        #07080f;
-  --px-surface:   #0f1022;
-  --px-purple:    #3628c5;
-  --px-green:     #4ade80;
-  --px-text:      #f0f4ff;
-  --px-muted:     #8892b0;
-  --px-border:    rgba(255, 255, 255, 0.07);
+  --px-bg: #07080f;
+  --px-surface: #0f1022;
+  --px-purple: #3628c5;
+  --px-green: #4ade80;
+  --px-text: #f0f4ff;
+  --px-muted: #8892b0;
+  --px-border: rgba(255, 255, 255, 0.07);
 }
 
 *,
 *::before,
-*::after { box-sizing: border-box; margin: 0; padding: 0; }
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 .auth-body {
   background: var(--px-bg);
   color: var(--px-text);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -32,7 +36,7 @@
 
 /* ---- Background glow ---- */
 .auth-body::before {
-  content: '';
+  content: "";
   position: fixed;
   top: -15%;
   left: 50%;
@@ -44,7 +48,7 @@
 }
 
 .auth-body::after {
-  content: '';
+  content: "";
   position: fixed;
   bottom: -10%;
   right: -10%;
@@ -75,8 +79,9 @@
   width: auto;
   opacity: 0.9;
   transition: opacity 0.2s;
-
-  &:hover { opacity: 1; }
+}
+.auth-logo:hover {
+  opacity: 1;
 }
 
 /* ---- Card ---- */
@@ -90,7 +95,7 @@
 }
 
 .auth-title {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: "Barlow Condensed", sans-serif;
   font-weight: 800;
   font-size: 1.9rem;
   text-transform: uppercase;
@@ -115,8 +120,10 @@
   color: #f87171;
   margin-bottom: 1.25rem;
   line-height: 1.5;
-
-  ul { padding-left: 1rem; margin: 0; }
+}
+.auth-alert-error ul {
+  padding-left: 1rem;
+  margin: 0;
 }
 
 .auth-alert-notice {
@@ -152,21 +159,20 @@
   border-radius: 10px;
   color: var(--px-text);
   font-size: 0.9rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   padding: 0 1rem;
   outline: none;
   transition: border-color 0.2s, background 0.2s;
-
-  &::placeholder { color: rgba(136, 146, 176, 0.45); }
-
-  &:focus {
-    border-color: rgba(74, 222, 128, 0.5);
-    background: rgba(255, 255, 255, 0.07);
-  }
-
-  &.is-invalid {
-    border-color: rgba(248, 113, 113, 0.5);
-  }
+}
+.auth-input::placeholder {
+  color: rgba(136, 146, 176, 0.45);
+}
+.auth-input:focus {
+  border-color: rgba(74, 222, 128, 0.5);
+  background: rgba(255, 255, 255, 0.07);
+}
+.auth-input.is-invalid {
+  border-color: rgba(248, 113, 113, 0.5);
 }
 
 /* ---- Row helpers ---- */
@@ -186,13 +192,12 @@
   font-size: 0.8rem;
   color: var(--px-muted);
   cursor: pointer;
-
-  input[type="checkbox"] {
-    accent-color: var(--px-green);
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-  }
+}
+.auth-remember input[type=checkbox] {
+  accent-color: var(--px-green);
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
 }
 
 .auth-forgot {
@@ -200,8 +205,9 @@
   color: rgba(136, 146, 176, 0.65);
   text-decoration: none;
   transition: color 0.2s;
-
-  &:hover { color: var(--px-green); }
+}
+.auth-forgot:hover {
+  color: var(--px-green);
 }
 
 /* ---- Submit button ---- */
@@ -212,7 +218,7 @@
   border: none;
   border-radius: 10px;
   color: #fff;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: "Barlow Condensed", sans-serif;
   font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -222,23 +228,24 @@
   transition: filter 0.2s, transform 0.15s;
   position: relative;
   overflow: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(rgba(255,255,255,0.1), transparent);
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  &:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
-    &::after { opacity: 1; }
-  }
-
-  &:active { transform: translateY(0); }
+}
+.auth-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(255, 255, 255, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.auth-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+.auth-btn:hover::after {
+  opacity: 1;
+}
+.auth-btn:active {
+  transform: translateY(0);
 }
 
 /* ---- Footer text ---- */
@@ -254,8 +261,9 @@
   text-decoration: none;
   font-weight: 500;
   transition: opacity 0.2s;
-
-  &:hover { opacity: 0.75; }
+}
+.auth-link:hover {
+  opacity: 0.75;
 }
 
 /* ---- OAuth buttons ---- */
@@ -270,15 +278,13 @@
   flex-direction: row;
   gap: 0.75rem;
   width: 100%;
-
-  > form {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .auth-btn-oauth {
-    width: 100%;
-  }
+}
+.auth-oauth-row > form {
+  flex: 1;
+  min-width: 0;
+}
+.auth-oauth-row .auth-btn-oauth {
+  width: 100%;
 }
 
 .auth-btn-oauth {
@@ -292,22 +298,27 @@
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.04);
   color: var(--px-text);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.18);
-  }
-
-  i { font-size: 1.1rem; }
+}
+.auth-btn-oauth:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.auth-btn-oauth i {
+  font-size: 1.1rem;
 }
 
-.auth-btn-google:hover { border-color: rgba(234, 67, 53, 0.4); }
-.auth-btn-facebook:hover { border-color: rgba(24, 119, 242, 0.4); }
+.auth-btn-google:hover {
+  border-color: rgba(234, 67, 53, 0.4);
+}
+
+.auth-btn-facebook:hover {
+  border-color: rgba(24, 119, 242, 0.4);
+}
 
 /* ---- Divider ---- */
 .auth-divider {
@@ -317,12 +328,10 @@
   margin: 1.5rem 0;
   font-size: 0.75rem;
   color: rgba(136, 146, 176, 0.4);
-
-  &::before,
-  &::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.06);
-  }
+}
+.auth-divider::before, .auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
 }
