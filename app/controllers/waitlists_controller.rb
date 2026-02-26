@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WaitlistsController < ApplicationController
   layout "landing"
 

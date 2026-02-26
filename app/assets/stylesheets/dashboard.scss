@@ -1,0 +1,222 @@
+/* ======================================================
+   PADEEX — Dashboard
+   ====================================================== */
+
+:root {
+  --px-bg:          #07080f;
+  --px-surface:     #0f1022;
+  --px-purple:      #3628c5;
+  --px-purple-dim:  rgba(54, 40, 197, 0.18);
+  --px-green:       #4ade80;
+  --px-text:        #f0f4ff;
+  --px-muted:       #8892b0;
+  --px-border:      rgba(255, 255, 255, 0.07);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.dashboard-body {
+  background: var(--px-bg);
+  color: var(--px-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Navbar ---- */
+.dash-navbar {
+  background: rgba(15, 16, 34, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dash-logo {
+  height: 26px;
+  width: auto;
+  opacity: 0.85;
+}
+
+.dash-user-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dash-user-name {
+  font-size: 0.85rem;
+  color: var(--px-muted);
+}
+
+.dash-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3628c5, #4ade80);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.dash-logout {
+  font-size: 0.8rem;
+  color: rgba(136, 146, 176, 0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover { color: #f87171; }
+}
+
+/* ---- Content area ---- */
+.dash-content {
+  padding: 3rem 2rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---- Welcome header ---- */
+.dash-welcome {
+  margin-bottom: 3rem;
+}
+
+.dash-welcome-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--px-green);
+  margin-bottom: 0.5rem;
+}
+
+.dash-welcome-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 2.4rem;
+  text-transform: uppercase;
+  color: var(--px-text);
+  line-height: 1.05;
+}
+
+.dash-welcome-sub {
+  font-size: 0.88rem;
+  color: var(--px-muted);
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+/* ---- Section label ---- */
+.dash-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(136, 146, 176, 0.5);
+  margin-bottom: 1rem;
+}
+
+/* ---- Cards grid ---- */
+.dash-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.dash-card {
+  background: rgba(15, 16, 34, 0.7);
+  border: 1px solid var(--px-border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  transition: border-color 0.25s, transform 0.2s;
+  cursor: default;
+
+  &:hover {
+    border-color: rgba(74, 222, 128, 0.22);
+    transform: translateY(-3px);
+  }
+}
+
+.dash-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--px-purple-dim);
+  border: 1px solid rgba(54, 40, 197, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: var(--px-green);
+  margin-bottom: 1.25rem;
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.dash-card:hover .dash-card-icon {
+  background: rgba(74, 222, 128, 0.1);
+  border-color: rgba(74, 222, 128, 0.35);
+}
+
+.dash-card-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--px-text);
+  margin-bottom: 0.4rem;
+}
+
+.dash-card-text {
+  font-size: 0.8rem;
+  color: var(--px-muted);
+  line-height: 1.65;
+}
+
+/* ---- Soon badge ---- */
+.dash-badge-soon {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--px-green);
+  border: 1px solid rgba(74, 222, 128, 0.28);
+  background: rgba(74, 222, 128, 0.05);
+  padding: 4px 11px;
+  border-radius: 20px;
+  margin-top: 1rem;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--px-green);
+    opacity: 0.7;
+  }
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .dash-content { padding: 2rem 1.25rem 3rem; }
+  .dash-navbar { padding: 0 1.25rem; }
+  .dash-user-name { display: none; }
+  .dash-welcome-title { font-size: 1.8rem; }
+}

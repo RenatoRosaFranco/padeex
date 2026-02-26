@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
+# Landing page components.
 module Landing
+  # Features section for the landing page.
   class FeaturesComponent < ViewComponent::Base
-    CONFIG_PATH = Rails.root.join("data/app_config.yml")
-
+    # Returns features list from app config. @return [Array]
     def features
-      @features ||= YAML.load_file(CONFIG_PATH, symbolize_names: true).dig(:features) || []
+      @features ||= AppConfigService.fetch(:features, default: [])
     end
   end
 end

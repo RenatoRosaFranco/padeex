@@ -1,0 +1,46 @@
+<div class="auth-wrapper">
+  <%= link_to root_path, class: "auth-logo-link" do %>
+    <%= image_tag "logo_padex_branco.png", alt: "PADEEX", class: "auth-logo" %>
+  <% end %>
+
+  <div class="auth-card">
+    <h1 class="auth-title">Entrar</h1>
+    <p class="auth-sub">Acesse sua conta Padeex</p>
+
+    <% if alert %>
+      <div class="auth-alert-error"><%= alert %></div>
+    <% end %>
+    <% if notice %>
+      <div class="auth-alert-notice"><%= notice %></div>
+    <% end %>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="auth-field">
+        <%= f.label :email, "E-mail", class: "auth-label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email",
+              class: "auth-input", placeholder: "seu@email.com" %>
+      </div>
+
+      <div class="auth-field">
+        <%= f.label :password, "Senha", class: "auth-label" %>
+        <%= f.password_field :password, autocomplete: "current-password",
+              class: "auth-input", placeholder: "••••••••" %>
+      </div>
+
+      <div class="auth-row">
+        <label class="auth-remember">
+          <%= f.check_box :remember_me %>
+          Lembrar de mim
+        </label>
+        <%= link_to "Esqueci minha senha", new_user_password_path, class: "auth-forgot" %>
+      </div>
+
+      <%= f.submit "Entrar na conta", class: "auth-btn" %>
+    <% end %>
+  </div>
+
+  <p class="auth-footer">
+    Não tem uma conta?
+    <%= link_to "Criar conta", new_user_registration_path, class: "auth-link" %>
+  </p>
+</div>
