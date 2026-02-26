@@ -31,5 +31,10 @@ module Landing
     def section_sub
       @content[:section_sub]
     end
+
+    # Optional stats/metrics for investors. @return [Array, nil]
+    def stats
+      @content[:stats]
+    end
   end
 end

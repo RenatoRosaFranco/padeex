@@ -20,5 +20,11 @@ module Landing
     def feature_tags
       @content[:feature_tags]
     end
+
+    # Optional custom CTA button text (e.g. "Quero investir").
+    # @return [String]
+    def cta_button_text
+      @content[:hero_cta_button].presence || "Entrar na lista"
+    end
   end
 end

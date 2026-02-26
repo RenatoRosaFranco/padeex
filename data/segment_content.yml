@@ -65,6 +65,52 @@ clubs:
       title: Relatórios
       description: Acompanhe ocupação, faturamento e métricas do seu clube em tempo real.
 
+investors:
+  title: "Para Investidores"
+  section_eyebrow: "Oportunidade exclusiva"
+  cta_hint: "Vagas limitadas para a próxima rodada. Registre seu e-mail e receba o deck executivo completo."
+  hero_cta_button: "Quero investir"
+  coming_soon_headline: "Rodada em andamento.<br>Entre antes que feche."
+  coming_soon_sub: "Estamos conversando com investidores estratégicos. Deixe seu contato e receba o deck executivo com detalhes da rodada."
+  launch_chip: "Oportunidade"
+  section_headline: "O padel está explodindo.<br>O PADEX vai dominar."
+  section_sub: "Mercado de R$ 2 bi+, crescimento de 40% ao ano, e nós estamos construindo a plataforma que vai conectar todo o ecossistema."
+  hero:
+    headline: "A maior oportunidade"
+    headline_accent: "no esporte que mais cresce no Brasil"
+    subheadline: "Rodada em andamento. Junte-se a investidores que enxergam o potencial do padel antes do mercado."
+  feature_tags:
+    - icon: bi-graph-up-arrow
+      label: "40% CAGR"
+    - icon: bi-cash-stack
+      label: "R$ 2 bi+"
+    - icon: bi-people-fill
+      label: "500k+ atletas"
+    - icon: bi-trophy-fill
+      label: "Primeiro mover"
+  stats:
+    - value: "40%"
+      label: "Crescimento anual do mercado"
+    - value: "R$ 2 bi+"
+      label: "Tamanho do mercado em 2028"
+    - value: "500 mil+"
+      label: "Atletas de padel no Brasil"
+    - value: "1º"
+      label: "Plataforma full-stack do ecossistema"
+  features:
+    - icon: bi-graph-up-arrow
+      title: "Mercado em explosão"
+      description: "O padel é o esporte que mais cresce no Brasil — 40% ao ano. Quadras dobrando a cada 18 meses. Oportunidade de primeiro mover em um mercado ainda fragmentado."
+    - icon: bi-pie-chart-fill
+      title: "Modelo de receita comprovado"
+      description: "Assinaturas B2C, comissões em reservas e eventos, B2B para clubes e patrocínios. Múltiplas fontes com margens atrativas e escalabilidade global."
+    - icon: bi-rocket-takeoff-fill
+      title: "Tecnologia e execução"
+      description: "Stack moderna, equipe com experiência em scale-ups e roadmap validado. Já em operação com early adopters e tração inicial."
+    - icon: bi-shield-check
+      title: "Governança e transparência"
+      description: "Estrutura profissional, métricas em tempo real e acompanhamento próximo. Relatórios trimestrais e acesso direto à liderança."
+
 companies:
   title: "Para Empresas"
   section_eyebrow: "Em desenvolvimento"

@@ -1,8 +1,11 @@
 <footer class="landing-footer">
   <div class="container">
     <div class="footer-inner">
-      <%= image_tag "logo_padex_branco.png", alt: "PADEEX", class: "footer-logo" %>
-      <p class="footer-copy">&copy; <%= current_year %> PADEEX. Todos os direitos reservados.</p>
+      <%= image_tag "logo_padex_branco.png", alt: "PADEX", class: "footer-logo" %>
+      <div class="footer-links">
+        <%= link_to "Blog", blog_posts_path, class: "footer-link" %>
+      </div>
+      <p class="footer-copy">&copy; <%= current_year %> PADEX. Todos os direitos reservados.</p>
       <div class="footer-social">
         <a href="#" class="footer-social-link" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
         <a href="#" class="footer-social-link" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>

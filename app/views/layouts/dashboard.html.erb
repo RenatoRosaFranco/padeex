@@ -16,8 +16,11 @@
   <body class="dashboard-body <%= controller_name %>-<%= action_name %>">
     <nav class="dash-navbar">
       <%= link_to dashboard_path do %>
-        <%= image_tag "logo_padex_branco.png", alt: "PADEEX", class: "dash-logo" %>
+        <%= image_tag "logo_padex_branco.png", alt: "PADEX", class: "dash-logo" %>
       <% end %>
+      <div class="dash-navbar-center">
+        <%= link_to "Blog", blog_path, class: "dash-navbar-link" %>
+      </div>
       <div class="dash-user-menu">
         <span class="dash-user-name">Olá, <%= current_user.name.split.first %></span>
         <div class="dash-avatar"><%= current_user.initials %></div>

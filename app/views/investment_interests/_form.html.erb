@@ -1,0 +1,67 @@
+<%= form_with url: investment_interest_path, method: :post, class: "investment-form" do |f| %>
+  <div class="investment-form-row">
+    <div class="investment-form-field">
+      <label for="first_name">Nome</label>
+      <input type="text"
+             name="first_name"
+             id="first_name"
+             value="<%= interest.first_name %>"
+             placeholder="Seu nome"
+             required
+             autocomplete="given-name">
+    </div>
+    <div class="investment-form-field">
+      <label for="last_name">Sobrenome</label>
+      <input type="text"
+             name="last_name"
+             id="last_name"
+             value="<%= interest.last_name %>"
+             placeholder="Seu sobrenome"
+             required
+             autocomplete="family-name">
+    </div>
+  </div>
+
+  <div class="investment-form-field">
+    <label for="email">E-mail</label>
+    <input type="email"
+           name="email"
+           id="email"
+           value="<%= interest.email %>"
+           placeholder="seu@email.com"
+           required
+           autocomplete="email">
+  </div>
+
+  <div class="investment-form-field">
+    <label for="phone">Telefone (opcional)</label>
+    <input type="tel"
+           name="phone"
+           id="phone"
+           value="<%= interest.phone %>"
+           placeholder="(11) 99999-9999"
+           autocomplete="tel">
+  </div>
+
+  <div class="investment-form-field">
+    <label for="investment_range">Interesse de investimento</label>
+    <select name="investment_range" id="investment_range" required>
+      <option value="">Selecione uma faixa</option>
+      <% InvestmentInterest::INVESTMENT_RANGES.each do |range| %>
+        <option value="<%= range %>" <%= "selected" if interest.investment_range == range %>><%= range %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="investment-form-field">
+    <label for="message">Mensagem (opcional)</label>
+    <textarea name="message"
+              id="message"
+              rows="3"
+              placeholder="Conte um pouco sobre você ou sua expectativa..."><%= interest.message %></textarea>
+  </div>
+
+  <button type="submit" class="investment-form-submit">
+    <i class="bi bi-send-fill me-2"></i>Enviar interesse
+  </button>
+<% end %>

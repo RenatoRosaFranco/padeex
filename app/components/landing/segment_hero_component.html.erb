@@ -1,6 +1,6 @@
 <nav class="padeex-navbar">
   <%= link_to root_path do %>
-    <%= image_tag "logo_padex_branco.png", alt: "PADEEX", class: "padeex-logo-nav" %>
+    <%= image_tag "logo_padex_branco.png", alt: "PADEX", class: "padeex-logo-nav" %>
   <% end %>
 
   <div class="navbar-nav-links">
@@ -8,13 +8,20 @@
       <span class="navbar-nav-prefix">para</span>
       <span class="navbar-nav-label">Atletas</span>
     <% end %>
-    <%= link_to para_clubes_path, class: "navbar-nav-link #{'active' if @segment == 'clubes'}" do %>
+    <%= link_to para_clubes_path, class: "navbar-nav-link #{'active' if @segment == 'clubs'}" do %>
       <span class="navbar-nav-prefix">para</span>
       <span class="navbar-nav-label">Clubes</span>
     <% end %>
-    <%= link_to para_empresas_path, class: "navbar-nav-link #{'active' if @segment == 'empresas'}" do %>
+    <%= link_to para_empresas_path, class: "navbar-nav-link #{'active' if @segment == 'companies'}" do %>
       <span class="navbar-nav-prefix">para</span>
       <span class="navbar-nav-label">Empresas</span>
+    <% end %>
+    <%= link_to para_investidores_path, class: "navbar-nav-link #{'active' if @segment == 'investors'}" do %>
+      <span class="navbar-nav-prefix">para</span>
+      <span class="navbar-nav-label">Investidores</span>
+    <% end %>
+    <%= link_to blog_path, class: "navbar-nav-link" do %>
+      <span class="navbar-nav-label">Blog</span>
     <% end %>
   </div>
 
@@ -38,7 +45,7 @@
 
           <%= link_to root_path do %>
             <%= image_tag "logo_padex_branco.png",
-                  alt: "PADEEX",
+                  alt: "PADEX",
                   class: "hero-logo animate-fade-up" %>
           <% end %>
 
@@ -60,7 +67,7 @@
                     class: "cta-input",
                     required: true,
                     autocomplete: "email" %>
-              <%= f.submit "Entrar na lista", class: "cta-btn" %>
+              <%= f.submit cta_button_text, class: "cta-btn" %>
             <% end %>
           </div>
 

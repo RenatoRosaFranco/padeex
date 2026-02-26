@@ -18,11 +18,18 @@ Rails.application.routes.draw do
   # Root.
   root "landing#index"
   resource :waitlist, only: [:create]
+  resource :investment_interest, only: [:create], path: "investimento"
+
+  # Blog
+  namespace :blog do
+    resources :posts, only: [:index, :show]
+  end
 
   # Landing pages.
-  get "para-atletas",  to: "segments#show", as: :para_atletas,  defaults: { slug: "athletes"  }
-  get "para-clubes",   to: "segments#show", as: :para_clubes,   defaults: { slug: "clubs"    }
-  get "para-empresas", to: "segments#show", as: :para_empresas, defaults: { slug: "companies" }
+  get "para-atletas",      to: "segments#show", as: :para_atletas,      defaults: { slug: "athletes"  }
+  get "para-clubes",       to: "segments#show", as: :para_clubes,       defaults: { slug: "clubs"    }
+  get "para-empresas",     to: "segments#show", as: :para_empresas,     defaults: { slug: "companies" }
+  get "para-investidores", to: "segments#show", as: :para_investidores, defaults: { slug: "investors" }
 
   # Devise.
   devise_for :users,

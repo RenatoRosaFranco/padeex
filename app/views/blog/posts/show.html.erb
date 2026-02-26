@@ -1,0 +1,27 @@
+<% content_for :title, "#{@post.title} — Blog Padeex" %>
+<%= render Landing::BlogNavComponent.new %>
+<article class="blog-article-section">
+  <div class="container">
+    <div class="blog-article">
+      <header class="blog-article-header">
+        <p class="blog-article-date"><%= @post.published_at.strftime("%d/%m/%Y") %></p>
+        <h1 class="blog-article-title"><%= @post.title %></h1>
+        <% if @post.excerpt.present? %>
+          <p class="blog-article-excerpt"><%= @post.excerpt %></p>
+        <% end %>
+      </header>
+      <div class="blog-article-cover">
+        <%= image_tag @post.cover_url, alt: @post.title %>
+      </div>
+      <div class="blog-article-content">
+        <%= simple_format(@post.content) %>
+      </div>
+      <footer class="blog-article-footer">
+        <%= link_to blog_posts_path, class: "blog-back-link" do %>
+          <i class="bi bi-arrow-left me-2"></i>Voltar ao blog
+        <% end %>
+      </footer>
+    </div>
+  </div>
+</article>
+<%= render Landing::FooterComponent.new %>

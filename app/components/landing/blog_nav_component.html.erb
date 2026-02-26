@@ -1,0 +1,36 @@
+<nav class="padeex-navbar">
+  <%= link_to root_path do %>
+    <%= image_tag "logo_padex_branco.png", alt: "PADEX", class: "padeex-logo-nav" %>
+  <% end %>
+
+  <div class="navbar-nav-links">
+    <%= link_to para_atletas_path, class: "navbar-nav-link" do %>
+      <span class="navbar-nav-prefix">para</span>
+      <span class="navbar-nav-label">Atletas</span>
+    <% end %>
+    <%= link_to para_clubes_path, class: "navbar-nav-link" do %>
+      <span class="navbar-nav-prefix">para</span>
+      <span class="navbar-nav-label">Clubes</span>
+    <% end %>
+    <%= link_to para_empresas_path, class: "navbar-nav-link" do %>
+      <span class="navbar-nav-prefix">para</span>
+      <span class="navbar-nav-label">Empresas</span>
+    <% end %>
+    <%= link_to para_investidores_path, class: "navbar-nav-link" do %>
+      <span class="navbar-nav-prefix">para</span>
+      <span class="navbar-nav-label">Investidores</span>
+    <% end %>
+    <%= link_to blog_posts_path, class: "navbar-nav-link" do %>
+      <span class="navbar-nav-label">Blog</span>
+    <% end %>
+  </div>
+
+  <% if Flipper.enabled?(:released_app) %>
+    <div class="navbar-auth-actions">
+      <%= link_to "Entrar", new_user_session_path, class: "navbar-btn-login" %>
+      <%= link_to "Criar conta", new_user_registration_path, class: "navbar-btn-signup" %>
+    </div>
+  <% else %>
+    <span class="badge-coming-soon">Em Breve</span>
+  <% end %>
+</nav>

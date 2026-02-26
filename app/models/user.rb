@@ -4,9 +4,8 @@ class User < ApplicationRecord
   include Omniauthable
 
   # Devise
-  devise :database_authenticatable, :registerable, :recoverable,
-         :rememberable, :validatable, :omniauthable,
-         :jwt_authenticatable,
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+         :validatable, :omniauthable, :jwt_authenticatable,
          jwt_revocation_strategy: Devise::JWT::RevocationStrategies::JTIMatcher,
          omniauth_providers: %i[google_oauth2 facebook]
 
@@ -14,8 +13,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :password, presence: true, if: :password_required?
 
-  # Returns user initials.
-  # @return [String] User initials.
+  # @return [String] iniciais do usuário (primeiras letras dos dois primeiros nomes)
   def initials
     name.split.first(2).map { |w| w[0] }.join.upcase
   end

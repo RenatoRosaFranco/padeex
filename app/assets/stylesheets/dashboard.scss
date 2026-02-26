@@ -51,6 +51,22 @@
   opacity: 0.85;
 }
 
+.dash-navbar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dash-navbar-link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--px-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover { color: var(--px-green); }
+}
+
 .dash-user-menu {
   display: flex;
   align-items: center;

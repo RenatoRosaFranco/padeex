@@ -1,0 +1,20 @@
+<% if @success %>
+  <%= turbo_stream.replace "investment-form-cta" do %>
+    <div class="investment-form-success">
+      <div class="investment-form-success-icon">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+      <h3 class="investment-form-success-title">Interesse registrado!</h3>
+      <p class="investment-form-success-sub">Nossa equipe entrará em contato em breve com o deck executivo e próximos passos.</p>
+    </div>
+  <% end %>
+<% else %>
+  <%= turbo_stream.replace "investment-form-cta" do %>
+    <div id="investment-form-cta">
+      <% if @error_msg %>
+        <p class="investment-form-error"><i class="bi bi-exclamation-circle-fill me-1"></i><%= @error_msg %></p>
+      <% end %>
+      <%= render "investment_interests/form", interest: @interest %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,46 @@
+<% content_for :title, "Blog — Padeex" %>
+<%= render Landing::BlogNavComponent.new %>
+<section class="blog-section">
+  <div class="container">
+    <div class="blog-header text-center">
+      <p class="blog-eyebrow">Blog</p>
+      <h1 class="blog-title">Artigos e novidades</h1>
+      <p class="blog-sub">Conteúdo sobre padel, dicas e novidades do ecossistema PADEX.</p>
+    </div>
+
+    <% if @posts.any? %>
+      <div class="blog-grid" data-controller="scroll-reveal">
+        <% @posts.each_with_index do |post, i| %>
+          <%= link_to blog_post_path(post), class: "blog-card", data: { scroll_reveal_target: "item" }, style: "animation-delay: #{i * 0.08}s" do %>
+            <div class="blog-card-cover">
+              <%= image_tag post.cover_url, alt: post.title, loading: "lazy" %>
+            </div>
+            <div class="blog-card-body">
+              <h3 class="blog-card-title"><%= post.title %></h3>
+              <p class="blog-card-excerpt"><%= post.excerpt.presence || truncate(strip_tags(post.content), length: 160) %></p>
+              <div class="blog-card-meta">
+                <span class="blog-card-date"><%= post.published_at.strftime("%d/%m/%Y") %></span>
+                <div class="blog-card-author">
+                  <span class="blog-card-avatar"><%= post.author_initials %></span>
+                  <span class="blog-card-author-name"><%= post.author %></span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
+      <% if @pagy.pages > 1 %>
+        <div class="blog-pagination">
+          <%== @pagy.series_nav %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="blog-empty text-center">
+        <i class="bi bi-journal-text blog-empty-icon"></i>
+        <p class="blog-empty-text">Em breve teremos artigos por aqui.</p>
+      </div>
+    <% end %>
+  </div>
+</section>
+<%= render Landing::FooterComponent.new %>

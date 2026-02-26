@@ -8,6 +8,17 @@
       </div>
     </div>
 
+    <% if stats.present? %>
+      <div class="stats-grid mb-5">
+        <% stats.each_with_index do |stat, i| %>
+          <div class="stat-card" data-scroll-reveal-target="item" style="animation-delay: <%= i * 0.08 %>s">
+            <span class="stat-value"><%= stat[:value] %></span>
+            <span class="stat-label"><%= stat[:label] %></span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
     <div class="features-grid" id="features-grid">
       <% features.each_with_index do |feat, i| %>
         <div class="feature-card" data-scroll-reveal-target="item" style="animation-delay: <%= i * 0.12 %>s">

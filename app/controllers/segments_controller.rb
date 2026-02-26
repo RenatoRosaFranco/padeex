@@ -4,7 +4,7 @@ class SegmentsController < ApplicationController
   layout "landing"
 
   # Slugs for the segments.
-  SEGMENT_SLUGS = %w[athletes clubs companies].freeze
+  SEGMENT_SLUGS = %w[athletes clubs companies investors].freeze
 
   # GET /segments/:slug
   def show

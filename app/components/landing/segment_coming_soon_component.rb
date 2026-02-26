@@ -16,5 +16,17 @@ module Landing
     def cta_hint
       @content[:cta_hint]
     end
+
+    def coming_soon_headline
+      @content[:coming_soon_headline].presence || "Algo grande está<br>chegando ao padel."
+    end
+
+    def coming_soon_sub
+      @content[:coming_soon_sub].presence || "Estamos construindo o maior ecossistema de padel do Brasil. Seja um dos primeiros a saber quando abrirmos as portas."
+    end
+
+    def launch_chip
+      @content[:launch_chip].presence || "Lançamento em breve"
+    end
   end
 end
