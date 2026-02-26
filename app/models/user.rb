@@ -3,6 +3,9 @@
 class User < ApplicationRecord
   include Omniauthable
 
+  # Associations
+  has_many :user_identities, dependent: :destroy
+
   # Devise
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
          :validatable, :omniauthable, :jwt_authenticatable,

@@ -13,12 +13,14 @@ module Omniauthable
     end
   end
 
+  # @return [Boolean] true se o usuário possui ao menos uma identidade OAuth vinculada
   def oauth_user?
-    provider.present?
+    user_identities.any?
   end
 
   private
 
+  # @return [Boolean] true se senha é obrigatória (usuário não veio de OAuth)
   def password_required?
     !oauth_user?
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_26_240000) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_26_250000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -43,7 +43,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_26_240000) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string "author", default: "Equipe PADEX", null: false
+    t.string "author", default: "Equipe PADEEX", null: false
     t.text "content", null: false
     t.string "cover"
     t.datetime "created_at", null: false
@@ -54,6 +54,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_26_240000) do
     t.datetime "updated_at", null: false
     t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
+  end
+
+  create_table "user_identities", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "provider", null: false
+    t.string "uid", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["provider", "uid"], name: "index_user_identities_on_provider_and_uid", unique: true
+    t.index ["user_id"], name: "index_user_identities_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -80,4 +90,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_26_240000) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_waitlist_entries_on_email", unique: true
   end
+
+  add_foreign_key "user_identities", "users"
 end
