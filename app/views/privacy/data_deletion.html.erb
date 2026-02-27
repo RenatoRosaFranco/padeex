@@ -1,0 +1,75 @@
+<% content_for :title, "Exclusão de Dados — PADEX" %>
+<%= render Landing::BlogNavComponent.new %>
+
+<section class="privacy-section">
+  <div class="container">
+    <div class="privacy-article">
+
+      <header class="privacy-header">
+        <p class="blog-eyebrow">Privacidade</p>
+        <h1 class="privacy-title">Exclusão de Dados</h1>
+        <p class="privacy-sub">
+          Saiba como solicitar a exclusão dos seus dados pessoais coletados pela PADEX.
+        </p>
+      </header>
+
+      <div class="privacy-content">
+
+        <h2>Quais dados coletamos via Facebook Login?</h2>
+        <p>
+          Ao fazer login com o Facebook, coletamos apenas as informações necessárias para criar
+          e identificar a sua conta na plataforma PADEX:
+        </p>
+        <ul>
+          <li>Nome completo</li>
+          <li>Endereço de e-mail</li>
+          <li>Identificador único do Facebook (UID)</li>
+        </ul>
+        <p>Não coletamos publicações, amigos, fotos ou qualquer outro dado do seu perfil.</p>
+
+        <h2>Como excluir seus dados</h2>
+        <p>Você tem duas opções para remover seus dados da PADEX:</p>
+
+        <h3>Opção 1 — Pelo próprio aplicativo</h3>
+        <p>
+          Acesse sua conta, vá em <strong>Meu Perfil → Configurações da Conta</strong> e
+          selecione <strong>Excluir minha conta</strong>. Todos os seus dados serão removidos
+          permanentemente de nossos servidores em até 30 dias.
+        </p>
+
+        <h3>Opção 2 — Por e-mail</h3>
+        <p>
+          Envie uma solicitação para
+          <a href="mailto:contato@padeex.com.br" class="privacy-link">contato@padeex.com.br</a>
+          com o assunto <strong>"Solicitação de Exclusão de Dados"</strong> e o e-mail associado
+          à sua conta. Processaremos o pedido em até 30 dias úteis e confirmaremos a exclusão
+          por e-mail.
+        </p>
+
+        <h2>O que acontece após a exclusão?</h2>
+        <p>
+          Após a exclusão da conta, todos os seus dados pessoais — incluindo nome, e-mail e
+          histórico de atividades — serão removidos permanentemente de nossos sistemas.
+          Dados anonimizados ou agregados (estatísticas gerais, por exemplo) podem ser
+          mantidos sem qualquer vínculo com sua identidade.
+        </p>
+
+        <h2>Dúvidas?</h2>
+        <p>
+          Entre em contato pelo e-mail
+          <a href="mailto:contato@padeex.com.br" class="privacy-link">contato@padeex.com.br</a>.
+        </p>
+
+      </div>
+
+      <footer class="blog-article-footer">
+        <%= link_to root_path, class: "blog-back-link" do %>
+          <i class="bi bi-arrow-left me-2"></i>Voltar ao início
+        <% end %>
+      </footer>
+
+    </div>
+  </div>
+</section>
+
+<%= render Landing::FooterComponent.new %>

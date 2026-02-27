@@ -1230,4 +1230,82 @@ nav.pagy.series-nav {
   .blog-grid { grid-template-columns: 1fr; }
 }
 
+/* ======================================================
+   Privacy Pages
+   ====================================================== */
+.privacy-section {
+  padding: 140px 0 100px;
+  min-height: 60vh;
+}
+
+.privacy-article {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.privacy-header {
+  margin-bottom: 2.5rem;
+}
+
+.privacy-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 40px);
+  text-transform: uppercase;
+  color: var(--px-text);
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.privacy-sub {
+  font-size: 1.05rem;
+  color: var(--px-muted);
+  line-height: 1.6;
+}
+
+.privacy-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(240, 244, 255, 0.85);
+
+  h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--px-text);
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--px-green);
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p { margin-bottom: 1rem; }
+
+  ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+
+    li {
+      margin-bottom: 0.35rem;
+      color: var(--px-muted);
+    }
+  }
+}
+
+.privacy-link {
+  color: var(--px-green);
+  text-decoration: none;
+  transition: opacity 0.2s;
+
+  &:hover { opacity: 0.8; }
+}
+
 /* auth → auth.scss | dashboard → dashboard.scss */

@@ -25,6 +25,9 @@ Rails.application.routes.draw do
     resources :posts, only: [:index, :show]
   end
 
+  # Privacy.
+  get "privacy/data-deletion", to: "privacy#data_deletion", as: :data_deletion
+
   # Landing pages.
   get "para-atletas",      to: "segments#show", as: :para_atletas,      defaults: { slug: "athletes"  }
   get "para-clubes",       to: "segments#show", as: :para_clubes,       defaults: { slug: "clubs"    }
