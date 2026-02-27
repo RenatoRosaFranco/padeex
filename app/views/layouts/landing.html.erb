@@ -11,6 +11,9 @@
     <%= csp_meta_tag %>
 
     <%= yield :head %>
+    <% if ENV["RECAPTCHA_SITE_KEY"].present? %>
+      <meta name="recaptcha-site-key" content="<%= ENV["RECAPTCHA_SITE_KEY"] %>">
+    <% end %>
 
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">

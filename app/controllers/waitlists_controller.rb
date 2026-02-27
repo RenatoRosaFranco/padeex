@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class WaitlistsController < ApplicationController
+  include RecaptchaVerifiable
   layout "landing"
+
+  verify_recaptcha only: [:create]
 
   def create
     @entry = WaitlistEntry.new(email: params[:email])

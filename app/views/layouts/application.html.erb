@@ -11,6 +11,9 @@
 
     <%= yield :head %>
     <%= render GoogleAnalyticsComponent.new %>
+    <% if ENV["RECAPTCHA_SITE_KEY"].present? %>
+      <meta name="recaptcha-site-key" content="<%= ENV["RECAPTCHA_SITE_KEY"] %>">
+    <% end %>
 
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>

@@ -11,7 +11,8 @@
     <% if @error_msg %>
       <p class="cta-error-msg"><i class="bi bi-exclamation-circle-fill me-1"></i><%= @error_msg %></p>
     <% end %>
-    <%= form_with url: "/waitlist", method: :post, class: "cta-input-group" do |f| %>
+    <%= form_with url: "/waitlist", method: :post, class: "cta-input-group", data: { controller: "recaptcha" } do |f| %>
+      <%= f.hidden_field :segment, value: params[:segment], name: "segment" if params[:segment].present? %>
       <%= f.email_field :email,
             name: "email",
             placeholder: "Seu melhor e-mail",

@@ -1,4 +1,4 @@
-<%= form_with url: investment_interest_path, method: :post, class: "investment-form" do |f| %>
+<%= form_with url: investment_interest_path, method: :post, class: "investment-form", data: { controller: "recaptcha" } do |f| %>
   <div class="investment-form-row">
     <div class="investment-form-field">
       <label for="first_name">Nome</label>

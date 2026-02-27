@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class InvestmentInterestsController < ApplicationController
+  include RecaptchaVerifiable
   layout "landing"
+
+  verify_recaptcha only: [:create]
 
   def create
     @interest = InvestmentInterest.new(interest_params)

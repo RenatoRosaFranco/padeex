@@ -59,7 +59,7 @@
           </p>
 
           <div id="waitlist-cta" class="cta-form-wrapper animate-fade-up delay-3">
-            <%= form_with url: "/waitlist", method: :post, class: "cta-input-group" do |f| %>
+            <%= form_with url: "/waitlist", method: :post, class: "cta-input-group", data: { controller: "recaptcha" } do |f| %>
               <%= f.hidden_field :segment, value: @segment, name: "segment" %>
               <%= f.email_field :email,
                     name: "email",
