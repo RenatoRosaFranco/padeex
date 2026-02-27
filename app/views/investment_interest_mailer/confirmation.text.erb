@@ -1,0 +1,21 @@
+Olá, <%= @interest.first_name %>.
+
+Recebemos sua proposta de investimento e gostaríamos de agradecer pela confiança
+depositada no PADEX. Estamos construindo algo que acreditamos ter o potencial de
+transformar a forma como o padel é vivido no Brasil — e investidores alinhados com
+essa visão são parte essencial dessa jornada.
+
+Nossa equipe irá analisar sua proposta com atenção. Caso haja alinhamento com o
+momento e a direção que buscamos para o projeto, entraremos em contato para dar
+continuidade à conversa.
+
+---
+RESUMO DA PROPOSTA
+
+Faixa de investimento: <%= @interest.investment_range %>
+<% if @interest.message.present? %>
+Mensagem: <%= @interest.message %>
+<% end %>
+---
+Dúvidas? contato@padeex.com.br
+© <%= Time.current.year %> PADEX

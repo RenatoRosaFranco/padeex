@@ -1,0 +1,13 @@
+NOVA PROPOSTA DE INVESTIMENTO — PADEX
+=====================================
+
+Nome:               <%= @interest.first_name %> <%= @interest.last_name %>
+E-mail:             <%= @interest.email %>
+<% if @interest.phone.present? %>Telefone:           <%= @interest.phone %>
+<% end %>Faixa de investimento: <%= @interest.investment_range %>
+<% if @interest.message.present? %>
+Mensagem:
+<%= @interest.message %>
+<% end %>
+-------------------------------------
+Recebido em <%= @interest.created_at.strftime("%d/%m/%Y às %H:%M") %>

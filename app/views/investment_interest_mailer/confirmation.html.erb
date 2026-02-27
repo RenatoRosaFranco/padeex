@@ -1,0 +1,54 @@
+<!-- Eyebrow -->
+<p style="margin:0 0 12px 0;font-size:11px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#4ade80;">
+  Proposta Recebida
+</p>
+
+<!-- Headline -->
+<h1 style="margin:0 0 16px 0;font-size:26px;font-weight:800;text-transform:uppercase;color:#f0f4ff;line-height:1.2;">
+  Obrigado pelo seu interesse,<br>
+  <span style="color:#4ade80;"><%= @interest.first_name %>.</span>
+</h1>
+
+<!-- Body -->
+<p style="margin:0 0 16px 0;font-size:15px;color:#8892b0;line-height:1.75;">
+  Recebemos sua proposta de investimento e gostaríamos de agradecer pela confiança depositada no
+  <strong style="color:#f0f4ff;">PADEX</strong>. Estamos construindo algo que acreditamos ter o
+  potencial de transformar a forma como o padel é vivido no Brasil — e investidores alinhados com
+  essa visão são parte essencial dessa jornada.
+</p>
+
+<p style="margin:0 0 32px 0;font-size:15px;color:#8892b0;line-height:1.75;">
+  Nossa equipe irá analisar sua proposta com atenção. Caso haja alinhamento com o momento e a
+  direção que buscamos para o projeto, entraremos em contato para dar continuidade à conversa.
+</p>
+
+<!-- Divider -->
+<hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:0 0 28px 0;">
+
+<!-- Summary -->
+<p style="margin:0 0 14px 0;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#3a4255;">
+  Resumo da proposta
+</p>
+
+<table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 32px 0;">
+  <tr>
+    <td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+      <p style="margin:0 0 2px 0;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#3a4255;">Faixa de investimento</p>
+      <p style="margin:0;font-size:14px;font-weight:700;color:#4ade80;"><%= @interest.investment_range %></p>
+    </td>
+  </tr>
+  <% if @interest.message.present? %>
+  <tr>
+    <td style="padding:10px 0;">
+      <p style="margin:0 0 2px 0;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#3a4255;">Sua mensagem</p>
+      <p style="margin:0;font-size:14px;color:#8892b0;line-height:1.6;"><%= @interest.message %></p>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<!-- Footer note -->
+<p style="margin:0;font-size:13px;color:#3a4255;line-height:1.65;">
+  Se tiver alguma dúvida, pode entrar em contato pelo e-mail
+  <a href="mailto:contato@padeex.com.br" style="color:#4ade80;text-decoration:none;">contato@padeex.com.br</a>.
+</p>

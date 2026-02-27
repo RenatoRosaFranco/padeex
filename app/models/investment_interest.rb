@@ -18,5 +18,13 @@ class InvestmentInterest < ApplicationRecord
   validates :investment_range, presence: true, inclusion: { in: INVESTMENT_RANGES }
 
   # Callbacks
-  before_save { self.email = email.downcase if email.present? }
+  before_save  { self.email = email.downcase if email.present? }
+  after_create_commit :notify_team
+
+  private
+
+  def notify_team
+    InvestmentInterestMailer.new_interest(self).deliver_later
+    InvestmentInterestMailer.confirmation(self).deliver_later
+  end
 end
