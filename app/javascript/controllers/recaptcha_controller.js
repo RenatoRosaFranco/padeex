@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
-// reCAPTCHA v3 invisível: intercepta o submit do form, obtém token e envia junto.
-// Requer data-controller="recaptcha" e data-recaptcha-site-key-value no form.
+// reCAPTCHA v3 invisible: intercepts form submit, gets token and sends it along.
+// Requires data-controller="recaptcha" and data-recaptcha-site-key-value on the form.
 export default class extends Controller {
   static values = {
     siteKey: { type: String, default: "" }
@@ -36,7 +36,7 @@ export default class extends Controller {
 
   async handleSubmit(event) {
     if (!this.siteKey || !this.scriptLoaded) return
-    if (this.element.querySelector('input[name="recaptcha_token"]')) return // já tem token (re-submit)
+    if (this.element.querySelector('input[name="recaptcha_token"]')) return
 
     event.preventDefault()
     event.stopImmediatePropagation()

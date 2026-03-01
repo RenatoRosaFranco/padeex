@@ -1,0 +1,55 @@
+<div class="ob-card">
+  <div class="ob-card__icon"><i class="bi bi-person-badge"></i></div>
+  <h1 class="ob-card__title">Seu perfil de atleta</h1>
+  <p class="ob-card__sub">Personalize como a comunidade vai te ver.</p>
+
+  <% if @profile.errors.any? %>
+    <div class="ob-alert ob-alert--error">
+      <% @profile.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form_with model: @profile, url: onboarding_profile_path, method: :patch,
+        class: "ob-form", data: { controller: "onboarding-form" } do |f| %>
+    <div class="ob-field">
+      <%= f.label :username, "Nome de usuário", class: "ob-label" %>
+      <div class="ob-username-wrap">
+        <%= f.text_field :username, class: "ob-input", placeholder: "renatorfranco",
+              autocomplete: "off", autocorrect: "off", autocapitalize: "off",
+              data: { action: "input->onboarding-form#checkUsername" } %>
+        <span class="ob-username-status" data-onboarding-form-target="usernameStatus" data-state=""></span>
+      </div>
+    </div>
+
+    <div class="ob-row-fields">
+      <div class="ob-field">
+        <%= f.label :birth_date, "Data de nascimento", class: "ob-label" %>
+        <%= f.date_field :birth_date, class: "ob-input" %>
+      </div>
+
+      <div class="ob-field">
+        <%= f.label :gender, "Gênero", class: "ob-label" %>
+        <%= f.select :gender,
+              [["Masculino", "male"], ["Feminino", "female"], ["Outro", "other"], ["Prefiro não informar", "undisclosed"]],
+              { include_blank: "Selecione..." },
+              class: "ob-input" %>
+      </div>
+    </div>
+
+    <div class="ob-field">
+      <%= f.label :bio, "Bio", class: "ob-label" %>
+      <%= f.text_area :bio, class: "ob-input ob-textarea", placeholder: "Fale um pouco sobre você...", rows: 3 %>
+    </div>
+
+    <div class="ob-actions">
+      <%= link_to edit_onboarding_account_type_path, class: "ob-btn ob-btn--ghost" do %>
+        <i class="bi bi-arrow-left"></i> Voltar
+      <% end %>
+      <button type="submit" class="ob-btn ob-btn--primary" data-onboarding-form-target="submitBtn">
+        Concluir <i class="bi bi-check-lg"></i>
+      </button>
+    </div>
+  <% end %>
+</div>

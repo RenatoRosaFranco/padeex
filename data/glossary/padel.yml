@@ -1,0 +1,90 @@
+---
+- category: Golpes
+  icon: bi-lightning-charge-fill
+  terms:
+    - term: Smash
+      definition: "Golpe forte executado de cima para baixo, geralmente na altura do ombro ou acima. É o golpe mais poderoso do padel e visa encerrar o ponto."
+    - term: Bandeja
+      definition: "Golpe aéreo executado lateralmente com a bola acima da cabeça. Mantém o controle e posição após o ponto alto, sendo uma versão mais segura que o smash."
+    - term: Víbora
+      definition: "Variante do smash lateral executado com efeito cortado (slice), fazendo a bola sair rápida e baixa após bater na vidraça."
+    - term: Lob
+      definition: "Bola levantada com altura sobre os adversários em direção ao fundo da quadra, forçando-os a recuar. Pode ser ofensivo ou defensivo."
+    - term: Globo
+      definition: "Lob defensivo executado sob pressão, com o objetivo principal de recuperar a posição na quadra."
+    - term: Bajada
+      definition: "Bola descendente aproveitada antes de subir após o quique na vidraça. É um golpe difícil e de alto risco, mas muito eficaz quando bem executado."
+    - term: Chiquita
+      definition: "Golpe defensivo rápido e baixo, geralmente executado junto à vidraça lateral, desviando a bola para o lado oposto."
+    - term: Volley
+      definition: "Interceptação da bola no ar antes que ela quique no chão. Exige reflexos rápidos e é muito usado próximo à rede."
+    - term: Contrapié
+      definition: "Golpe executado para o lado oposto ao movimento do adversário, explorando o desequilíbrio e a falta de posicionamento."
+    - term: Remate
+      definition: "Golpe finalização com força e intenção de ganhar o ponto diretamente, sem deixar opção de devolução ao adversário."
+
+- category: Táticas
+  icon: bi-diagram-3-fill
+  terms:
+    - term: Paralela
+      definition: "Bola jogada próxima e paralela à vidraça lateral, geralmente para escapar do oponente ou criar ângulo."
+    - term: Cruzada
+      definition: "Bola jogada em diagonal, cruzando a quadra. Abre espaços e cria desequilíbrio na dupla adversária."
+    - term: "Por los pies"
+      definition: "Bola jogada diretamente aos pés do adversário, dificultando a devolução e forçando um golpe de baixa qualidade."
+    - term: "Zona de ouro"
+      definition: "Área central próxima à rede onde a dupla dominante tem maior controle do jogo e da pontuação."
+    - term: "Quarta bola"
+      definition: "Estratégia em que a dupla joga para forçar um erro ou fraqueza na quarta jogada da troca, após uma sequência planejada."
+    - term: "Pressão lateral"
+      definition: "Série de bolas jogadas para o mesmo lado, forçando o adversário a correr e abrir espaços no meio da quadra."
+    - term: "Saque e volley"
+      definition: "Estratégia em que o sacador avança até à rede imediatamente após o saque para dominar o ponto desde o início."
+
+- category: "Quadra e Regras"
+  icon: bi-grid-3x3
+  terms:
+    - term: Vidraça
+      definition: "Paredes de vidro transparente nas laterais e no fundo da quadra. A bola pode ser jogada contra elas e continua em jogo."
+    - term: Grade
+      definition: "Paredes de metal gradeado presentes em alguns setores da quadra. A bola também rebate nelas e permanece em jogo."
+    - term: Quique
+      definition: "Rebote da bola no chão da quadra. A bola pode quicar apenas uma vez antes de ser devolvida."
+    - term: Contrachico
+      definition: "Bola que rebate em uma vidraça ou grade após quicar no chão. O adversário deve devolvê-la antes do segundo quique."
+    - term: Bóia
+      definition: "Quando a bola sai completamente dos limites da quadra sem tocar o chão antes. Ponto para o adversário."
+    - term: Falha
+      definition: "Erro no saque: bola que não cai na caixa correta, toca na rede ou sai da quadra. Duas falhas seguidas = ponto perdido."
+    - term: Tie-break
+      definition: "Desempate jogado quando o placar chega a 6-6 no set. Vence quem marcar 7 pontos com 2 de diferença."
+    - term: "Golden point"
+      definition: "Ponto decisivo jogado quando o placar chega a 40-40 (deuce). A dupla que vencer esse ponto ganha o game."
+
+- category: Equipamentos
+  icon: bi-shield-fill
+  terms:
+    - term: Pá
+      definition: "Raquete de padel, mais curta e sólida que a de tênis, sem cordas. Possui furos e é feita de materiais como fibra de carbono ou fibra de vidro."
+    - term: Grip
+      definition: "Empunhadura da pá, responsável pela aderência e amortecimento. Existem grips de diferentes espessuras e materiais."
+    - term: Overgrip
+      definition: "Fita fina sobreposta ao grip original para melhorar a aderência, absorver suor ou personalizar a espessura da empunhadura."
+    - term: Cordão
+      definition: "Fita de segurança que prende a pá ao pulso do jogador, evitando que ela saia voando em golpes mais fortes."
+    - term: Bola
+      definition: "Bola de padel semelhante à de tênis, porém com pressão interna menor, o que reduz o quique e favorece o controle."
+
+- category: "Posições e Jogadores"
+  icon: bi-people-fill
+  terms:
+    - term: Drive
+      definition: "Lado do jogador onde ele segura a pá com empunhadura natural (lado dominante). Golpe executado por esse lado."
+    - term: Revés
+      definition: "Lado oposto ao dominante do jogador. Golpe executado pelo lado não-dominante, geralmente considerado mais técnico."
+    - term: "Número 1"
+      definition: "Jogador mais forte da dupla, que geralmente joga pelo lado esquerdo (drive no lado esquerdo da quadra)."
+    - term: "Número 2"
+      definition: "Segundo jogador da dupla, que geralmente joga pelo lado direito (revés no lado direito da quadra)."
+    - term: Raqueteiro
+      definition: "Bolsa ou mochila específica para transportar pás de padel, com compartimentos acolchoados para proteger o equipamento."

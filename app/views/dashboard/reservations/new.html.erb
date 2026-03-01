@@ -1,0 +1,56 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow"><%= link_to "Quadras", dashboard_courts_path, class: "back-link" %> / Reservar</p>
+  <h1 class="dash-welcome-title"><%= @court.name %></h1>
+  <p class="dash-welcome-sub">Selecione a data e o horário desejado.</p>
+</div>
+
+<div class="sched-layout" data-controller="slot-picker"
+                          data-slot-picker-base-path-value="<%= new_dashboard_court_reservation_path(@court) %>">
+
+  <%# Date picker %>
+  <div class="sched-date-picker">
+    <label class="sched-label" for="date-input">Data</label>
+    <input type="date"
+           id="date-input"
+           class="sched-date-input"
+           value="<%= @date %>"
+           min="<%= Date.current %>"
+           data-slot-picker-target="dateInput"
+           data-action="change->slot-picker#changeDate">
+  </div>
+
+  <%# Flash (errors) %>
+  <% if flash.now[:alert] %>
+    <div class="sched-flash sched-flash--error"><%= flash.now[:alert] %></div>
+  <% end %>
+
+  <%# Slot grid (Turbo Frame) %>
+  <%= turbo_frame_tag "slots" do %>
+    <%= render "slots", slots: @slots %>
+  <% end %>
+
+  <%# Confirmation panel (Stimulus-controlled, persists across frame updates) %>
+  <div class="sched-confirm" data-slot-picker-target="confirm">
+    <%= form_with url: dashboard_court_reservation_path(@court), method: :post, local: true do |f| %>
+      <%= f.hidden_field :starts_at, data: { "slot-picker-target": "selectedSlot" } %>
+      <%= f.hidden_field :date, data: { "slot-picker-target": "dateHidden" } %>
+
+      <div class="sched-confirm__header">
+        <i class="bi bi-calendar-check-fill"></i>
+        <span>Confirmar reserva para
+          <strong data-slot-picker-target="timeDisplay"></strong>
+          em <strong><%= @court.name %></strong>
+        </span>
+      </div>
+
+      <div class="sched-confirm__actions">
+        <%= f.submit "Confirmar reserva", class: "sched-btn sched-btn--primary" %>
+        <button type="button" class="sched-btn sched-btn--ghost"
+                data-action="click->slot-picker#cancelSelection">
+          Cancelar
+        </button>
+      </div>
+    <% end %>
+  </div>
+
+</div>

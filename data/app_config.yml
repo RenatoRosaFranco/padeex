@@ -1,4 +1,34 @@
 ---
+segment_slugs:
+  - athletes
+  - clubs
+  - companies
+  - investors
+
+tournament_status_labels:
+  draft: "Rascunho"
+  open: "Aberto"
+  in_progress: "Em Andamento"
+  finished: "Finalizado"
+  cancelled: "Cancelado"
+
+tournament_match_status_labels:
+  scheduled: "Agendado"
+  in_progress: "Em andamento"
+  finished: "Finalizado"
+  cancelled: "Cancelado"
+
+tournament_format_labels:
+  round_robin: "Round Robin"
+  elimination: "Eliminatória"
+  double_elimination: "Dupla Eliminatória"
+
+investment_ranges:
+  - "R$ 50 mil - R$ 100 mil"
+  - "R$ 100 mil - R$ 500 mil"
+  - "R$ 500 mil - R$ 1 milhão"
+  - "Acima de R$ 1 milhão"
+
 features:
   - icon: bi-lightning-charge-fill
     title: Jogos

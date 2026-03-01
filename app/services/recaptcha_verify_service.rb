@@ -4,24 +4,21 @@
 #
 # @example
 #   RecaptchaVerifyService.call(token: params[:recaptcha_token], remote_ip: request.remote_ip)
-class RecaptchaVerifyService
+class RecaptchaVerifyService < ApplicationService
   # reCAPTCHA verification URL
   VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
   # Minimum score required for the token to be considered valid
   MIN_SCORE = 0.5
 
   # @param token [String] reCAPTCHA v3 token from the client
-  # @param remote_ip [String] user IP address (optional)
-  # @return [Boolean] true when Google confirms the token and score meets MIN_SCORE
-  def self.call(token:, remote_ip: nil)
-    new(token: token, remote_ip: remote_ip).call
-  end
-
+  # @param remote_ip [String, nil] user IP address (optional)
   def initialize(token:, remote_ip: nil)
     @token = token
     @remote_ip = remote_ip
   end
 
+  # Verifies token with Google API and checks score against MIN_SCORE.
+  # @return [Boolean] true when verification succeeds and score meets threshold
   def call
     return false if @token.blank?
 
@@ -34,6 +31,7 @@ class RecaptchaVerifyService
 
   private
 
+  # @return [Hash] Google API response (success, score, action, etc.)
   def fetch_verification
     uri = URI(VERIFY_URL)
     res = Net::HTTP.post_form(uri, {

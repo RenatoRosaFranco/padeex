@@ -1,0 +1,73 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow"><%= link_to "Clubes", dashboard_clubs_path, class: "back-link" %></p>
+  <div class="club-header">
+    <div class="club-header__avatar"><%= @club.initials %></div>
+    <div>
+      <h1 class="dash-welcome-title"><%= @club.name %></h1>
+      <p class="dash-welcome-sub">
+        <i class="bi bi-grid-3x3-gap"></i>
+        <%= pluralize(@courts.count, "quadra disponível", "quadras disponíveis") %>
+        <% if @instructors.any? %>
+          &nbsp;·&nbsp;
+          <i class="bi bi-person-badge"></i>
+          <%= pluralize(@instructors.count, "instrutor", "instrutores") %>
+        <% end %>
+      </p>
+    </div>
+  </div>
+</div>
+
+<%# Quadras %>
+<% if @courts.empty? %>
+  <div class="sched-empty">
+    <i class="bi bi-calendar-x"></i>
+    <p>Este clube ainda não possui quadras disponíveis.</p>
+  </div>
+<% else %>
+  <p class="dash-section-label" style="margin-bottom: 1rem;">Quadras</p>
+  <div class="courts-grid" style="margin-bottom: 2.5rem;">
+    <% @courts.each do |court| %>
+      <div class="court-card">
+        <div class="court-card__icon">
+          <i class="bi bi-<%= court.court_type == 'indoor' ? 'building' : 'sun' %>"></i>
+        </div>
+        <div class="court-card__body">
+          <h2 class="court-card__name"><%= court.name %></h2>
+          <span class="court-type-badge"><%= court.court_type.humanize %></span>
+        </div>
+        <%= link_to new_dashboard_court_reservation_path(court), class: "court-card__cta" do %>
+          Reservar <i class="bi bi-arrow-right-short"></i>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<%# Instrutores %>
+<% if @instructors.any? %>
+  <p class="dash-section-label" style="margin-bottom: 1rem;">Instrutores</p>
+  <div class="instructor-grid">
+    <% @instructors.each do |instructor| %>
+      <div class="instructor-card instructor-card--public">
+        <div class="instructor-card__avatar">
+          <% if instructor.photo.attached? %>
+            <%= image_tag instructor.photo, class: "instructor-card__photo" %>
+          <% else %>
+            <span><%= instructor.name.split.first(2).map { |w| w[0] }.join.upcase %></span>
+          <% end %>
+        </div>
+        <div class="instructor-card__body">
+          <h2 class="instructor-card__name"><%= instructor.name %></h2>
+          <% if instructor.user.present? %>
+            <span class="instructor-linked-badge">
+              <i class="bi bi-patch-check-fill"></i> Na plataforma
+            </span>
+          <% end %>
+          <% if instructor.description.present? %>
+            <p class="instructor-card__bio"><%= truncate(instructor.description, length: 100) %></p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

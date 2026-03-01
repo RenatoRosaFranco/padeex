@@ -1,0 +1,30 @@
+<div class="stv" data-story-viewer-target="modal">
+
+  <div class="stv__backdrop" data-action="click->story-viewer#close"></div>
+
+  <div class="stv__card">
+
+    <%# Progress bars (rendered by JS) %>
+    <div class="stv__bars" data-story-viewer-target="bars"></div>
+
+    <%# Header %>
+    <div class="stv__header">
+      <div class="stv__avatar" data-story-viewer-target="authorAvatar"></div>
+      <div class="stv__author-info">
+        <span class="stv__author-name" data-story-viewer-target="authorName"></span>
+        <span class="stv__author-time" data-story-viewer-target="authorTime"></span>
+      </div>
+      <button class="stv__close" data-action="click->story-viewer#close" aria-label="Fechar">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <%# Content area (image or gradient, rendered by JS) %>
+    <div class="stv__content" data-story-viewer-target="content"></div>
+
+    <%# Navigation zones %>
+    <button class="stv__nav stv__nav--prev" data-action="click->story-viewer#prev" aria-label="Story anterior"></button>
+    <button class="stv__nav stv__nav--next" data-action="click->story-viewer#next" aria-label="Próximo story"></button>
+
+  </div>
+</div>

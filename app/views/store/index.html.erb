@@ -1,0 +1,61 @@
+<% content_for :title, "Loja — Padeex" %>
+<%= render Landing::StoreNavComponent.new %>
+
+<section class="store-section">
+  <div class="store-container">
+
+    <div class="store-header">
+      <p class="store-eyebrow">Padeex</p>
+      <h1 class="store-title">Loja</h1>
+      <p class="store-sub">Os melhores equipamentos de padel, selecionados para você.</p>
+    </div>
+
+    <div class="store-body" data-controller="store-filter">
+
+      <%# Category filter %>
+      <div class="store-cats">
+        <% @categories.each do |cat| %>
+          <button class="store-cat-btn <%= 'store-cat-btn--active' if cat[:key] == 'todos' %>"
+                  data-store-filter-target="tab"
+                  data-category="<%= cat[:key] %>"
+                  data-action="click->store-filter#filter">
+            <%= cat[:label] %>
+          </button>
+        <% end %>
+      </div>
+
+      <%# Product grid %>
+      <div class="store-grid">
+        <% @products.each do |product| %>
+          <%= link_to loja_produto_path(product.id),
+                class: "store-card",
+                data: { store_filter_target: "card", category: product.category } do %>
+
+            <div class="store-card__img" style="background: <%= product.color %>;">
+              <% if product.badge %>
+                <span class="store-card__badge"><%= product.badge %></span>
+              <% end %>
+              <i class="bi bi-<%= product.category == 'paletas' ? 'shield-fill' : product.category == 'bolas' ? 'circle-fill' : product.category == 'bolsas' ? 'bag-fill' : product.category == 'vestuario' ? 'person-fill' : 'box-fill' %> store-card__icon"></i>
+            </div>
+
+            <div class="store-card__body">
+              <p class="store-card__brand"><%= product.brand %></p>
+              <h3 class="store-card__name"><%= product.name %></h3>
+              <div class="store-card__pricing">
+                <% if product.original_price %>
+                  <span class="store-card__original">R$ <%= "%.2f" % product.original_price %></span>
+                <% end %>
+                <span class="store-card__price">R$ <%= "%.2f" % product.price %></span>
+              </div>
+              <span class="store-card__cta">Ver produto <i class="bi bi-arrow-right"></i></span>
+            </div>
+
+          <% end %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<%= render Landing::FooterComponent.new %>

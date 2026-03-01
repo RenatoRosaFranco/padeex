@@ -1,0 +1,12 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">
+    <%= link_to "Torneios", dashboard_tournaments_path, class: "back-link" %> /
+    <%= link_to @tournament.name, dashboard_tournament_path(@tournament), class: "back-link" %> /
+    Nova Categoria
+  </p>
+  <h1 class="dash-welcome-title">Nova Categoria</h1>
+</div>
+
+<div class="analytics-card">
+  <%= render "form", tournament: @tournament, category: @category %>
+</div>

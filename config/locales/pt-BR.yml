@@ -1,0 +1,312 @@
+---
+pt-BR:
+  onboarding:
+    welcome: "Bem-vindo ao Padex!"
+
+  flash:
+    booking:
+      cancelled: "Reserva cancelada"
+      confirmed: "Reserva confirmada para %{date} às %{time}"
+    court:
+      created: "Quadra \"%{name}\" criada com sucesso"
+      updated: "Quadra \"%{name}\" atualizada"
+    time_block:
+      created: "Bloqueio criado"
+      removed: "Bloqueio removido"
+    feature_flag:
+      enabled: "Flag '%{key}' ativada"
+      disabled: "Flag '%{key}' desativada"
+    instructor:
+      created: "Instrutor \"%{name}\" adicionado"
+      updated: "Instrutor atualizado"
+      removed: "Instrutor removido"
+    profile:
+      updated: "Perfil atualizado com sucesso"
+    tournament:
+      created: "Torneio \"%{name}\" criado com sucesso"
+      updated: "Torneio atualizado"
+      removed: "Torneio removido"
+    tournament_category:
+      created: "Categoria \"%{name}\" criada"
+      updated: "Categoria atualizada"
+      removed: "Categoria removida"
+    tournament_registration:
+      created: "Inscrição realizada com sucesso! Aguarde a confirmação."
+      status_updated: "Status atualizado"
+      removed: "Inscrição removida"
+    tournament_match:
+      created: "Jogo criado"
+      updated: "Jogo atualizado"
+      removed: "Jogo removido"
+    tournament_group:
+      created: "Grupo \"%{name}\" criado"
+      updated: "Grupo atualizado"
+      removed: "Grupo removido"
+    tournament_group_membership:
+      created: "%{member} adicionado ao %{group}"
+      removed: "Dupla removida do grupo"
+
+  tournament_category:
+    gender_labels:
+      masculine: "Masculino"
+      feminine: "Feminino"
+      mixed: "Misto"
+
+  tournament_registration:
+    status_labels:
+      pending: "Inscrição Pendente"
+      confirmed: "Inscrição Confirmada"
+      waitlisted: "Fila de Espera"
+
+  date:
+    abbr_day_names:
+      - Dom
+      - Seg
+      - Ter
+      - Qua
+      - Qui
+      - Sex
+      - "Sáb"
+    abbr_month_names:
+      - ~
+      - Jan
+      - Fev
+      - Mar
+      - Abr
+      - Mai
+      - Jun
+      - Jul
+      - Ago
+      - Set
+      - Out
+      - Nov
+      - Dez
+    day_names:
+      - Domingo
+      - "Segunda-feira"
+      - "Terça-feira"
+      - "Quarta-feira"
+      - "Quinta-feira"
+      - "Sexta-feira"
+      - "Sábado"
+    month_names:
+      - ~
+      - Janeiro
+      - Fevereiro
+      - "Março"
+      - Abril
+      - Maio
+      - Junho
+      - Julho
+      - Agosto
+      - Setembro
+      - Outubro
+      - Novembro
+      - Dezembro
+    order:
+      - :day
+      - :month
+      - :year
+    formats:
+      default: "%d/%m/%Y"
+      short:   "%d de %b"
+      long:    "%d de %B de %Y"
+
+  time:
+    am: ""
+    pm: ""
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      short:   "%d de %b, %H:%M"
+      long:    "%d de %B de %Y, %H:%M"
+
+  datetime:
+    distance_in_words:
+      half_a_minute:          "meio minuto"
+      less_than_x_seconds:
+        one:                  "menos de 1 segundo"
+        other:                "menos de %{count} segundos"
+      x_seconds:
+        one:                  "1 segundo"
+        other:                "%{count} segundos"
+      less_than_x_minutes:
+        one:                  "menos de 1 minuto"
+        other:                "menos de %{count} minutos"
+      x_minutes:
+        one:                  "1 minuto"
+        other:                "%{count} minutos"
+      about_x_hours:
+        one:                  "cerca de 1 hora"
+        other:                "cerca de %{count} horas"
+      x_days:
+        one:                  "1 dia"
+        other:                "%{count} dias"
+      about_x_months:
+        one:                  "cerca de 1 mês"
+        other:                "cerca de %{count} meses"
+      x_months:
+        one:                  "1 mês"
+        other:                "%{count} meses"
+      about_x_years:
+        one:                  "cerca de 1 ano"
+        other:                "cerca de %{count} anos"
+      over_x_years:
+        one:                  "mais de 1 ano"
+        other:                "mais de %{count} anos"
+      almost_x_years:
+        one:                  "quase 1 ano"
+        other:                "quase %{count} anos"
+
+  activerecord:
+    attributes:
+      user:
+        name:            "Nome"
+        email:           "E-mail"
+        password:        "Senha"
+        mobile_number:   "Telefone"
+        accepted_terms:  "Termos de uso"
+      instructor:
+        name:          "Nome"
+        email:         "E-mail"
+        internal_code: "Código interno"
+
+    errors:
+      messages:
+        blank:        "não pode ficar em branco"
+        taken:        "já está em uso"
+        too_short:    "é muito curto (mínimo %{count} caracteres)"
+        too_long:     "é muito longo (máximo %{count} caracteres)"
+        invalid:      "é inválido"
+        confirmation: "não coincide com %{attribute}"
+        accepted:     "deve ser aceito"
+        inclusion:    "não está incluído na lista"
+        exclusion:    "está reservado"
+        not_a_number: "não é um número"
+
+      models:
+        user:
+          attributes:
+            email:
+              blank:   "não pode ficar em branco"
+              taken:   "já está cadastrado"
+              invalid: "não é um e-mail válido"
+            password:
+              blank:     "não pode ficar em branco"
+              too_short: "é muito curta (mínimo %{count} caracteres)"
+            name:
+              blank: "não pode ficar em branco"
+            accepted_terms:
+              accepted: "devem ser aceitos para criar uma conta"
+
+        court:
+          attributes:
+            name:
+              taken_in_club: "já existe neste clube"
+
+        instructor:
+          attributes:
+            internal_code:
+              taken: "já está em uso neste clube"
+
+        booking:
+          attributes:
+            date:
+              invalid_past: "não pode ser no passado"
+            starts_at:
+              out_of_hours: "fora do horário de funcionamento (%{hours})"
+              already_reserved: "horário já reservado"
+              blocked: "horário bloqueado"
+
+        tournament_match:
+          attributes:
+            base:
+              different_pairs: "As duplas devem ser diferentes"
+
+        tournament:
+          attributes:
+            ends_on:
+              after_start: "deve ser após a data de início"
+
+        time_block:
+          attributes:
+            date:
+              invalid_past: "não pode ser no passado"
+            ends_at:
+              before_start: "deve ser após o horário inicial"
+
+        investment_interest:
+          attributes:
+            email:
+              invalid: "E-mail inválido"
+
+        waitlist_entry:
+          attributes:
+            email:
+              invalid: "E-mail inválido"
+              taken: "já está na lista"
+
+        user_profile:
+          attributes:
+            username:
+              blank:  "não pode ficar em branco"
+              taken:  "já está em uso"
+              invalid: "só pode conter letras, números, pontos e sublinhados"
+            birth_date:
+              blank:  "não pode ficar em branco"
+            gender:
+              blank:  "não pode ficar em branco"
+
+        tournament_registration:
+          attributes:
+            user_id:
+              already_registered: "já está inscrito nesta categoria"
+
+        follow:
+          attributes:
+            base:
+              cannot_follow_self: "Você não pode se seguir"
+
+        club_profile:
+          attributes:
+            club_name:
+              blank: "não pode ficar em branco"
+            cnpj:
+              blank: "não pode ficar em branco"
+            address:
+              blank: "não pode ficar em branco"
+            phone:
+              blank: "não pode ficar em branco"
+
+  errors:
+    not_found: "Não encontrado"
+    court_not_found: "Quadra não encontrada"
+    time_block_not_found: "Bloqueio não encontrado"
+    admin_required: "Acesso restrito a administradores"
+    club_required: "Área exclusiva para clubes"
+    invalid_date_or_time: "Data ou horário inválido"
+    unauthorized: "Não autorizado"
+    cancellation_not_allowed: "Cancelamento não permitido. Prazo mínimo: %{hours} horas antes do início."
+    booking_not_found: "Reserva não encontrada"
+    date_invalid_past: "Data não pode ser no passado"
+    date_invalid_format: "Data inválida. Use o formato YYYY-MM-DD"
+    post_not_found: "Artigo não encontrado"
+    instructor_not_found: "Instrutor não encontrado"
+    tournament_not_found: "Torneio não encontrado"
+    tournament_category_not_found: "Categoria não encontrada"
+    tournament_registration_not_found: "Inscrição não encontrada"
+    tournament_registration_already_registered: "Você já está inscrito nesta categoria"
+    tournament_registration_club_only: "Apenas o clube pode alterar o status"
+    tournament_registration_status_failed: "Erro ao atualizar status"
+    tournament_match_not_found: "Jogo não encontrado"
+    tournament_group_not_found: "Grupo não encontrado"
+    tournament_group_membership_not_found: "Dupla não encontrada"
+    messages:
+      blank:          "não pode ficar em branco"
+      taken:          "já está em uso"
+      too_short:      "é muito curto (mínimo %{count} caracteres)"
+      too_long:       "é muito longo (máximo %{count} caracteres)"
+      invalid:        "é inválido"
+      confirmation:   "não coincide"
+      accepted:       "deve ser aceito"
+      not_a_number:   "não é um número"
+      record_invalid: "A validação falhou: %{errors}"

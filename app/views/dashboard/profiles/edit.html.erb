@@ -1,0 +1,182 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Conta</p>
+  <h1 class="dash-welcome-title">Editar Perfil</h1>
+</div>
+
+<% if current_user.errors.any? || @profile&.errors&.any? %>
+  <div class="sched-flash sched-flash--error">
+    <% (current_user.errors.full_messages + (@profile&.errors&.full_messages || [])).uniq.each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="prf-edit">
+
+  <% if current_user.club? %>
+
+    <%# ── Club edit form ───────────────────────────── %>
+    <div class="prf-edit-section">
+      <h2 class="prf-edit-section__title">Identificação</h2>
+      <%= form_with url: my_profile_path, method: :patch, multipart: true,
+            class: "sched-form", data: { controller: "onboarding-form" } do %>
+        <div class="sched-form-grid">
+          <div class="sched-field">
+            <%= label_tag "club_profile[logo]", "Logo do clube", class: "sched-label" %>
+            <div class="prf-avatar-upload">
+              <% if @profile&.logo&.attached? %>
+                <%= image_tag @profile.logo, class: "prf-avatar-upload__preview", id: "avatar-preview" %>
+              <% else %>
+                <div class="prf-avatar prf-avatar--initials prf-avatar-upload__preview" id: "avatar-preview">
+                  <%= current_user.initials %>
+                </div>
+              <% end %>
+              <%= file_field_tag "club_profile[logo]", class: "prf-avatar-upload__input",
+                    accept: "image/*", id: "logo-input",
+                    data: { action: "change->onboarding-form#previewAvatar",
+                            "onboarding-form-preview-target": "avatarPreview",
+                            "onboarding-form-trigger-value": "logo-input" } %>
+              <label for="logo-input" class="prf-avatar-upload__btn">
+                <i class="bi bi-camera-fill"></i> Alterar logo
+              </label>
+            </div>
+          </div>
+
+          <div class="sched-field">
+            <%= label_tag "user[name]", "Responsável", class: "sched-label" %>
+            <%= text_field_tag "user[name]", current_user.name, class: "sched-input", placeholder: "Nome completo" %>
+          </div>
+
+          <div class="sched-field">
+            <%= label_tag "club_profile[club_name]", "Nome do Clube", class: "sched-label" %>
+            <%= text_field_tag "club_profile[club_name]", @profile&.club_name, class: "sched-input", placeholder: "Arena Padel SP" %>
+          </div>
+
+          <div class="sched-field">
+            <%= label_tag "club_profile[cnpj]", "CNPJ", class: "sched-label" %>
+            <%= text_field_tag "club_profile[cnpj]", @profile&.cnpj, class: "sched-input",
+                  placeholder: "00.000.000/0001-00", inputmode: "numeric",
+                  data: { action: "input->onboarding-form#formatCnpj" } %>
+          </div>
+
+          <div class="sched-field" style="grid-column: 1 / -1;">
+            <%= label_tag "club_profile[address]", "Endereço", class: "sched-label" %>
+            <%= text_field_tag "club_profile[address]", @profile&.address, class: "sched-input",
+                  placeholder: "Rua Exemplo, 100 – Bairro, Cidade – SP", autocomplete: "off",
+                  data: { controller: "places-autocomplete",
+                          "places-autocomplete-api-key-value": google_maps_api_key } %>
+          </div>
+
+          <div class="sched-field">
+            <%= label_tag "club_profile[phone]", "Telefone", class: "sched-label" %>
+            <%= telephone_field_tag "club_profile[phone]", @profile&.phone, class: "sched-input",
+                  placeholder: "(11) 99999-9999", inputmode: "numeric",
+                  data: { action: "input->onboarding-form#formatPhone" } %>
+          </div>
+
+          <div class="sched-field">
+            <%= label_tag "club_profile[email]", "E-mail do clube", class: "sched-label" %>
+            <%= email_field_tag "club_profile[email]", @profile&.email, class: "sched-input", placeholder: "contato@clube.com" %>
+          </div>
+
+          <div class="sched-field">
+            <%= label_tag "club_profile[website]", "Site", class: "sched-label" %>
+            <%= url_field_tag "club_profile[website]", @profile&.website, class: "sched-input", placeholder: "https://seuclubepadel.com.br" %>
+          </div>
+
+          <div class="sched-field">
+            <%= label_tag "user[mobile_number]", "Telefone pessoal", class: "sched-label" %>
+            <%= telephone_field_tag "user[mobile_number]", current_user.mobile_number, class: "sched-input",
+                  placeholder: "(11) 99999-9999", inputmode: "numeric",
+                  data: { action: "input->onboarding-form#formatPhone" } %>
+          </div>
+
+          <div class="sched-field" style="grid-column: 1 / -1;">
+            <%= label_tag "club_profile[description]", "Descrição", class: "sched-label" %>
+            <%= text_area_tag "club_profile[description]", @profile&.description, class: "sched-input sched-textarea",
+                  placeholder: "Conte sobre seu clube...", rows: 4 %>
+          </div>
+        </div>
+        <div class="sched-form-actions">
+          <%= submit_tag "Salvar alterações", class: "sched-btn sched-btn--primary" %>
+          <%= link_to "Cancelar", dashboard_meu_perfil_path, class: "sched-btn sched-btn--ghost" %>
+        </div>
+      <% end %>
+    </div>
+
+  <% else %>
+
+    <%# ── User edit form ───────────────────────────── %>
+    <div class="prf-edit-section">
+      <h2 class="prf-edit-section__title">Informações pessoais</h2>
+      <%= form_with url: my_profile_path, method: :patch, multipart: true,
+            class: "sched-form", data: { controller: "onboarding-form" } do %>
+        <div class="sched-form-grid">
+          <div class="sched-field" style="grid-column: 1 / -1;">
+            <%= label_tag "user_profile[avatar]", "Foto de perfil", class: "sched-label" %>
+            <div class="prf-avatar-upload">
+              <% if @profile&.avatar&.attached? %>
+                <%= image_tag @profile.avatar, class: "prf-avatar prf-avatar--img prf-avatar--md", id: "avatar-preview" %>
+              <% else %>
+                <div class="prf-avatar prf-avatar--initials prf-avatar--md" id="avatar-preview">
+                  <%= current_user.initials %>
+                </div>
+              <% end %>
+              <%= file_field_tag "user_profile[avatar]", class: "prf-avatar-upload__input",
+                    accept: "image/*", id: "avatar-input" %>
+              <label for="avatar-input" class="prf-avatar-upload__btn">
+                <i class="bi bi-camera-fill"></i> Alterar foto
+              </label>
+            </div>
+          </div>
+
+          <div class="sched-field">
+            <%= label_tag "user[name]", "Nome completo", class: "sched-label" %>
+            <%= text_field_tag "user[name]", current_user.name, class: "sched-input", placeholder: "João Silva" %>
+          </div>
+
+          <div class="sched-field">
+            <%= label_tag "user[mobile_number]", "Telefone", class: "sched-label" %>
+            <%= telephone_field_tag "user[mobile_number]", current_user.mobile_number, class: "sched-input",
+                  placeholder: "(11) 99999-9999", inputmode: "numeric",
+                  data: { action: "input->onboarding-form#formatPhone" } %>
+          </div>
+
+          <div class="sched-field">
+            <%= label_tag "user_profile[username]", "Nome de usuário", class: "sched-label" %>
+            <div class="ob-username-wrap">
+              <%= text_field_tag "user_profile[username]", @profile&.username, class: "sched-input ob-input",
+                    placeholder: "renatorfranco", autocomplete: "off", autocorrect: "off", autocapitalize: "off",
+                    data: { action: "input->onboarding-form#checkUsername" } %>
+              <span class="ob-username-status" data-onboarding-form-target="usernameStatus" data-state=""></span>
+            </div>
+          </div>
+
+          <div class="sched-field">
+            <%= label_tag "user_profile[birth_date]", "Data de nascimento", class: "sched-label" %>
+            <%= date_field_tag "user_profile[birth_date]", @profile&.birth_date, class: "sched-input" %>
+          </div>
+
+          <div class="sched-field">
+            <%= label_tag "user_profile[gender]", "Gênero", class: "sched-label" %>
+            <%= select_tag "user_profile[gender]",
+                  options_for_select([["Masculino", "male"], ["Feminino", "female"], ["Outro", "other"], ["Prefiro não informar", "undisclosed"]], @profile&.gender),
+                  include_blank: "Selecione...", class: "sched-input" %>
+          </div>
+
+          <div class="sched-field" style="grid-column: 1 / -1;">
+            <%= label_tag "user_profile[bio]", "Bio", class: "sched-label" %>
+            <%= text_area_tag "user_profile[bio]", @profile&.bio, class: "sched-input sched-textarea",
+                  placeholder: "Fale um pouco sobre você...", rows: 3 %>
+          </div>
+        </div>
+        <div class="sched-form-actions">
+          <%= submit_tag "Salvar alterações", class: "sched-btn sched-btn--primary",
+                data: { "onboarding-form-target": "submitBtn" } %>
+          <%= link_to "Cancelar", dashboard_meu_perfil_path, class: "sched-btn sched-btn--ghost" %>
+        </div>
+      <% end %>
+    </div>
+
+  <% end %>
+</div>

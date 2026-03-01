@@ -1,0 +1,50 @@
+<div class="ob-wizard">
+  <%= render "onboarding/shared/progress", current_step: 2 %>
+
+  <div class="ob-card">
+    <div class="ob-card__icon"><i class="bi bi-grid-fill"></i></div>
+    <h1 class="ob-card__title">Tipo de conta</h1>
+    <p class="ob-card__sub">Como você vai usar o Padeex?</p>
+
+    <% if current_user.errors.any? %>
+      <div class="ob-alert ob-alert--error">
+        <% current_user.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= form_with model: current_user, url: onboarding_account_type_path, method: :patch, class: "ob-form" do |f| %>
+      <div class="ob-kind-grid">
+        <label class="ob-kind-card">
+          <input type="radio" name="user[kind]" value="user" class="ob-kind-card__radio"
+                 <%= "checked" if current_user.user? || current_user.kind.nil? %>>
+          <div class="ob-kind-card__body">
+            <i class="bi bi-person-circle ob-kind-card__icon"></i>
+            <span class="ob-kind-card__title">Atleta</span>
+            <span class="ob-kind-card__desc">Jogue, reserve quadras e acompanhe sua evolução.</span>
+          </div>
+        </label>
+
+        <label class="ob-kind-card">
+          <input type="radio" name="user[kind]" value="club" class="ob-kind-card__radio"
+                 <%= "checked" if current_user.club? %>>
+          <div class="ob-kind-card__body">
+            <i class="bi bi-building ob-kind-card__icon"></i>
+            <span class="ob-kind-card__title">Clube</span>
+            <span class="ob-kind-card__desc">Gerencie quadras, torneios e instrutores.</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="ob-actions">
+        <%= link_to edit_onboarding_personal_info_path, class: "ob-btn ob-btn--ghost" do %>
+          <i class="bi bi-arrow-left"></i> Voltar
+        <% end %>
+        <button type="submit" class="ob-btn ob-btn--primary">
+          Continuar <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    <% end %>
+  </div>
+</div>

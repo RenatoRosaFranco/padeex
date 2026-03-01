@@ -3,12 +3,10 @@
 class SegmentsController < ApplicationController
   layout "landing"
 
-  # Slugs for the segments.
-  SEGMENT_SLUGS = %w[athletes clubs companies investors].freeze
-
   # GET /segments/:slug
   def show
     @segment = params[:slug] || params[:id]
-    return render "errors/not_found", status: :not_found unless SEGMENT_SLUGS.include?(@segment)
+    slugs = AppConfigService.fetch(:segment_slugs, default: [])
+    return render "errors/not_found", status: :not_found unless slugs.include?(@segment)
   end
 end

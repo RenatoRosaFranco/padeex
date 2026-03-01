@@ -1,0 +1,121 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow"><%= link_to "Torneios", dashboard_tournaments_path, class: "back-link" %> / <%= @tournament.name %></p>
+  <h1 class="dash-welcome-title"><%= @tournament.name %></h1>
+</div>
+
+<% if flash[:notice] %>
+  <div class="sched-flash sched-flash--success"><%= flash[:notice] %></div>
+<% end %>
+
+<% if @tournament.banner.attached? %>
+  <div class="tnmt-banner">
+    <%= image_tag @tournament.banner, class: "tnmt-banner__img", alt: @tournament.name %>
+  </div>
+<% end %>
+
+<div class="analytics-card">
+  <div class="tournament-detail">
+    <div class="tournament-detail-item">
+      <span class="tournament-detail-label">Status</span>
+      <span class="tournament-status-badge tournament-status-badge--<%= @tournament.status %>">
+        <%= @tournament.status_label %>
+      </span>
+    </div>
+
+    <div class="tournament-detail-item">
+      <span class="tournament-detail-label">Período</span>
+      <span class="tournament-detail-value">
+        <%= @tournament.starts_on.strftime("%d/%m/%Y") %> – <%= @tournament.ends_on.strftime("%d/%m/%Y") %>
+      </span>
+    </div>
+
+    <% if @tournament.format.present? %>
+      <div class="tournament-detail-item">
+        <span class="tournament-detail-label">Formato</span>
+        <span class="tournament-detail-value"><%= @tournament.format_label %></span>
+      </div>
+    <% end %>
+
+    <% if @tournament.max_teams.present? %>
+      <div class="tournament-detail-item">
+        <span class="tournament-detail-label">Máx. Times</span>
+        <span class="tournament-detail-value"><%= @tournament.max_teams %></span>
+      </div>
+    <% end %>
+
+    <% if @tournament.entry_fee.present? %>
+      <div class="tournament-detail-item">
+        <span class="tournament-detail-label">Taxa de Inscrição</span>
+        <span class="tournament-detail-value">R$ <%= number_with_precision(@tournament.entry_fee, precision: 2, delimiter: ".", separator: ",") %></span>
+      </div>
+    <% end %>
+
+    <% if @tournament.edital.attached? %>
+      <div class="tournament-detail-item">
+        <span class="tournament-detail-label">Edital</span>
+        <%= link_to url_for(@tournament.edital), target: "_blank", class: "tnmt-edital-link" do %>
+          <i class="bi bi-file-earmark-pdf-fill"></i> Baixar regulamento
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @tournament.description.present? %>
+    <div style="margin-bottom: 1.5rem;">
+      <p class="tournament-detail-label" style="margin-bottom: 0.5rem;">Descrição</p>
+      <p style="color: var(--px-muted); font-size: 0.9rem; line-height: 1.6;"><%= simple_format(@tournament.description) %></p>
+    </div>
+  <% end %>
+
+  <div class="sched-form-actions">
+    <%= link_to "Editar", edit_dashboard_tournament_path(@tournament), class: "sched-btn sched-btn--ghost" %>
+    <%= button_to "Excluir", dashboard_tournament_path(@tournament), method: :delete,
+        data: { turbo_confirm: "Excluir este torneio permanentemente?" },
+        class: "sched-btn sched-btn--danger" %>
+  </div>
+</div>
+
+<%# ── Categories ────────────────────────────────────────────── %>
+<div class="tnmt-categories-header">
+  <h2 class="tnmt-categories-title">Categorias</h2>
+  <% if current_user.club? && @tournament.club_id == current_user.id %>
+    <%= link_to new_dashboard_tournament_category_path(@tournament), class: "sched-btn sched-btn--primary sched-btn--sm" do %>
+      <i class="bi bi-plus-lg"></i> Nova Categoria
+    <% end %>
+  <% end %>
+</div>
+
+<% if @tournament.categories.empty? %>
+  <div class="sched-empty">
+    <i class="bi bi-list-ul"></i>
+    <p>Nenhuma categoria cadastrada ainda.</p>
+  </div>
+<% else %>
+  <div class="tnmt-cat-grid">
+    <% @tournament.categories.each do |cat| %>
+      <%= link_to dashboard_tournament_category_path(@tournament, cat), class: "tnmt-cat-card" do %>
+        <div class="tnmt-cat-card__header">
+          <span class="tnmt-cat-card__name"><%= cat.name %></span>
+          <% if cat.gender.present? %>
+            <span class="tnmt-cat-badge tnmt-cat-badge--<%= cat.gender %>"><%= cat.gender_label %></span>
+          <% end %>
+        </div>
+        <div class="tnmt-cat-card__meta">
+          <% if cat.level.present? %>
+            <span><i class="bi bi-bar-chart-fill"></i> <%= cat.level %></span>
+          <% end %>
+          <span><i class="bi bi-people-fill"></i> <%= cat.confirmed_count %><% if cat.max_pairs.present? %>/<%= cat.max_pairs %><% end %> inscritos</span>
+          <% if cat.entry_fee.present? %>
+            <span><i class="bi bi-cash"></i> R$ <%= number_with_precision(cat.entry_fee, precision: 2, delimiter: ".", separator: ",") %></span>
+          <% end %>
+          <% if cat.registration_deadline.present? %>
+            <span><i class="bi bi-calendar-x"></i> Até <%= cat.registration_deadline.strftime("%d/%m/%Y") %></span>
+          <% end %>
+        </div>
+        <% if cat.full? %>
+          <span class="tnmt-cat-card__full">Vagas esgotadas</span>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Landing
-  # Features section para landing pages segmentadas.
+  # Features section for segmented landing pages.
   class SegmentFeaturesComponent < ::ApplicationComponent
     # @param segment [String] Segment slug (athletes, clubs, companies).
     def initialize(segment:)
       @app_config = AppConfigService
-      @content = SegmentContentService.fetch(segment)
+      @content = SegmentContentService.fetch(segment, tenant: Current.tenant)
     end
 
     # Returns features list from segment or app config. @return [Array]

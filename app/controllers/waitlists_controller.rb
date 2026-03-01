@@ -7,9 +7,9 @@ class WaitlistsController < ApplicationController
   verify_recaptcha only: [:create]
 
   def create
-    @entry = WaitlistEntry.new(email: params[:email])
-    @success = @entry.save
-    @error_msg = @entry.errors.full_messages.first unless @success
+    result = Actions::Create.call(model: WaitlistEntry, attributes: { email: params[:email] })
+    @success = result.success?
+    @error_msg = result.errors&.first unless @success
 
     respond_to do |format|
       format.turbo_stream

@@ -2,13 +2,13 @@
 
 # Landing page components.
 module Landing
-  # Coming soon section para landing pages segmentadas.
+  # Coming soon section for segmented landing pages.
   class SegmentComingSoonComponent < ::ApplicationComponent
 
     # @param segment [String] Segment slug (athletes, clubs, companies).
     # @return [SegmentContentService] Segment content service.
     def initialize(segment:)
-      @content = SegmentContentService.fetch(segment)
+      @content = SegmentContentService.fetch(segment, tenant: Current.tenant)
     end
 
     # CTA hint from segment config.
@@ -17,16 +17,19 @@ module Landing
       @content[:cta_hint]
     end
 
+    # @return [String, nil] coming soon headline from segment config
     def coming_soon_headline
-      @content[:coming_soon_headline].presence || "Algo grande está<br>chegando ao padel."
+      @content[:coming_soon_headline]
     end
 
+    # @return [String, nil] coming soon subtitle from segment config
     def coming_soon_sub
-      @content[:coming_soon_sub].presence || "Estamos construindo o maior ecossistema de padel do Brasil. Seja um dos primeiros a saber quando abrirmos as portas."
+      @content[:coming_soon_sub]
     end
 
+    # @return [String, nil] launch chip label from segment config
     def launch_chip
-      @content[:launch_chip].presence || "Lançamento em breve"
+      @content[:launch_chip]
     end
   end
 end

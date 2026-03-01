@@ -13,6 +13,39 @@
       <div class="blog-article-cover">
         <%= image_tag @post.cover_url, alt: @post.title %>
       </div>
+
+      <div class="post-player"
+           data-controller="audio-player"
+           data-audio-player-text-value="<%= strip_tags(@post.content) %>">
+
+        <button class="post-player__play"
+                data-audio-player-target="playBtn"
+                data-action="click->audio-player#toggle">
+          <i class="bi bi-play-fill"></i>
+        </button>
+
+        <div class="post-player__meta">
+          <span class="post-player__eyebrow">Ouvir</span>
+          <span class="post-player__track"><%= @post.title %></span>
+        </div>
+
+        <div class="post-player__bar" data-action="click->audio-player#seek">
+          <div class="post-player__bar-fill" data-audio-player-target="barFill"></div>
+          <div class="post-player__bar-thumb" data-audio-player-target="barThumb"></div>
+        </div>
+
+        <div class="post-player__times">
+          <span data-audio-player-target="elapsed">0:00</span>
+          <span class="post-player__sep">/</span>
+          <span data-audio-player-target="duration">0:00</span>
+        </div>
+
+        <button class="post-player__speed"
+                data-audio-player-target="speed"
+                data-action="click->audio-player#cycleSpeed">1x</button>
+
+      </div>
+
       <div class="blog-article-content">
         <%= simple_format(@post.content) %>
       </div>

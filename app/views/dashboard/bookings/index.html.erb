@@ -1,0 +1,78 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Reservas</p>
+  <h1 class="dash-welcome-title">Minhas Reservas</h1>
+  <p class="dash-welcome-sub">Acompanhe e gerencie seus agendamentos.</p>
+</div>
+
+<% if flash[:notice] %>
+  <div class="sched-flash sched-flash--success"><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="sched-flash sched-flash--error"><%= flash[:alert] %></div>
+<% end %>
+
+<div class="sched-bookings-header">
+  <p class="dash-section-label">Próximas</p>
+  <%= link_to "Reservar quadra", dashboard_courts_path, class: "sched-btn sched-btn--primary sched-btn--sm" %>
+</div>
+
+<% if @upcoming.empty? %>
+  <div class="sched-empty">
+    <i class="bi bi-calendar-plus"></i>
+    <p>Nenhuma reserva futura. <% link_to "Reservar agora", dashboard_courts_path %></p>
+  </div>
+<% else %>
+  <div class="bookings-list">
+    <% @upcoming.each do |booking| %>
+      <div class="booking-card" id="booking-<%= booking.id %>">
+        <div class="booking-card__icon">
+          <i class="bi bi-calendar-event-fill"></i>
+        </div>
+        <div class="booking-card__info">
+          <span class="booking-card__court"><%= booking.court.name %></span>
+          <span class="booking-card__datetime">
+            <%= l(booking.date, format: :long) %> · <%= booking.starts_at.strftime("%H:%M") %>–<%= booking.ends_at.strftime("%H:%M") %>
+          </span>
+        </div>
+        <div class="booking-card__actions">
+          <span class="booking-badge booking-badge--active">Ativa</span>
+          <% if booking.cancellable? %>
+            <%= button_to "Cancelar",
+                          dashboard_booking_path(booking),
+                          method: :delete,
+                          data: { turbo_confirm: "Cancelar esta reserva?" },
+                          class: "sched-btn sched-btn--danger sched-btn--sm" %>
+          <% else %>
+            <span class="booking-badge booking-badge--locked" title="Cancelamento encerrado">
+              <i class="bi bi-lock-fill"></i> Bloqueada
+            </span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<% unless @past.empty? %>
+  <p class="dash-section-label" style="margin-top: 2.5rem;">Histórico</p>
+  <div class="bookings-list bookings-list--past">
+    <% @past.each do |booking| %>
+      <div class="booking-card booking-card--past">
+        <div class="booking-card__icon">
+          <i class="bi bi-calendar-check"></i>
+        </div>
+        <div class="booking-card__info">
+          <span class="booking-card__court"><%= booking.court.name %></span>
+          <span class="booking-card__datetime">
+            <%= l(booking.date, format: :long) %> · <%= booking.starts_at.strftime("%H:%M") %>–<%= booking.ends_at.strftime("%H:%M") %>
+          </span>
+        </div>
+        <div class="booking-card__actions">
+          <span class="booking-badge booking-badge--<%= booking.status %>">
+            <%= booking.cancelled? ? "Cancelada" : "Concluída" %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

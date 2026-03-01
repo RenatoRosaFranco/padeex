@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <title><%= content_for(:title) || "Padeex" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <%= stylesheet_link_tag "onboarding", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="ob-body">
+    <div class="ob-shell">
+      <header class="ob-header">
+        <%= link_to root_path, class: "ob-logo-link" do %>
+          <%= image_tag "logo_padex_branco.png", alt: "Padeex", class: "ob-logo" %>
+        <% end %>
+      </header>
+
+      <main class="ob-main">
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

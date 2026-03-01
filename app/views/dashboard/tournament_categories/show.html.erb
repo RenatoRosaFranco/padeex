@@ -1,0 +1,376 @@
+<% is_club_owner = current_user.club? && @tournament.club_id == current_user.id %>
+
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">
+    <%= link_to "Torneios", dashboard_tournaments_path, class: "back-link" %> /
+    <%= link_to @tournament.name, dashboard_tournament_path(@tournament), class: "back-link" %> /
+    <%= @category.name %>
+  </p>
+  <h1 class="dash-welcome-title"><%= @category.name %></h1>
+</div>
+
+<% if flash[:notice] %>
+  <div class="sched-flash sched-flash--success"><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="sched-flash sched-flash--error"><%= flash[:alert] %></div>
+<% end %>
+
+<%# ── Tabs ──────────────────────────────────────────────── %>
+<div class="tnmt-tabs" data-controller="tabs" data-tabs-active-value="<%= @tab %>">
+
+  <div class="tnmt-tabs__nav">
+    <button class="tnmt-tabs__btn" data-tabs-target="tab" data-tab="informacoes"
+            data-action="click->tabs#switch">
+      <i class="bi bi-info-circle"></i> Informações
+    </button>
+    <button class="tnmt-tabs__btn" data-tabs-target="tab" data-tab="inscritos"
+            data-action="click->tabs#switch">
+      <i class="bi bi-people-fill"></i> Inscritos
+      <span class="tnmt-tabs__count"><%= @registrations.count %></span>
+    </button>
+    <button class="tnmt-tabs__btn" data-tabs-target="tab" data-tab="chaves"
+            data-action="click->tabs#switch">
+      <i class="bi bi-diagram-3-fill"></i> Chaves
+    </button>
+    <button class="tnmt-tabs__btn" data-tabs-target="tab" data-tab="jogos"
+            data-action="click->tabs#switch">
+      <i class="bi bi-play-circle-fill"></i> Jogos
+      <span class="tnmt-tabs__count"><%= @matches.count %></span>
+    </button>
+  </div>
+
+  <%# ── TAB: Informações ──────────────────────────────── %>
+  <div class="tnmt-tabs__panel hidden" data-tabs-target="panel" data-tab="informacoes">
+    <div class="analytics-card">
+      <div class="tournament-detail">
+        <% if @category.gender.present? %>
+          <div class="tournament-detail-item">
+            <span class="tournament-detail-label">Gênero</span>
+            <span class="tnmt-cat-badge tnmt-cat-badge--<%= @category.gender %>"><%= @category.gender_label %></span>
+          </div>
+        <% end %>
+
+        <% if @category.level.present? %>
+          <div class="tournament-detail-item">
+            <span class="tournament-detail-label">Nível</span>
+            <span class="tournament-detail-value"><%= @category.level %></span>
+          </div>
+        <% end %>
+
+        <div class="tournament-detail-item">
+          <span class="tournament-detail-label">Inscrições</span>
+          <span class="tournament-detail-value">
+            <%= @category.confirmed_count %><% if @category.max_pairs.present? %>/<%= @category.max_pairs %><% end %> duplas
+          </span>
+        </div>
+
+        <% if @category.entry_fee.present? %>
+          <div class="tournament-detail-item">
+            <span class="tournament-detail-label">Taxa</span>
+            <span class="tournament-detail-value">R$ <%= number_with_precision(@category.entry_fee, precision: 2, delimiter: ".", separator: ",") %></span>
+          </div>
+        <% end %>
+
+        <% if @category.registration_deadline.present? %>
+          <div class="tournament-detail-item">
+            <span class="tournament-detail-label">Prazo</span>
+            <span class="tournament-detail-value">
+              <%= @category.registration_deadline.strftime("%d/%m/%Y") %>
+              <% unless @category.registration_open? %>
+                <span class="tnmt-badge tnmt-badge--closed">Encerrado</span>
+              <% end %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @category.description.present? %>
+        <div style="margin-top: 1rem;">
+          <p class="tournament-detail-label" style="margin-bottom: .5rem;">Descrição</p>
+          <p style="color: var(--px-muted); font-size: .9rem; line-height: 1.6;"><%= simple_format(@category.description) %></p>
+        </div>
+      <% end %>
+
+      <% if is_club_owner %>
+        <div class="sched-form-actions" style="margin-top: 1.5rem;">
+          <%= link_to "Editar Categoria", edit_dashboard_tournament_category_path(@tournament, @category), class: "sched-btn sched-btn--ghost" %>
+          <%= button_to "Excluir", dashboard_tournament_category_path(@tournament, @category),
+                method: :delete,
+                data: { turbo_confirm: "Excluir esta categoria e todas as inscrições?" },
+                class: "sched-btn sched-btn--danger" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%# ── TAB: Inscritos ────────────────────────────────── %>
+  <div class="tnmt-tabs__panel hidden" data-tabs-target="panel" data-tab="inscritos">
+
+    <%# Registration form for regular users %>
+    <% unless is_club_owner %>
+      <div class="analytics-card" style="margin-bottom: 1rem;">
+        <% if @my_registration %>
+          <div class="tnmt-my-reg">
+            <div>
+              <p class="tnmt-my-reg__title">Sua inscrição</p>
+              <p class="tnmt-my-reg__name"><%= @my_registration.display_name %></p>
+            </div>
+            <div style="display: flex; align-items: center; gap: .75rem;">
+              <span class="tnmt-reg-status tnmt-reg-status--<%= @my_registration.status %>">
+                <%= @my_registration.status_label %>
+              </span>
+              <%= button_to "Cancelar inscrição",
+                    dashboard_tournament_category_registration_path(@tournament, @category, @my_registration),
+                    method: :delete,
+                    data: { turbo_confirm: "Cancelar sua inscrição nesta categoria?" },
+                    class: "sched-btn sched-btn--ghost sched-btn--sm" %>
+            </div>
+          </div>
+        <% elsif @category.registration_open? && !@category.full? %>
+          <p class="tournament-detail-label" style="margin-bottom: 1rem;">Inscrever-se nesta categoria</p>
+          <%= form_with url: dashboard_tournament_category_registrations_path(@tournament, @category),
+                method: :post, local: true, class: "sched-form",
+                data: { controller: "onboarding-form" } do %>
+            <div class="sched-form-grid">
+              <div class="sched-field">
+                <%= label_tag :partner_name, "Nome do parceiro(a)", class: "sched-label" %>
+                <%= text_field_tag "tournament_registration[partner_name]", nil,
+                      class: "sched-input", placeholder: "Nome completo" %>
+              </div>
+              <div class="sched-field">
+                <%= label_tag :partner_phone, "Telefone do parceiro(a)", class: "sched-label" %>
+                <%= telephone_field_tag "tournament_registration[partner_phone]", nil,
+                      class: "sched-input", placeholder: "(11) 99999-9999",
+                      inputmode: "numeric",
+                      data: { action: "input->onboarding-form#formatPhone" } %>
+              </div>
+            </div>
+            <div class="sched-form-actions">
+              <%= submit_tag "Solicitar Inscrição", class: "sched-btn sched-btn--primary" %>
+            </div>
+          <% end %>
+        <% elsif @category.full? %>
+          <div class="sched-empty"><i class="bi bi-x-circle"></i><p>Vagas esgotadas nesta categoria.</p></div>
+        <% else %>
+          <div class="sched-empty"><i class="bi bi-calendar-x"></i><p>Inscrições encerradas.</p></div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%# Registrations list %>
+    <div class="analytics-card">
+      <div class="sched-bookings-header" style="margin-bottom: 1rem;">
+        <p class="dash-section-label">Inscrições (<%= @registrations.count %>)</p>
+      </div>
+
+      <% if @registrations.empty? %>
+        <div class="sched-empty"><i class="bi bi-people"></i><p>Nenhuma inscrição ainda.</p></div>
+      <% else %>
+        <div class="tnmt-reg-list">
+          <% @registrations.each_with_index do |reg, i| %>
+            <div class="tnmt-reg-item">
+              <div class="tnmt-reg-item__num"><%= i + 1 %></div>
+
+              <div class="tnmt-pair-avatars">
+                <div class="tnmt-pair-avatars__av tnmt-pair-avatars__av--1">
+                  <%= reg.user.name.split.map(&:first).first(2).join.upcase %>
+                </div>
+                <div class="tnmt-pair-avatars__av tnmt-pair-avatars__av--2">
+                  <% if reg.partner_name.present? %>
+                    <%= reg.partner_name.split.map(&:first).first(2).join.upcase %>
+                  <% else %>
+                    <i class="bi bi-question-lg"></i>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="tnmt-reg-item__info">
+                <p class="tnmt-reg-item__name"><%= reg.display_name %></p>
+                <% if reg.partner_phone.present? %>
+                  <p class="tnmt-reg-item__meta"><i class="bi bi-telephone"></i> <%= reg.partner_phone %></p>
+                <% end %>
+              </div>
+              <div class="tnmt-reg-item__actions">
+                <span class="tnmt-reg-status tnmt-reg-status--<%= reg.status %>">
+                  <%= reg.status_label %>
+                </span>
+                <% if is_club_owner %>
+                  <div class="tnmt-reg-status-form">
+                    <%= form_with url: dashboard_tournament_category_registration_path(@tournament, @category, reg),
+                          method: :patch, local: true do %>
+                      <%= select_tag "tournament_registration[status]",
+                            options_for_select(
+                              [["Pendente", "pending"], ["Confirmada", "confirmed"], ["Fila de espera", "waitlisted"]],
+                              reg.status
+                            ),
+                            class: "sched-input sched-input--sm",
+                            onchange: "this.form.submit()" %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%# ── TAB: Chaves ────────────────────────────────────── %>
+  <div class="tnmt-tabs__panel hidden" data-tabs-target="panel" data-tab="chaves">
+
+    <% if is_club_owner %>
+      <div class="analytics-card" style="margin-bottom: 1rem;">
+        <p class="tournament-detail-label" style="margin-bottom: 1rem;">Criar Grupo</p>
+        <%= form_with url: dashboard_tournament_category_groups_path(@tournament, @category),
+              method: :post, local: true, class: "sched-form" do %>
+          <div style="display: flex; gap: .75rem; align-items: flex-end;">
+            <div class="sched-field" style="flex: 1; margin: 0;">
+              <%= text_field_tag "tournament_group[name]", nil,
+                    class: "sched-input", placeholder: "Ex: Grupo A" %>
+            </div>
+            <%= submit_tag "Criar", class: "sched-btn sched-btn--primary sched-btn--sm" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if @groups.empty? %>
+      <div class="sched-empty"><i class="bi bi-diagram-3"></i><p>Nenhum grupo criado ainda.</p></div>
+    <% else %>
+      <div class="tnmt-groups-grid">
+        <% @groups.each do |group| %>
+          <div class="tnmt-group-card">
+            <div class="tnmt-group-card__header">
+              <h3 class="tnmt-group-card__title"><%= group.name %></h3>
+              <% if is_club_owner %>
+                <%= button_to "",
+                      dashboard_tournament_category_group_path(@tournament, @category, group),
+                      method: :delete,
+                      data: { turbo_confirm: "Remover grupo #{group.name}?" },
+                      class: "tnmt-group-card__del",
+                      title: "Remover grupo" do %>
+                  <i class="bi bi-trash"></i>
+                <% end %>
+              <% end %>
+            </div>
+
+            <% if group.registrations.empty? %>
+              <p class="tnmt-group-card__empty">Nenhuma dupla neste grupo.</p>
+            <% else %>
+              <ul class="tnmt-group-card__list">
+                <% group.registrations.each do |reg| %>
+                  <li class="tnmt-group-card__pair">
+                    <span><%= reg.display_name %></span>
+                    <% if is_club_owner %>
+                      <%= button_to "",
+                            dashboard_tournament_category_group_membership_path(@tournament, @category, group, reg.group_membership),
+                            method: :delete, class: "tnmt-group-card__remove",
+                            title: "Remover do grupo" do %>
+                        <i class="bi bi-x"></i>
+                      <% end %>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            <% end %>
+
+            <% if is_club_owner && @assignable.any? %>
+              <div class="tnmt-group-card__add">
+                <%= form_with url: dashboard_tournament_category_group_memberships_path(@tournament, @category, group),
+                      method: :post, local: true do %>
+                  <div style="display: flex; gap: .5rem; align-items: center;">
+                    <%= select_tag "tournament_group_membership[tournament_registration_id]",
+                          options_from_collection_for_select(@assignable, :id, :display_name),
+                          class: "sched-input sched-input--sm",
+                          prompt: "Adicionar dupla..." %>
+                    <%= submit_tag "Adicionar", class: "sched-btn sched-btn--ghost sched-btn--sm" %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# ── TAB: Jogos ─────────────────────────────────────── %>
+  <div class="tnmt-tabs__panel hidden" data-tabs-target="panel" data-tab="jogos">
+
+    <% if is_club_owner %>
+      <div class="sched-bookings-header" style="margin-bottom: 1rem;">
+        <p class="dash-section-label">Jogos (<%= @matches.count %>)</p>
+        <%= link_to new_dashboard_tournament_category_match_path(@tournament, @category),
+              class: "sched-btn sched-btn--primary sched-btn--sm" do %>
+          <i class="bi bi-plus-lg"></i> Novo Jogo
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if @matches.empty? %>
+      <div class="sched-empty"><i class="bi bi-play-circle"></i><p>Nenhum jogo cadastrado ainda.</p></div>
+    <% else %>
+      <% @matches.group_by(&:tournament_group).each do |group, group_matches| %>
+        <% if group %>
+          <p class="dash-section-label" style="margin-bottom: .5rem;"><%= group.name %></p>
+        <% end %>
+        <div class="tnmt-match-list" style="margin-bottom: 1.5rem;">
+          <% group_matches.each do |match| %>
+            <div class="tnmt-match-card">
+              <div class="tnmt-match-card__teams">
+                <div class="tnmt-match-card__team">
+                  <span class="tnmt-match-card__name"><%= match.home_registration.display_name %></span>
+                  <% if match.finished? && match.home_score.present? %>
+                    <span class="tnmt-match-card__score <%= 'winner' if match.winner == :home %>">
+                      <%= match.home_score %>
+                    </span>
+                  <% end %>
+                </div>
+                <div class="tnmt-match-card__vs">×</div>
+                <div class="tnmt-match-card__team tnmt-match-card__team--away">
+                  <span class="tnmt-match-card__name"><%= match.away_registration.display_name %></span>
+                  <% if match.finished? && match.away_score.present? %>
+                    <span class="tnmt-match-card__score <%= 'winner' if match.winner == :away %>">
+                      <%= match.away_score %>
+                    </span>
+                  <% end %>
+                </div>
+              </div>
+              <div class="tnmt-match-card__meta">
+                <span class="tnmt-match-status tnmt-match-status--<%= match.status %>">
+                  <%= match.status_label %>
+                </span>
+                <% if match.scheduled_at.present? %>
+                  <span class="tnmt-match-card__when">
+                    <i class="bi bi-calendar3"></i>
+                    <%= match.scheduled_at.strftime("%d/%m %H:%M") %>
+                  </span>
+                <% end %>
+                <% if match.court.present? %>
+                  <span class="tnmt-match-card__court">
+                    <i class="bi bi-grid-3x3-gap-fill"></i> <%= match.court.name %>
+                  </span>
+                <% end %>
+                <% if is_club_owner %>
+                  <%= link_to edit_dashboard_tournament_category_match_path(@tournament, @category, match),
+                        class: "sched-btn sched-btn--ghost sched-btn--sm" do %>
+                    <i class="bi bi-pencil"></i>
+                  <% end %>
+                  <%= button_to dashboard_tournament_category_match_path(@tournament, @category, match),
+                        method: :delete,
+                        data: { turbo_confirm: "Excluir este jogo?" },
+                        class: "sched-btn sched-btn--danger sched-btn--sm" do %>
+                    <i class="bi bi-trash"></i>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+</div><%# end tabs %>

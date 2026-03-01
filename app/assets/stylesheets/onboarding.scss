@@ -1,0 +1,448 @@
+@use "sass:color";
+
+// ─────────────────────────────────────────────
+// Variables (mirror design system)
+// ─────────────────────────────────────────────
+$bg:       #07080f;
+$surface:  #0f1117;
+$border:   #1e2130;
+$purple:   #3628c5;
+$green:    #4ade80;
+$muted:    #8892b0;
+$text:     #e2e8f0;
+
+// ─────────────────────────────────────────────
+// Shell
+// ─────────────────────────────────────────────
+.ob-body {
+  background: $bg;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  color: $text;
+}
+
+.ob-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.ob-header {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid $border;
+}
+
+.ob-logo-link { display: inline-flex; }
+.ob-logo { height: 32px; }
+
+.ob-main {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3rem 1rem 4rem;
+}
+
+// ─────────────────────────────────────────────
+// Wizard container
+// ─────────────────────────────────────────────
+.ob-wizard {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+// ─────────────────────────────────────────────
+// Progress bar
+// ─────────────────────────────────────────────
+.ob-progress {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.ob-progress__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .35rem;
+  flex-shrink: 0;
+}
+
+.ob-progress__dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .8rem;
+  font-weight: 700;
+  border: 2px solid $border;
+  background: $surface;
+  color: $muted;
+  transition: all .25s;
+}
+
+.ob-progress__label {
+  font-size: .7rem;
+  font-weight: 500;
+  color: $muted;
+  white-space: nowrap;
+  transition: color .25s;
+}
+
+.ob-progress__line {
+  flex: 1;
+  height: 2px;
+  background: $border;
+  margin-bottom: 1.4rem;
+  transition: background .25s;
+
+  &--done { background: $purple; }
+}
+
+.ob-progress__step--done {
+  .ob-progress__dot {
+    background: $purple;
+    border-color: $purple;
+    color: #fff;
+  }
+  .ob-progress__label { color: $purple; }
+}
+
+.ob-progress__step--active {
+  .ob-progress__dot {
+    background: $purple;
+    border-color: $purple;
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba($purple, .25);
+  }
+  .ob-progress__label { color: $text; font-weight: 600; }
+}
+
+// ─────────────────────────────────────────────
+// Card
+// ─────────────────────────────────────────────
+.ob-card {
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.ob-card__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba($purple, .15);
+  color: color.adjust($purple, $lightness: 30%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.ob-card__title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: .5px;
+  color: $text;
+  margin: 0;
+}
+
+.ob-card__sub {
+  color: $muted;
+  font-size: .9rem;
+  line-height: 1.5;
+  margin: -.75rem 0 0;
+}
+
+// ─────────────────────────────────────────────
+// Alert
+// ─────────────────────────────────────────────
+.ob-alert {
+  border-radius: 8px;
+  padding: .75rem 1rem;
+  font-size: .875rem;
+
+  p { margin: 0; line-height: 1.4; }
+  p + p { margin-top: .25rem; }
+
+  &--error {
+    background: rgba(#ef4444, .1);
+    border: 1px solid rgba(#ef4444, .3);
+    color: #fca5a5;
+  }
+}
+
+// ─────────────────────────────────────────────
+// Form elements
+// ─────────────────────────────────────────────
+.ob-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ob-field {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+.ob-label {
+  font-size: .8rem;
+  font-weight: 600;
+  color: $muted;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+
+.ob-input {
+  background: $bg;
+  border: 1px solid $border;
+  border-radius: 8px;
+  padding: .7rem 1rem;
+  color: $text;
+  font-size: .95rem;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color .2s;
+
+  &:focus {
+    outline: none;
+    border-color: $purple;
+    box-shadow: 0 0 0 3px rgba($purple, .15);
+  }
+
+  &::placeholder { color: color.adjust($muted, $lightness: -20%); }
+
+  &[type="date"] { color-scheme: dark; }
+}
+
+.ob-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+// ─────────────────────────────────────────────
+// Username availability
+// ─────────────────────────────────────────────
+.ob-username-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .ob-input { padding-right: 2.75rem; }
+}
+
+.ob-username-status {
+  position: absolute;
+  right: .85rem;
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  font-size: .75rem;
+  font-weight: 600;
+  pointer-events: none;
+  white-space: nowrap;
+
+  &[data-state=""] { display: none; }
+
+  &[data-state="loading"]::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba($muted, .3);
+    border-top-color: $muted;
+    border-radius: 50%;
+    animation: ob-spin .6s linear infinite;
+    display: block;
+  }
+
+  &[data-state="available"] {
+    color: $green;
+    &::before { content: "\F26A"; font-family: "bootstrap-icons"; font-size: .9rem; }
+  }
+
+  &[data-state="taken"] {
+    color: #f87171;
+    &::before { content: "\F623"; font-family: "bootstrap-icons"; font-size: .9rem; }
+  }
+}
+
+@keyframes ob-spin {
+  to { transform: rotate(360deg); }
+}
+
+// ─────────────────────────────────────────────
+// Google Places Autocomplete dark theme
+// ─────────────────────────────────────────────
+.pac-container {
+  background: #0f1117;
+  border: 1px solid #1e2130;
+  border-radius: 8px;
+  margin-top: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .5);
+  font-family: 'Inter', sans-serif;
+}
+
+.pac-item {
+  padding: .5rem .75rem;
+  color: #8892b0;
+  border-top: 1px solid #1e2130;
+  cursor: pointer;
+  font-size: .875rem;
+
+  &:first-child { border-top: none; }
+  &:hover, &.pac-item-selected { background: rgba(#3628c5, .15); color: #e2e8f0; }
+}
+
+.pac-item-query { color: #e2e8f0; font-size: .875rem; }
+.pac-icon       { display: none; }
+.pac-logo::after { display: none; }
+
+.ob-file {
+  padding: .55rem .75rem;
+  cursor: pointer;
+
+  &::file-selector-button {
+    background: $purple;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: .3rem .75rem;
+    font-size: .8rem;
+    font-family: inherit;
+    cursor: pointer;
+    margin-right: .75rem;
+  }
+}
+
+select.ob-input option { background: $surface; }
+
+.ob-row-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 480px) { grid-template-columns: 1fr; }
+}
+
+// ─────────────────────────────────────────────
+// Account type cards
+// ─────────────────────────────────────────────
+.ob-kind-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 420px) { grid-template-columns: 1fr; }
+}
+
+.ob-kind-card {
+  cursor: pointer;
+  display: block;
+
+  &__radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .6rem;
+    padding: 1.5rem 1rem;
+    background: $bg;
+    border: 2px solid $border;
+    border-radius: 12px;
+    text-align: center;
+    transition: border-color .2s, background .2s;
+  }
+
+  &__icon {
+    font-size: 2rem;
+    color: $muted;
+    transition: color .2s;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $text;
+  }
+
+  &__desc {
+    font-size: .78rem;
+    color: $muted;
+    line-height: 1.4;
+  }
+
+  &:has(&__radio:checked) &__body {
+    border-color: $purple;
+    background: rgba($purple, .08);
+  }
+
+  &:has(&__radio:checked) &__icon {
+    color: color.adjust($purple, $lightness: 30%);
+  }
+
+  &__body:hover {
+    border-color: rgba($purple, .4);
+  }
+}
+
+// ─────────────────────────────────────────────
+// Buttons + actions
+// ─────────────────────────────────────────────
+.ob-actions {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-top: .25rem;
+}
+
+.ob-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .75rem 1.5rem;
+  border-radius: 8px;
+  font-size: .9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: opacity .2s, background .2s;
+
+  &--primary {
+    background: $purple;
+    color: #fff;
+    flex: 1;
+    justify-content: center;
+
+    &:hover { background: color.adjust($purple, $lightness: 6%); }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: $muted;
+    border: 1px solid $border;
+
+    &:hover { color: $text; border-color: $muted; }
+  }
+}

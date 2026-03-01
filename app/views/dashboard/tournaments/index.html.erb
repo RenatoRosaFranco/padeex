@@ -1,0 +1,77 @@
+<div class="dash-welcome">
+  <% if @my_club_view %>
+    <p class="dash-welcome-eyebrow">Meu Clube</p>
+    <h1 class="dash-welcome-title">Torneios</h1>
+    <p class="dash-welcome-sub">Gerencie os torneios do seu clube.</p>
+  <% else %>
+    <p class="dash-welcome-eyebrow">Explore</p>
+    <h1 class="dash-welcome-title">Torneios</h1>
+    <p class="dash-welcome-sub">Encontre e inscreva-se nos torneios disponíveis.</p>
+  <% end %>
+</div>
+
+<% if flash[:notice] %>
+  <div class="sched-flash sched-flash--success"><%= flash[:notice] %></div>
+<% end %>
+
+<div class="sched-bookings-header">
+  <p class="dash-section-label">
+    <% if @my_club_view %>Meus Torneios<% else %>Torneios disponíveis<% end %>
+    (<%= @tournaments.count %>)
+  </p>
+  <% if @my_club_view %>
+    <%= link_to "Novo Torneio", new_dashboard_tournament_path, class: "sched-btn sched-btn--primary sched-btn--sm" %>
+  <% end %>
+</div>
+
+<% if @tournaments.empty? %>
+  <div class="sched-empty">
+    <i class="bi bi-trophy"></i>
+    <p>
+      <% if @my_club_view %>
+        Nenhum torneio cadastrado ainda. Crie seu primeiro torneio.
+      <% else %>
+        Nenhum torneio disponível no momento.
+      <% end %>
+    </p>
+  </div>
+<% else %>
+  <div class="tournament-grid">
+    <% @tournaments.each do |tournament| %>
+      <%= link_to dashboard_tournament_path(tournament), class: "tournament-card" do %>
+        <% if tournament.banner.attached? %>
+          <div class="tournament-card__banner">
+            <%= image_tag tournament.banner, class: "tournament-card__banner-img", alt: tournament.name %>
+          </div>
+        <% end %>
+        <div class="tournament-card__body">
+          <h2 class="tournament-card__name"><%= tournament.name %></h2>
+          <p class="tournament-card__dates">
+            <i class="bi bi-calendar3"></i>
+            <%= tournament.starts_on.strftime("%d/%m/%Y") %> – <%= tournament.ends_on.strftime("%d/%m/%Y") %>
+          </p>
+          <% unless @my_club_view %>
+            <p class="tournament-card__club">
+              <i class="bi bi-building-fill"></i>
+              <%= tournament.club.name %>
+            </p>
+          <% end %>
+          <% if tournament.categories.loaded? && tournament.categories.any? %>
+            <p class="tournament-card__cats">
+              <i class="bi bi-list-ul"></i>
+              <%= pluralize(tournament.categories.size, "categoria", "categorias") %>
+            </p>
+          <% end %>
+        </div>
+        <div class="tournament-card__footer">
+          <span class="tournament-status-badge tournament-status-badge--<%= tournament.status %>">
+            <%= tournament.status_label %>
+          </span>
+          <% if tournament.format.present? %>
+            <span class="court-type-badge"><%= tournament.format_label %></span>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

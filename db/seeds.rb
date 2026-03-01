@@ -1,3 +1,6 @@
+# Ensure default tenant exists
+Tenant.find_or_create_by!(slug: "padel") { |t| t.name = "Padel" }
+
 Post.destroy_all
 
 posts = [
@@ -137,6 +140,8 @@ content = <<~TEXT
   Fique atento às novidades e faça parte dessa revolução do padel brasileiro.
 TEXT
 
+padel = Tenant.find_by!(slug: "padel")
+
 posts.each do |attrs|
   Post.create!(
     title: attrs[:title],
@@ -144,7 +149,8 @@ posts.each do |attrs|
     cover: attrs[:cover],
     author: attrs[:author],
     content: content,
-    published_at: attrs[:published_at]
+    published_at: attrs[:published_at],
+    tenant: padel
   )
 end
 

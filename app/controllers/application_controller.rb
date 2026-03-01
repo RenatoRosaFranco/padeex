@@ -1,16 +1,34 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  allow_browser versions: :modern
+  include SetTenant
 
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
+
+  # Browser support
+  allow_browser versions: :modern
+
+  # Callbacks
+  before_action :set_locale
+
+  private
+
+  # Sets the locale based on the user's browser language.
+  # @return [void]
+  def set_locale
+    I18n.locale = I18n.default_locale
+  end
 
   # Redirect path after sign in.
   # @param resource [Object] Signed-in user.
   # @return [String] Redirect path after sign in.
   def after_sign_in_path_for(resource)
-    dashboard_path
+    if resource.is_a?(User) && !resource.onboarding_completed?
+      edit_onboarding_personal_info_path
+    else
+      dashboard_path
+    end
   end
 
   # Redirect path after sign out. 

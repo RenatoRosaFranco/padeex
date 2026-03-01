@@ -1,0 +1,9 @@
+<div class="ob-wizard">
+  <%= render "onboarding/shared/progress", current_step: 3 %>
+
+  <% if current_user.club? %>
+    <%= render "club_form" %>
+  <% else %>
+    <%= render "user_form" %>
+  <% end %>
+</div>

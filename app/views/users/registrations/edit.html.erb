@@ -1,0 +1,63 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Padeex</p>
+  <h1 class="dash-welcome-title">Minha Conta</h1>
+</div>
+
+<% if resource.errors.any? %>
+  <div class="sched-flash sched-flash--error">
+    <% resource.errors.full_messages.each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="prf-edit">
+
+  <div class="prf-edit-section">
+    <h2 class="prf-edit-section__title">E-mail e senha</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "sched-form" }) do |f| %>
+      <div class="sched-form-grid">
+
+        <div class="sched-field">
+          <%= f.label :email, "E-mail", class: "sched-label" %>
+          <%= f.email_field :email, class: "sched-input", autocomplete: "email" %>
+        </div>
+
+        <div class="sched-field" style="grid-column: 1 / -1;">
+          <p class="sched-hint">Deixe os campos de senha em branco para não alterá-la.</p>
+        </div>
+
+        <div class="sched-field">
+          <%= f.label :password, "Nova senha", class: "sched-label" %>
+          <%= f.password_field :password, class: "sched-input", autocomplete: "new-password",
+                placeholder: "Mínimo 8 caracteres" %>
+        </div>
+
+        <div class="sched-field">
+          <%= f.label :password_confirmation, "Confirmar nova senha", class: "sched-label" %>
+          <%= f.password_field :password_confirmation, class: "sched-input", autocomplete: "new-password" %>
+        </div>
+
+        <div class="sched-field" style="grid-column: 1 / -1;">
+          <%= f.label :current_password, "Senha atual", class: "sched-label" %>
+          <p class="sched-hint" style="margin-bottom: .5rem;">Necessária para confirmar qualquer alteração.</p>
+          <%= f.password_field :current_password, class: "sched-input", autocomplete: "current-password" %>
+        </div>
+
+      </div>
+
+      <div class="sched-form-actions">
+        <%= f.submit "Salvar alterações", class: "sched-btn sched-btn--primary" %>
+        <%= link_to "Cancelar", dashboard_meu_perfil_path, class: "sched-btn sched-btn--ghost" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="prf-edit-section prf-edit-section--danger">
+    <h2 class="prf-edit-section__title prf-edit-section__title--danger">Zona de perigo</h2>
+    <p class="sched-hint">Ao cancelar sua conta, todos os seus dados serão removidos permanentemente e esta ação não poderá ser desfeita.</p>
+    <%= button_to "Cancelar minha conta", registration_path(resource_name), data: { turbo_confirm: "Tem certeza? Esta ação não pode ser desfeita." }, method: :delete, class: "sched-btn sched-btn--danger" %>
+  </div>
+
+</div>

@@ -1,0 +1,34 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Admin</p>
+  <h1 class="dash-welcome-title">Feature Flags</h1>
+</div>
+
+<% if flash[:notice] %>
+  <div class="sched-flash sched-flash--success"><%= flash[:notice] %></div>
+<% end %>
+
+<div class="ff-list">
+  <% @flags.each do |flag| %>
+    <div class="ff-card">
+      <div class="ff-card__info">
+        <div class="ff-card__header">
+          <code class="ff-card__key"><%= flag[:key] %></code>
+          <span class="ff-card__badge <%= flag[:enabled] ? 'ff-card__badge--on' : 'ff-card__badge--off' %>">
+            <%= flag[:enabled] ? "Ativo" : "Inativo" %>
+          </span>
+        </div>
+        <p class="ff-card__description"><%= flag[:description] %></p>
+      </div>
+
+      <%= button_to toggle_dashboard_admin_feature_flags_path,
+            method: :patch,
+            params: { key: flag[:key] },
+            class: "ff-toggle #{'ff-toggle--on' if flag[:enabled]}",
+            aria: { label: "Alternar flag #{flag[:key]}", pressed: flag[:enabled] } do %>
+        <span class="ff-toggle__track">
+          <span class="ff-toggle__thumb"></span>
+        </span>
+      <% end %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,42 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Clube</p>
+  <h1 class="dash-welcome-title">Minhas Quadras</h1>
+  <p class="dash-welcome-sub">Gerencie as quadras do seu clube.</p>
+</div>
+
+<% if flash[:notice] %>
+  <div class="sched-flash sched-flash--success"><%= flash[:notice] %></div>
+<% end %>
+
+<div class="sched-bookings-header">
+  <p class="dash-section-label">Quadras (<%= @courts.count %>)</p>
+  <%= link_to "Nova Quadra", new_dashboard_court_path, class: "sched-btn sched-btn--primary sched-btn--sm" %>
+</div>
+
+<% if @courts.empty? %>
+  <div class="sched-empty">
+    <i class="bi bi-building-plus"></i>
+    <p>Nenhuma quadra cadastrada ainda. Adicione sua primeira quadra.</p>
+  </div>
+<% else %>
+  <div class="courts-grid">
+    <% @courts.each do |court| %>
+      <div class="court-card">
+        <div class="court-card__icon">
+          <i class="bi bi-<%= court.court_type == 'indoor' ? 'building' : 'sun' %>"></i>
+        </div>
+        <div class="court-card__body">
+          <h2 class="court-card__name"><%= court.name %></h2>
+          <span class="court-type-badge"><%= court.court_type.humanize %></span>
+          <span class="booking-badge booking-badge--<%= court.active? ? 'active' : 'cancelled' %>" style="margin-left: 0.4rem;">
+            <%= court.active? ? "Ativa" : "Inativa" %>
+          </span>
+        </div>
+        <div class="court-card__footer">
+          <%= link_to "Editar", edit_dashboard_court_path(court), class: "sched-btn sched-btn--ghost sched-btn--sm" %>
+          <%= link_to "Agendamentos", dashboard_court_bookings_path(court_id: court), class: "sched-btn sched-btn--ghost sched-btn--sm" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -23,6 +23,11 @@
     <%= link_to blog_posts_path, class: "navbar-nav-link" do %>
       <span class="navbar-nav-label">Blog</span>
     <% end %>
+    <% if FeatureFlags.enabled?(:store) %>
+      <%= link_to loja_path, class: "navbar-nav-link" do %>
+        <span class="navbar-nav-label">Loja</span>
+      <% end %>
+    <% end %>
   </div>
 
   <% if Flipper.enabled?(:released_app) %>

@@ -1,0 +1,65 @@
+<% if category.errors.any? %>
+  <div class="sched-flash sched-flash--error">
+    <%= category.errors.full_messages.first %>
+  </div>
+<% end %>
+
+<%= form_with model: category,
+      url: category.new_record? ?
+        dashboard_tournament_categories_path(tournament) :
+        dashboard_tournament_category_path(tournament, category),
+      method: category.new_record? ? :post : :patch,
+      local: true, class: "sched-form" do |f| %>
+  <div class="sched-form-grid">
+
+    <div class="sched-field" style="grid-column: 1 / -1;">
+      <%= f.label :name, "Nome da Categoria", class: "sched-label" %>
+      <%= f.text_field :name, class: "sched-input", placeholder: "Ex: Masculino A, Feminino B+, Misto C" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :gender, "Gênero", class: "sched-label" %>
+      <%= f.select :gender,
+            [["Masculino", "masculine"], ["Feminino", "feminine"], ["Misto", "mixed"]],
+            { include_blank: "Selecione..." },
+            class: "sched-input" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :level, "Nível / Classe", class: "sched-label" %>
+      <%= f.select :level,
+            [["A", "A"], ["B+", "B+"], ["B", "B"], ["C", "C"], ["D", "D"], ["Livre", "Livre"]],
+            { include_blank: "Selecione..." },
+            class: "sched-input" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :max_pairs, "Máx. de Duplas", class: "sched-label" %>
+      <%= f.number_field :max_pairs, class: "sched-input", placeholder: "Ex: 16", min: 2 %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :entry_fee, "Taxa de Inscrição (R$)", class: "sched-label" %>
+      <%= f.number_field :entry_fee, class: "sched-input", placeholder: "0,00", step: "0.01", min: 0 %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :registration_deadline, "Prazo de Inscrição", class: "sched-label" %>
+      <%= f.date_field :registration_deadline, class: "sched-input" %>
+    </div>
+
+    <div class="sched-field" style="grid-column: 1 / -1;">
+      <%= f.label :description, "Descrição", class: "sched-label" %>
+      <%= f.text_area :description, class: "sched-input sched-textarea",
+            placeholder: "Regras específicas desta categoria...", rows: 3 %>
+    </div>
+
+  </div>
+
+  <div class="sched-form-actions">
+    <%= f.submit category.new_record? ? "Criar Categoria" : "Salvar Alterações", class: "sched-btn sched-btn--primary" %>
+    <%= link_to "Cancelar",
+          category.new_record? ? dashboard_tournament_path(tournament) : dashboard_tournament_category_path(tournament, category),
+          class: "sched-btn sched-btn--ghost" %>
+  </div>
+<% end %>

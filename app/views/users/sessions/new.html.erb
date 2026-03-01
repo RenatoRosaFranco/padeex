@@ -5,7 +5,7 @@
 
   <div class="auth-card">
     <h1 class="auth-title">Entrar</h1>
-    <p class="auth-sub">Acesse sua conta Padeex</p>
+    <p class="auth-sub">Acesse sua conta Padex</p>
 
     <% if alert %>
       <div class="auth-alert-error"><%= alert %></div>
@@ -28,8 +28,11 @@
       </div>
 
       <div class="auth-row">
-        <label class="auth-remember">
-          <%= f.check_box :remember_me %>
+        <label class="auth-toggle" for="user_remember_me">
+          <%= f.check_box :remember_me, class: "auth-toggle__checkbox" %>
+          <span class="auth-toggle__track">
+            <span class="auth-toggle__thumb"></span>
+          </span>
           Lembrar de mim
         </label>
         <%= link_to "Esqueci minha senha", new_user_password_path, class: "auth-forgot" %>

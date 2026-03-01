@@ -1,0 +1,25 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Academy</p>
+  <h1 class="dash-welcome-title">Glossário</h1>
+  <p class="dash-welcome-sub">Os termos mais comuns do padel explicados de forma simples.</p>
+</div>
+
+<div class="glossary">
+  <% @categories.each do |cat| %>
+    <section class="glossary-section">
+      <div class="glossary-section__header">
+        <span class="glossary-section__icon"><i class="bi <%= cat[:icon] %>"></i></span>
+        <h2 class="glossary-section__title"><%= cat[:category] %></h2>
+      </div>
+
+      <div class="glossary-grid">
+        <% cat[:terms].each do |item| %>
+          <div class="glossary-card">
+            <h3 class="glossary-card__term"><%= item[:term] %></h3>
+            <p class="glossary-card__definition"><%= item[:definition] %></p>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+</div>

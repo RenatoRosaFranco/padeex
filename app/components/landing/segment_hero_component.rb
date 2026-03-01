@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Landing
-  # Hero section para landing pages segmentadas (atletas, clubes, empresas).
+  # Hero section for segmented landing pages (athletes, clubs, companies).
   class SegmentHeroComponent < ::ApplicationComponent
-    # @param segment [String] Segment slug (atletas, clubes, empresas).
+    # @param segment [String] Segment slug (athletes, clubs, companies).
     def initialize(segment:)
       @segment = segment
-      @content = SegmentContentService.fetch(segment)
+      @content = SegmentContentService.fetch(segment, tenant: Current.tenant)
     end
 
     # Returns hero content for the segment.

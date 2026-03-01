@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
 class InvestmentInterest < ApplicationRecord
-  VALID_EMAIL = URI::MailTo::EMAIL_REGEXP
+  include BelongsToTenant
 
-  # Investment ranges
-  INVESTMENT_RANGES = [
-    "R$ 50 mil - R$ 100 mil",
-    "R$ 100 mil - R$ 500 mil",
-    "R$ 500 mil - R$ 1 milhão",
-    "Acima de R$ 1 milhão"
-  ].freeze
+  # Constants
+  VALID_EMAIL = URI::MailTo::EMAIL_REGEXP
 
   # Validations
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :email, presence: true, format: { with: VALID_EMAIL, message: "E-mail inválido" }
-  validates :investment_range, presence: true, inclusion: { in: INVESTMENT_RANGES }
+  validates :email, presence: true, format: { with: VALID_EMAIL }
+  validates :investment_range, presence: true, inclusion: { in: ->(r) { r.class.investment_ranges } }
+
+  # @return [Array<String>] investment range options from app config
+  def self.investment_ranges
+    AppConfigService.fetch(:investment_ranges, default: []).freeze
+  end
 
   # Callbacks
   before_save  { self.email = email.downcase if email.present? }
@@ -23,8 +23,9 @@ class InvestmentInterest < ApplicationRecord
 
   private
 
+  # Queues InvestmentInterestNotificationJob to dispatch  emails.
+  # @return [void]
   def notify_team
-    InvestmentInterestMailer.new_interest(self).deliver_later
-    InvestmentInterestMailer.confirmation(self).deliver_later
+    InvestmentInterestNotificationJob.perform_later(self)
   end
 end

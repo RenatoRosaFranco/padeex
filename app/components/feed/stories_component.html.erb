@@ -1,0 +1,16 @@
+<div data-controller="story-viewer"
+     data-action="keydown@window->story-viewer#keydown"
+     data-story-viewer-stories-value="<%= stories_json %>">
+
+  <%# Strip %>
+  <div class="fst">
+    <div class="fst__scroll">
+      <% stories.each_with_index do |story, i| %>
+        <%= render Feed::StoryComponent.new(story: story, index: i) %>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Viewer modal %>
+  <%= render Feed::StoryViewerComponent.new %>
+</div>

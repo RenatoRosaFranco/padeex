@@ -4,7 +4,7 @@ FactoryBot.define do
     last_name { "MyString" }
     email { "MyString" }
     phone { "MyString" }
-    investment_range { "MyString" }
+    investment_range { InvestmentInterest.investment_ranges.first }
     message { "MyText" }
   end
 end

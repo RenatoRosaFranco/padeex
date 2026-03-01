@@ -112,6 +112,9 @@ group :development do
 
   # Email no browser
   gem "letter_opener_web"
+
+  # Component previews
+  gem "lookbook"
 end
 
 group :test do

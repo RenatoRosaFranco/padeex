@@ -11,10 +11,11 @@ module Blog
     end
 
     def show
-      @post = Post.friendly.find(params[:id])
-      redirect_to blog_posts_path, alert: "Artigo não encontrado." unless @post.published?
-    rescue ActiveRecord::RecordNotFound
-      redirect_to blog_posts_path, alert: "Artigo não encontrado."
+      result = Actions::Find.call(scope: Post.friendly, id: params[:id])
+      return redirect_to blog_posts_path, alert: t("errors.post_not_found") if result.failure?
+
+      @post = result.record
+      redirect_to blog_posts_path, alert: t("errors.post_not_found") unless @post.published_at? && @post.published_at <= Time.current
     end
   end
 end

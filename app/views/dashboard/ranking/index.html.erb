@@ -1,0 +1,126 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Padeex</p>
+  <h1 class="dash-welcome-title">Ranking</h1>
+  <p class="dash-welcome-sub">Os melhores jogadores da plataforma.</p>
+</div>
+
+<%# ── Podium (top 3) ──────────────────────────────────────── %>
+<div class="rank-podium">
+  <%# 2nd place %>
+  <div class="rank-podium__slot rank-podium__slot--2">
+    <div class="rank-podium__avatar rank-podium__avatar--2">
+      <%= @ranking[1][:name].split.map(&:first).first(2).join.upcase %>
+    </div>
+    <p class="rank-podium__name"><%= @ranking[1][:name].split.first %></p>
+    <p class="rank-podium__pts"><%= number_with_delimiter(@ranking[1][:points]) %> pts</p>
+    <div class="rank-podium__medal rank-podium__medal--2">
+      <i class="bi bi-trophy-fill"></i> 2º
+    </div>
+  </div>
+
+  <%# 1st place %>
+  <div class="rank-podium__slot rank-podium__slot--1">
+    <div class="rank-podium__crown"><i class="bi bi-crown-fill"></i></div>
+    <div class="rank-podium__avatar rank-podium__avatar--1">
+      <%= @ranking[0][:name].split.map(&:first).first(2).join.upcase %>
+    </div>
+    <p class="rank-podium__name"><%= @ranking[0][:name].split.first %></p>
+    <p class="rank-podium__pts"><%= number_with_delimiter(@ranking[0][:points]) %> pts</p>
+    <div class="rank-podium__medal rank-podium__medal--1">
+      <i class="bi bi-trophy-fill"></i> 1º
+    </div>
+  </div>
+
+  <%# 3rd place %>
+  <div class="rank-podium__slot rank-podium__slot--3">
+    <div class="rank-podium__avatar rank-podium__avatar--3">
+      <%= @ranking[2][:name].split.map(&:first).first(2).join.upcase %>
+    </div>
+    <p class="rank-podium__name"><%= @ranking[2][:name].split.first %></p>
+    <p class="rank-podium__pts"><%= number_with_delimiter(@ranking[2][:points]) %> pts</p>
+    <div class="rank-podium__medal rank-podium__medal--3">
+      <i class="bi bi-trophy-fill"></i> 3º
+    </div>
+  </div>
+</div>
+
+<%# ── Full leaderboard ────────────────────────────────────── %>
+<div class="analytics-card rank-board">
+  <div class="rank-board__header">
+    <span class="rank-board__col rank-board__col--pos">#</span>
+    <span class="rank-board__col rank-board__col--player">Jogador</span>
+    <span class="rank-board__col rank-board__col--level">Nível</span>
+    <span class="rank-board__col rank-board__col--wins">V</span>
+    <span class="rank-board__col rank-board__col--losses">D</span>
+    <span class="rank-board__col rank-board__col--wr">Aproveit.</span>
+    <span class="rank-board__col rank-board__col--pts">Pontos</span>
+  </div>
+
+  <% @ranking.each_with_index do |player, i| %>
+    <% pos = i + 1 %>
+    <% win_rate = (player[:wins].to_f / [player[:wins] + player[:losses], 1].max * 100).round %>
+    <div class="rank-board__row <%= 'rank-board__row--top3' if pos <= 3 %> <%= 'rank-board__row--me' if player[:id] == current_user.id %>">
+      <div class="rank-board__col rank-board__col--pos">
+        <% if pos == 1 %>
+          <span class="rank-pos rank-pos--gold"><i class="bi bi-trophy-fill"></i></span>
+        <% elsif pos == 2 %>
+          <span class="rank-pos rank-pos--silver"><i class="bi bi-trophy-fill"></i></span>
+        <% elsif pos == 3 %>
+          <span class="rank-pos rank-pos--bronze"><i class="bi bi-trophy-fill"></i></span>
+        <% else %>
+          <span class="rank-pos rank-pos--num"><%= pos %></span>
+        <% end %>
+      </div>
+
+      <div class="rank-board__col rank-board__col--player">
+        <div class="rank-player">
+          <div class="rank-player__avatar">
+            <%= player[:name].split.map(&:first).first(2).join.upcase %>
+          </div>
+          <div class="rank-player__info">
+            <p class="rank-player__name"><%= player[:name] %></p>
+            <p class="rank-player__username">@<%= player[:username] %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rank-board__col rank-board__col--level">
+        <span class="rank-level-badge"><%= player[:level] %></span>
+      </div>
+
+      <div class="rank-board__col rank-board__col--wins">
+        <span class="rank-stat rank-stat--wins"><%= player[:wins] %></span>
+      </div>
+
+      <div class="rank-board__col rank-board__col--losses">
+        <span class="rank-stat rank-stat--losses"><%= player[:losses] %></span>
+      </div>
+
+      <div class="rank-board__col rank-board__col--wr">
+        <div class="rank-wr">
+          <div class="rank-wr__bar">
+            <div class="rank-wr__fill" style="width: <%= win_rate %>%"></div>
+          </div>
+          <span class="rank-wr__label"><%= win_rate %>%</span>
+        </div>
+      </div>
+
+      <div class="rank-board__col rank-board__col--pts">
+        <span class="rank-pts"><%= number_with_delimiter(player[:points]) %></span>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%# ── My position (if not in top 15) ─────────────────────── %>
+<% if @current_entry && @current_position.nil? %>
+  <div class="rank-my-pos">
+    <p class="rank-my-pos__label">Sua posição</p>
+    <p class="rank-my-pos__rank">#<%= @current_position %></p>
+  </div>
+<% end %>
+
+<div class="rank-disclaimer">
+  <i class="bi bi-info-circle"></i>
+  Ranking em desenvolvimento — dados mockados para visualização.
+</div>

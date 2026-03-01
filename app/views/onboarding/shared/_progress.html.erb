@@ -1,0 +1,25 @@
+<nav class="ob-progress" aria-label="Progresso do cadastro">
+  <% steps = [
+    { label: "Dados pessoais", icon: "bi-person-fill" },
+    { label: "Tipo de conta",  icon: "bi-grid-fill" },
+    { label: "Perfil",         icon: "bi-star-fill" }
+  ] %>
+
+  <% steps.each_with_index do |step, i| %>
+    <% n = i + 1 %>
+    <% status = n < current_step ? "done" : (n == current_step ? "active" : "pending") %>
+    <div class="ob-progress__step ob-progress__step--<%= status %>">
+      <div class="ob-progress__dot">
+        <% if status == "done" %>
+          <i class="bi bi-check-lg"></i>
+        <% else %>
+          <%= n %>
+        <% end %>
+      </div>
+      <span class="ob-progress__label"><%= step[:label] %></span>
+    </div>
+    <% unless i == steps.length - 1 %>
+      <div class="ob-progress__line ob-progress__line--<%= n < current_step ? 'done' : 'pending' %>"></div>
+    <% end %>
+  <% end %>
+</nav>

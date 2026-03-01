@@ -1,0 +1,17 @@
+<div class="feed-wrap">
+  <%= render Feed::StoriesComponent.new(stories: @stories) %>
+  <%= render Feed::SuggestionsComponent.new(suggestions: @suggestions) %>
+
+  <div class="feed-posts">
+    <% if @posts.empty? %>
+      <div class="sched-empty">
+        <i class="bi bi-camera"></i>
+        <p>Siga atletas para ver as publicações deles aqui.</p>
+      </div>
+    <% else %>
+      <% @posts.each do |post| %>
+        <%= render Feed::PostComponent.new(post: post, current_user: current_user) %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

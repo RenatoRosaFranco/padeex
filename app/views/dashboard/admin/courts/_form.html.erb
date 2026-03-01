@@ -1,0 +1,35 @@
+<% if court.errors.any? %>
+  <div class="sched-flash sched-flash--error">
+    <%= court.errors.full_messages.first %>
+  </div>
+<% end %>
+
+<%= form_with model: [:dashboard, :admin, court], local: true, class: "sched-form" do |f| %>
+  <div class="sched-form-grid">
+    <div class="sched-field">
+      <%= f.label :name, "Nome da quadra", class: "sched-label" %>
+      <%= f.text_field :name, class: "sched-input", placeholder: "Ex: Quadra 1" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :court_type, "Tipo", class: "sched-label" %>
+      <%= f.select :court_type,
+                   Court::TYPES.map { |t| [t.humanize, t] },
+                   { include_blank: "Selecione..." },
+                   class: "sched-input" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :status, "Status", class: "sched-label" %>
+      <%= f.select :status,
+                   [["Ativa", "active"], ["Inativa", "inactive"]],
+                   {},
+                   class: "sched-input" %>
+    </div>
+  </div>
+
+  <div class="sched-form-actions">
+    <%= f.submit court.new_record? ? "Criar quadra" : "Salvar alterações", class: "sched-btn sched-btn--primary" %>
+    <%= link_to "Cancelar", dashboard_admin_courts_path, class: "sched-btn sched-btn--ghost" %>
+  </div>
+<% end %>

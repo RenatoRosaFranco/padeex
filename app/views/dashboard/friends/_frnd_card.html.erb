@@ -1,0 +1,57 @@
+<% follow_rec = current_user.follow_record_with(user) %>
+<% is_following  = follow_rec&.accepted? %>
+<% is_requested  = follow_rec&.pending? %>
+
+<div class="frnd-card">
+  <%= link_to public_profile_path(user), class: "frnd-card__user" do %>
+    <div class="frnd-card__avatar">
+      <% if user.user_profile&.avatar&.attached? %>
+        <%= image_tag user.user_profile.avatar, class: "frnd-card__avatar-img" %>
+      <% elsif user.club? && user.club_profile&.logo&.attached? %>
+        <%= image_tag user.club_profile.logo, class: "frnd-card__avatar-img" %>
+      <% else %>
+        <%= user.initials %>
+      <% end %>
+    </div>
+    <div class="frnd-card__info">
+      <p class="frnd-card__name"><%= user.name %></p>
+      <% username = user.user_profile&.username %>
+      <% if username.present? %>
+        <p class="frnd-card__username">@<%= username %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="frnd-card__actions">
+    <% if is_following %>
+      <%= button_to dashboard_follow_path(follow_rec), method: :delete,
+            class: "frnd-btn frnd-btn--following",
+            data: { turbo_confirm: "Deixar de seguir #{user.name}?" } do %>
+        <i class="bi bi-person-check-fill"></i> Seguindo
+      <% end %>
+    <% elsif is_requested %>
+      <%= button_to dashboard_follow_path(follow_rec), method: :delete,
+            class: "frnd-btn frnd-btn--requested" do %>
+        <i class="bi bi-hourglass-split"></i> Solicitado
+      <% end %>
+    <% else %>
+      <%= form_with url: dashboard_follows_path, method: :post, local: true do %>
+        <%= hidden_field_tag :followed_id, user.id %>
+        <%= submit_tag "Seguir", class: "frnd-btn frnd-btn--follow" %>
+      <% end %>
+    <% end %>
+
+    <% if context == :follower %>
+      <%# Show "remove follower" option %>
+      <% passive_follow = current_user.passive_follows.find_by(follower_id: user.id) %>
+      <% if passive_follow %>
+        <%= button_to dashboard_follow_path(passive_follow), method: :delete,
+              class: "frnd-btn frnd-btn--ghost",
+              data: { turbo_confirm: "Remover #{user.name} dos seus seguidores?" },
+              title: "Remover seguidor" do %>
+          <i class="bi bi-person-dash"></i>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

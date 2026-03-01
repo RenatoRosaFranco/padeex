@@ -3,7 +3,7 @@
     <%= image_tag "logo_padex_branco.png", alt: "PADEX", class: "auth-logo" %>
   <% end %>
 
-  <div class="auth-card">
+  <div class="auth-card" data-controller="auth-form">
     <h1 class="auth-title">Criar conta</h1>
     <p class="auth-sub">Faça parte do ecossistema Padeex</p>
 
@@ -18,13 +18,8 @@
     <% end %>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <div class="auth-field">
-        <%= f.label :name, "Nome completo", class: "auth-label" %>
-        <%= f.text_field :name, autofocus: true, autocomplete: "name",
-              class: "auth-input #{'is-invalid' if resource.errors[:name].any?}",
-              placeholder: "João Silva" %>
-      </div>
 
+      <%# E-mail %>
       <div class="auth-field">
         <%= f.label :email, "E-mail", class: "auth-label" %>
         <%= f.email_field :email, autocomplete: "email",
@@ -32,18 +27,51 @@
               placeholder: "seu@email.com" %>
       </div>
 
+      <%# Senha com olho + força %>
       <div class="auth-field">
         <%= f.label :password, "Senha", class: "auth-label" %>
-        <%= f.password_field :password, autocomplete: "new-password",
-              class: "auth-input #{'is-invalid' if resource.errors[:password].any?}",
-              placeholder: "Mínimo 8 caracteres" %>
+        <div class="auth-input-wrap">
+          <%= f.password_field :password, autocomplete: "new-password",
+                class: "auth-input #{'is-invalid' if resource.errors[:password].any?}",
+                placeholder: "Mínimo 8 caracteres",
+                data: { auth_form_target: "passwordInput", action: "input->auth-form#checkStrength" } %>
+          <button type="button" class="auth-eye" data-action="click->auth-form#toggleVisibility" tabindex="-1">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+        <div class="auth-strength">
+          <div class="auth-strength__bar" data-auth-form-target="strengthBar" data-score="0">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <span class="auth-strength__label" data-auth-form-target="strengthLabel"></span>
+        </div>
       </div>
 
+      <%# Confirmar senha com olho %>
       <div class="auth-field">
         <%= f.label :password_confirmation, "Confirmar senha", class: "auth-label" %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password",
-              class: "auth-input",
-              placeholder: "Repita a senha" %>
+        <div class="auth-input-wrap">
+          <%= f.password_field :password_confirmation, autocomplete: "new-password",
+                class: "auth-input",
+                placeholder: "Repita a senha" %>
+          <button type="button" class="auth-eye" data-action="click->auth-form#toggleVisibility" tabindex="-1">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <%# Termos de uso %>
+      <div class="auth-terms-wrap">
+      <label class="auth-terms">
+        <%= f.check_box :accepted_terms, class: "auth-terms__checkbox" %>
+        <span class="auth-terms__box"></span>
+        <span class="auth-terms__text">
+          Li e aceito os
+          <%= link_to "Termos de Uso", "#", class: "auth-link", target: "_blank" %>
+          e a
+          <%= link_to "Política de Privacidade", "#", class: "auth-link", target: "_blank" %>
+        </span>
+      </label>
       </div>
 
       <%= f.submit "Criar conta", class: "auth-btn" %>

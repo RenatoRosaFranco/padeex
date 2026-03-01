@@ -1,0 +1,23 @@
+<% if slots.empty? %>
+  <div class="sched-empty">
+    <i class="bi bi-calendar-x"></i>
+    <p>Nenhum horário disponível para esta data.</p>
+  </div>
+<% else %>
+  <p class="dash-section-label">Horários disponíveis</p>
+  <div class="slot-grid">
+    <% slots.each do |slot| %>
+      <% if slot[:available] %>
+        <button class="slot-btn slot-btn--available"
+                data-action="click->slot-picker#selectSlot"
+                data-slot-picker-time-param="<%= slot[:starts_at] %>">
+          <%= slot[:starts_at] %>
+        </button>
+      <% else %>
+        <button class="slot-btn slot-btn--taken" disabled title="Horário indisponível">
+          <%= slot[:starts_at] %>
+        </button>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

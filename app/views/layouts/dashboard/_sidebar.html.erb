@@ -1,45 +1,105 @@
 <aside class="dash-sidebar">
-  <nav class="dash-sidebar-nav">
+  <nav class="dash-sidebar-nav" style="flex: 1; overflow-y: auto;">
+    <% if current_user.club? %>
+
+      <section class="dash-sidebar-section">
+        <h3 class="dash-sidebar-title">Meu Clube</h3>
+        <ul class="dash-sidebar-links">
+          <li><%= link_to dashboard_tournaments_path, class: "dash-sidebar-link #{'active' if request.path.start_with?(dashboard_tournaments_path)}" do %><i class="bi bi-trophy-fill"></i> Torneios<% end %></li>
+          <li><%= link_to dashboard_courts_path, class: "dash-sidebar-link #{'active' if request.path.start_with?(dashboard_courts_path)}" do %><i class="bi bi-grid-3x3-gap-fill"></i> Quadras<% end %></li>
+          <li><%= link_to dashboard_reservas_path, class: "dash-sidebar-link #{'active' if request.path.start_with?(dashboard_reservas_path)}" do %><i class="bi bi-calendar-week"></i> Reservas<% end %></li>
+          <li><%= link_to dashboard_instructors_path, class: "dash-sidebar-link #{'active' if request.path.start_with?(dashboard_instructors_path)}" do %><i class="bi bi-person-badge-fill"></i> Instrutores<% end %></li>
+          <li><%= link_to dashboard_meu_perfil_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_meu_perfil_path)}" do %><i class="bi bi-person-circle"></i> Meu Perfil<% end %></li>
+        </ul>
+      </section>
+
+    <% else %>
+
+      <section class="dash-sidebar-section">
+        <h3 class="dash-sidebar-title">Explore</h3>
+        <ul class="dash-sidebar-links">
+          <% if FeatureFlags.enabled?(:feed) %>
+            <li><%= link_to dashboard_feed_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_feed_path)}" do %><i class="bi bi-house-heart-fill"></i> Feed<% end %></li>
+          <% end %>
+          <li><%= link_to dashboard_tournaments_path, class: "dash-sidebar-link #{'active' if request.path.start_with?(dashboard_tournaments_path)}" do %><i class="bi bi-trophy-fill"></i> Torneios<% end %></li>
+          <li><%= link_to dashboard_clubs_path, class: "dash-sidebar-link #{'active' if request.path.start_with?(dashboard_clubs_path)}" do %><i class="bi bi-building-fill"></i> Encontrar Clubes<% end %></li>
+          <li><%= link_to dashboard_encontrar_partidas_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_encontrar_partidas_path)}" do %><i class="bi bi-search"></i> Encontrar Partidas<% end %></li>
+        </ul>
+      </section>
+
+      <section class="dash-sidebar-section">
+        <h3 class="dash-sidebar-title">Academy</h3>
+        <ul class="dash-sidebar-links">
+          <li><%= link_to dashboard_artigos_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_artigos_path)}" do %><i class="bi bi-journal-text"></i> Artigos<% end %></li>
+          <li><%= link_to dashboard_glossary_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_glossary_path)}" do %><i class="bi bi-book"></i> Glossário<% end %></li>
+        </ul>
+      </section>
+
+      <section class="dash-sidebar-section">
+        <h3 class="dash-sidebar-title">Aprenda</h3>
+        <ul class="dash-sidebar-links">
+          <li><%= link_to dashboard_aulas_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_aulas_path)}" do %><i class="bi bi-easel"></i> Aulas<% end %></li>
+        </ul>
+      </section>
+
+      <section class="dash-sidebar-section">
+        <h3 class="dash-sidebar-title">Perfil</h3>
+        <ul class="dash-sidebar-links">
+          <li><%= link_to dashboard_ranking_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_ranking_path)}" do %><i class="bi bi-bar-chart-fill"></i> Ranking<% end %></li>
+          <li><%= link_to dashboard_bookings_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_bookings_path)}" do %><i class="bi bi-calendar-range"></i> Minhas Reservas<% end %></li>
+          <li><%= link_to dashboard_meu_perfil_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_meu_perfil_path)}" do %><i class="bi bi-person-fill"></i> Meu Perfil<% end %></li>
+        </ul>
+      </section>
+
+    <% end %>
+
+    <% if current_user.admin? %>
+      <section class="dash-sidebar-section">
+        <h3 class="dash-sidebar-title">Admin</h3>
+        <ul class="dash-sidebar-links">
+          <li><%= link_to dashboard_analytics_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_analytics_path)}" do %><i class="bi bi-graph-up-arrow"></i> Analytics<% end %></li>
+          <li><%= link_to dashboard_admin_courts_path, class: "dash-sidebar-link #{'active' if request.path.start_with?(dashboard_admin_courts_path)}" do %><i class="bi bi-gear-fill"></i> Quadras<% end %></li>
+          <li><%= link_to dashboard_admin_feature_flags_path, class: "dash-sidebar-link #{'active' if request.path.start_with?(dashboard_admin_feature_flags_path)}" do %><i class="bi bi-toggles"></i> Feature Flags<% end %></li>
+        </ul>
+      </section>
+    <% end %>
+
+    <div class="dash-sidebar-divider"></div>
+
     <section class="dash-sidebar-section">
-      <h3 class="dash-sidebar-title">Explore</h3>
+      <h3 class="dash-sidebar-title">Minha Conta</h3>
       <ul class="dash-sidebar-links">
-        <li><%= link_to dashboard_torneios_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_torneios_path)}" do %><i class="bi bi-trophy-fill"></i> Torneios<% end %></li>
-        <li><%= link_to dashboard_encontrar_clubes_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_encontrar_clubes_path)}" do %><i class="bi bi-building-fill"></i> Encontrar clubes<% end %></li>
-        <li><%= link_to dashboard_encontrar_partidas_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_encontrar_partidas_path)}" do %><i class="bi bi-search"></i> Encontrar Partidas<% end %></li>
-        <li><%= link_to dashboard_reservar_partida_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_reservar_partida_path)}" do %><i class="bi bi-calendar-check"></i> Reservar Partida<% end %></li>
+        <li>
+          <%= link_to dashboard_friends_path, class: "dash-sidebar-link #{'active' if request.path.start_with?(dashboard_friends_path)}" do %>
+            <i class="bi bi-people-fill"></i> Amigos
+            <% pending = current_user.follow_requests_received.count %>
+            <% if pending > 0 %>
+              <span class="dash-sidebar-badge"><%= pending %></span>
+            <% end %>
+          <% end %>
+        </li>
+        <li><%= link_to dashboard_meu_perfil_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_meu_perfil_path)}" do %><i class="bi bi-person-circle"></i> Meu Perfil<% end %></li>
+        <li><%= link_to edit_my_profile_path, class: "dash-sidebar-link #{'active' if current_page?(edit_my_profile_path)}" do %><i class="bi bi-pencil-fill"></i> Editar Perfil<% end %></li>
+        <li><%= link_to edit_user_registration_path, class: "dash-sidebar-link #{'active' if current_page?(edit_user_registration_path)}" do %><i class="bi bi-gear-fill"></i> Minha Conta<% end %></li>
       </ul>
     </section>
 
-    <section class="dash-sidebar-section">
-      <h3 class="dash-sidebar-title">Academy</h3>
+    <section class="dash-sidebar-section dash-sidebar-section--legal">
+      <h3 class="dash-sidebar-title">Padeex</h3>
       <ul class="dash-sidebar-links">
-        <li><%= link_to dashboard_artigos_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_artigos_path)}" do %><i class="bi bi-journal-text"></i> Artigos<% end %></li>
-        <li><%= link_to dashboard_glossario_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_glossario_path)}" do %><i class="bi bi-book"></i> Glossário<% end %></li>
-      </ul>
-    </section>
-
-    <section class="dash-sidebar-section">
-      <h3 class="dash-sidebar-title">Aprenda</h3>
-      <ul class="dash-sidebar-links">
-        <li><%= link_to dashboard_aulas_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_aulas_path)}" do %><i class="bi bi-easel"></i> Aulas<% end %></li>
-        <li><%= link_to dashboard_instrutores_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_instrutores_path)}" do %><i class="bi bi-person-badge"></i> Instrutores<% end %></li>
-      </ul>
-    </section>
-
-    <section class="dash-sidebar-section">
-      <h3 class="dash-sidebar-title">Analytics</h3>
-      <ul class="dash-sidebar-links">
-        <li><%= link_to dashboard_analytics_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_analytics_path)}" do %><i class="bi bi-graph-up-arrow"></i> Analytics<% end %></li>
-      </ul>
-    </section>
-
-    <section class="dash-sidebar-section">
-      <h3 class="dash-sidebar-title">Perfil</h3>
-      <ul class="dash-sidebar-links">
-        <li><%= link_to dashboard_ranking_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_ranking_path)}" do %><i class="bi bi-bar-chart-fill"></i> Ranking<% end %></li>
-        <li><%= link_to dashboard_minhas_partidas_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_minhas_partidas_path)}" do %><i class="bi bi-calendar-range"></i> Minhas Partidas<% end %></li>
-        <li><%= link_to dashboard_meu_perfil_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_meu_perfil_path)}" do %><i class="bi bi-person-fill"></i> Meu Perfil<% end %></li>
+        <li><%= link_to dashboard_terms_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_terms_path)}" do %><i class="bi bi-file-text"></i> Termos e Condições<% end %></li>
+        <li><%= link_to dashboard_privacy_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_privacy_path)}" do %><i class="bi bi-shield-lock"></i> Políticas de Privacidade<% end %></li>
+        <li><a href="mailto:contato@padeex.com.br" class="dash-sidebar-link"><i class="bi bi-envelope"></i> Fale Conosco</a></li>
       </ul>
     </section>
   </nav>
+
+  <%= link_to dashboard_meu_perfil_path, class: "sidebar-user-card" do %>
+    <div class="sidebar-user-card__avatar"><%= current_user.initials %></div>
+    <div class="sidebar-user-card__info">
+      <p class="sidebar-user-card__name"><%= current_user.name %></p>
+      <p class="sidebar-user-card__email"><%= current_user.email %></p>
+    </div>
+    <i class="bi bi-chevron-right sidebar-user-card__chevron"></i>
+  <% end %>
 </aside>

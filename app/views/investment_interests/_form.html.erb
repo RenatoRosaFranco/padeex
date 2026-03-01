@@ -47,7 +47,7 @@
     <label for="investment_range">Interesse de investimento</label>
     <select name="investment_range" id="investment_range" required>
       <option value="">Selecione uma faixa</option>
-      <% InvestmentInterest::INVESTMENT_RANGES.each do |range| %>
+      <% InvestmentInterest.investment_ranges.each do |range| %>
         <option value="<%= range %>" <%= "selected" if interest.investment_range == range %>><%= range %></option>
       <% end %>
     </select>

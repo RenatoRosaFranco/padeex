@@ -12,7 +12,20 @@ Rails.application.routes.draw do
         delete "sign_out", to: "sessions#destroy"
         get "me", to: "me#show"
       end
+
+      # Scheduling.
+      resources :courts, only: [:index, :create, :update] do
+        resource :availability, only: [:show], controller: "availability"
+        resources :bookings, only: [:create]
+        resources :time_blocks, only: [:index, :create, :destroy]
+      end
+      resources :bookings, only: [:destroy]
     end
+  end
+
+  # Component previews (development only).
+  if Rails.env.development?
+    mount Lookbook::Engine, at: "/lookbook"
   end
 
   # Root.
@@ -24,6 +37,10 @@ Rails.application.routes.draw do
   namespace :blog do
     resources :posts, only: [:index, :show]
   end
+
+  # Store
+  get "loja",     to: "store#index", as: :loja
+  get "loja/:id", to: "store#show",  as: :loja_produto
 
   # Privacy.
   get "privacy/data-deletion", to: "privacy#data_deletion", as: :data_deletion
@@ -41,21 +58,85 @@ Rails.application.routes.draw do
     controllers: {
       sessions: "users/sessions",
       registrations: "users/registrations",
+      passwords: "users/passwords",
       omniauth_callbacks: "users/omniauth_callbacks"
     }
 
+  # Onboarding wizard.
+  namespace :onboarding do
+    resource :personal_info, only: [:edit, :update], path: "dados-pessoais"
+    resource :account_type,  only: [:edit, :update], path: "tipo-de-conta"
+    resource :profile,       only: [:edit, :update], path: "perfil"
+    get "username-check", to: "username_checks#show", as: :username_check
+  end
+
   # Dashboard.
-  get "/dashboard", to: "dashboard#index", as: :dashboard
-  get "/dashboard/torneios", to: "dashboard#index", as: :dashboard_torneios, defaults: { page: "torneios" }
-  get "/dashboard/encontrar-clubes", to: "dashboard#index", as: :dashboard_encontrar_clubes, defaults: { page: "encontrar-clubes" }
+  get "/dashboard",                   to: "dashboard#index", as: :dashboard
   get "/dashboard/encontrar-partidas", to: "dashboard#index", as: :dashboard_encontrar_partidas, defaults: { page: "encontrar-partidas" }
-  get "/dashboard/reservar-partida", to: "dashboard#index", as: :dashboard_reservar_partida, defaults: { page: "reservar-partida" }
-  get "/dashboard/artigos", to: "dashboard#index", as: :dashboard_artigos, defaults: { page: "artigos" }
-  get "/dashboard/glossario", to: "dashboard#index", as: :dashboard_glossario, defaults: { page: "glossario" }
-  get "/dashboard/aulas", to: "dashboard#index", as: :dashboard_aulas, defaults: { page: "aulas" }
-  get "/dashboard/instrutores", to: "dashboard#index", as: :dashboard_instrutores, defaults: { page: "instrutores" }
-  get "/dashboard/ranking", to: "dashboard#index", as: :dashboard_ranking, defaults: { page: "ranking" }
-  get "/dashboard/minhas-partidas", to: "dashboard#index", as: :dashboard_minhas_partidas, defaults: { page: "minhas-partidas" }
-  get "/dashboard/meu-perfil", to: "dashboard#index", as: :dashboard_meu_perfil, defaults: { page: "meu-perfil" }
-  get "/dashboard/analytics", to: "analytics#index", as: :dashboard_analytics
+  get "/dashboard/artigos",            to: "dashboard#index", as: :dashboard_artigos,   defaults: { page: "artigos" }
+  get "/dashboard/aulas",              to: "dashboard#index", as: :dashboard_aulas,     defaults: { page: "aulas" }
+  get "/dashboard/ranking",            to: "dashboard/ranking#index", as: :dashboard_ranking
+  get   "/meu-perfil",        to: "dashboard/profiles#show",   as: :dashboard_meu_perfil
+  get   "/meu-perfil/editar", to: "dashboard/profiles#edit",   as: :edit_my_profile
+  patch "/meu-perfil",        to: "dashboard/profiles#update", as: :my_profile
+  put   "/meu-perfil",        to: "dashboard/profiles#update"
+  get   "/perfil/:id",        to: "profiles#show",             as: :public_profile
+  get "/dashboard/analytics",          to: "analytics#index", as: :dashboard_analytics
+
+  # Scheduling + clubs (within dashboard namespace).
+  namespace :dashboard do
+    get "feed",   to: "feed#index",    as: :feed
+    get "amigos", to: "friends#index", as: :friends
+    resources :follows, only: [:create, :destroy, :update], path: "seguir"
+    get "termos-e-condicoes",        to: "legal#terms",   as: :terms
+    get "politicas-de-privacidade",  to: "legal#privacy", as: :privacy
+    # Static content pages.
+    get "glossario", to: "glossary#index", as: :glossary
+
+    # For regular users: browse clubs and their courts.
+    resources :clubs, only: [:index, :show]
+
+    # For club users: tournament management.
+    resources :tournaments, path: "torneios" do
+      resources :categories, path: "categorias", controller: "tournament_categories" do
+        resources :registrations, path: "inscricoes",
+                  controller: "tournament_category_registrations",
+                  only: [:create, :update, :destroy]
+        resources :groups, path: "grupos",
+                  controller: "tournament_category_groups",
+                  only: [:create, :update, :destroy] do
+          resources :memberships, path: "duplas",
+                    controller: "tournament_group_memberships",
+                    only: [:create, :destroy]
+        end
+        resources :matches, path: "jogos",
+                  controller: "tournament_category_matches"
+      end
+    end
+
+    # For club users: instructor management.
+    resources :instructors, path: "instrutores"
+
+    # For club users: week-view calendar of court bookings.
+    resources :reservas, only: [:index, :destroy]
+
+    # For club users: manage their own courts + per-court bookings.
+    resources :courts, only: [:index, :new, :create, :edit, :update], path: "quadras" do
+      resource  :reservation, only: [:new, :create], path: "reservar"
+      resources :bookings, only: [:index, :destroy], path: "agendamentos", controller: "court_bookings"
+    end
+
+    # For all users: their own bookings.
+    resources :bookings, only: [:index, :destroy], path: "minhas-reservas"
+
+    # System admin: manage all courts and time blocks.
+    namespace :admin do
+      resources :courts, only: [:index, :new, :create, :edit, :update], path: "quadras" do
+        resources :time_blocks, only: [:index, :create, :destroy], path: "bloqueios"
+      end
+      resources :feature_flags, only: [:index], path: "feature-flags" do
+        collection { patch :toggle }
+      end
+    end
+  end
 end

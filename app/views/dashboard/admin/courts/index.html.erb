@@ -1,0 +1,53 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Admin</p>
+  <h1 class="dash-welcome-title">Gestão de Quadras</h1>
+</div>
+
+<% if flash[:notice] %>
+  <div class="sched-flash sched-flash--success"><%= flash[:notice] %></div>
+<% end %>
+
+<div class="sched-bookings-header">
+  <p class="dash-section-label">Quadras (<%= @courts.count %>)</p>
+  <%= link_to "Nova Quadra", new_dashboard_admin_court_path, class: "sched-btn sched-btn--primary sched-btn--sm" %>
+</div>
+
+<% if @courts.empty? %>
+  <div class="sched-empty">
+    <i class="bi bi-building-x"></i>
+    <p>Nenhuma quadra cadastrada ainda.</p>
+  </div>
+<% else %>
+  <div class="analytics-card analytics-table-card">
+    <table class="analytics-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Tipo</th>
+          <th>Status</th>
+          <th>Bloqueios</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @courts.each do |court| %>
+          <tr>
+            <td><strong><%= court.name %></strong></td>
+            <td><span class="court-type-badge"><%= court.court_type.humanize %></span></td>
+            <td>
+              <span class="booking-badge booking-badge--<%= court.active? ? 'active' : 'cancelled' %>">
+                <%= court.active? ? "Ativa" : "Inativa" %>
+              </span>
+            </td>
+            <td>
+              <%= link_to "Bloqueios", dashboard_admin_court_time_blocks_path(court), class: "dash-navbar-link" %>
+            </td>
+            <td class="admin-table-actions">
+              <%= link_to "Editar", edit_dashboard_admin_court_path(court), class: "sched-btn sched-btn--ghost sched-btn--sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

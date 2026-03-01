@@ -1,0 +1,75 @@
+<% if match.errors.any? %>
+  <div class="sched-flash sched-flash--error"><%= match.errors.full_messages.first %></div>
+<% end %>
+
+<%= form_with model: match,
+      url: match.new_record? ?
+        dashboard_tournament_category_matches_path(tournament, category) :
+        dashboard_tournament_category_match_path(tournament, category, match),
+      method: match.new_record? ? :post : :patch,
+      local: true, class: "sched-form" do |f| %>
+  <div class="sched-form-grid">
+
+    <div class="sched-field">
+      <%= f.label :tournament_group_id, "Grupo (Chave)", class: "sched-label" %>
+      <%= f.select :tournament_group_id,
+            options_from_collection_for_select(groups, :id, :name, match.tournament_group_id),
+            { include_blank: "Sem grupo" }, class: "sched-input" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :court_id, "Quadra", class: "sched-label" %>
+      <%= f.select :court_id,
+            options_from_collection_for_select(courts, :id, :name, match.court_id),
+            { include_blank: "Não definida" }, class: "sched-input" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :scheduled_at, "Data / Hora", class: "sched-label" %>
+      <%= f.datetime_local_field :scheduled_at, class: "sched-input",
+            value: match.scheduled_at&.strftime("%Y-%m-%dT%H:%M") %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :status, "Status", class: "sched-label" %>
+      <%= f.select :status,
+            [["Agendado", "scheduled"], ["Em andamento", "in_progress"], ["Finalizado", "finished"], ["Cancelado", "cancelled"]],
+            {}, class: "sched-input" %>
+    </div>
+
+    <div class="sched-field" style="grid-column: 1 / -1; border-top: 1px solid var(--px-border); padding-top: 1rem; margin-top: .25rem;">
+      <p class="tournament-detail-label" style="margin-bottom: 1rem;">Duplas</p>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :home_registration_id, "Dupla A (Casa)", class: "sched-label" %>
+      <%= f.select :home_registration_id,
+            options_from_collection_for_select(registrations, :id, :display_name, match.home_registration_id),
+            { include_blank: "Selecione..." }, class: "sched-input" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :away_registration_id, "Dupla B (Visitante)", class: "sched-label" %>
+      <%= f.select :away_registration_id,
+            options_from_collection_for_select(registrations, :id, :display_name, match.away_registration_id),
+            { include_blank: "Selecione..." }, class: "sched-input" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :home_score, "Placar – Dupla A", class: "sched-label" %>
+      <%= f.number_field :home_score, class: "sched-input", min: 0, placeholder: "–" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :away_score, "Placar – Dupla B", class: "sched-label" %>
+      <%= f.number_field :away_score, class: "sched-input", min: 0, placeholder: "–" %>
+    </div>
+
+  </div>
+
+  <div class="sched-form-actions">
+    <%= f.submit match.new_record? ? "Criar Jogo" : "Salvar Alterações", class: "sched-btn sched-btn--primary" %>
+    <%= link_to "Cancelar", dashboard_tournament_category_path(tournament, category, tab: "jogos"),
+          class: "sched-btn sched-btn--ghost" %>
+  </div>
+<% end %>

@@ -1,0 +1,15 @@
+<button class="fst__item"
+        data-action="click->story-viewer#open"
+        data-story-index="<%= index %>"
+        aria-label="Story de <%= story.author_username %>">
+  <div class="<%= ring_class %>">
+    <div class="fst__avatar-wrap">
+      <% if story.author_avatar_url.present? %>
+        <img src="<%= story.author_avatar_url %>" alt="<%= story.author_name %>" class="fst__avatar-img">
+      <% else %>
+        <span class="fst__avatar-initials"><%= story.author_initials %></span>
+      <% end %>
+    </div>
+  </div>
+  <span class="fst__name"><%= story.author_username.presence || story.author_name %></span>
+</button>

@@ -4,6 +4,9 @@
       <%= image_tag "logo_padex_branco.png", alt: "PADEX", class: "footer-logo" %>
       <div class="footer-links">
         <%= link_to "Blog", blog_posts_path, class: "footer-link" %>
+        <% if FeatureFlags.enabled?(:store) %>
+          <%= link_to "Loja", loja_path, class: "footer-link" %>
+        <% end %>
       </div>
       <p class="footer-copy">&copy; <%= current_year %> PADEX. Todos os direitos reservados.</p>
       <div class="footer-social">

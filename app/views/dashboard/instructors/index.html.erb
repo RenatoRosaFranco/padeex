@@ -1,0 +1,51 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Meu Clube</p>
+  <h1 class="dash-welcome-title">Instrutores</h1>
+  <p class="dash-welcome-sub">Gerencie os instrutores do seu clube.</p>
+</div>
+
+<% if flash[:notice] %>
+  <div class="sched-flash sched-flash--success"><%= flash[:notice] %></div>
+<% end %>
+
+<div class="sched-bookings-header">
+  <p class="dash-section-label">Instrutores (<%= @instructors.count %>)</p>
+  <%= link_to "Adicionar Instrutor", new_dashboard_instructor_path, class: "sched-btn sched-btn--primary sched-btn--sm" %>
+</div>
+
+<% if @instructors.empty? %>
+  <div class="sched-empty">
+    <i class="bi bi-person-badge"></i>
+    <p>Nenhum instrutor cadastrado ainda.</p>
+  </div>
+<% else %>
+  <div class="instructor-grid">
+    <% @instructors.each do |instructor| %>
+      <%= link_to dashboard_instructor_path(instructor), class: "instructor-card" do %>
+        <div class="instructor-card__avatar">
+          <% if instructor.photo.attached? %>
+            <%= image_tag instructor.photo, class: "instructor-card__photo" %>
+          <% else %>
+            <span><%= instructor.name.split.first(2).map { |w| w[0] }.join.upcase %></span>
+          <% end %>
+        </div>
+        <div class="instructor-card__body">
+          <h2 class="instructor-card__name"><%= instructor.name %></h2>
+          <% if instructor.user.present? %>
+            <span class="instructor-linked-badge">
+              <i class="bi bi-patch-check-fill"></i> Conta vinculada
+            </span>
+          <% end %>
+          <% if instructor.description.present? %>
+            <p class="instructor-card__bio"><%= truncate(instructor.description, length: 90) %></p>
+          <% end %>
+        </div>
+        <% if instructor.internal_code.present? %>
+          <div class="instructor-card__code">
+            <span class="instructor-code-badge"><%= instructor.internal_code %></span>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

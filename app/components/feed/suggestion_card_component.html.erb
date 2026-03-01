@@ -1,0 +1,21 @@
+<div class="fsc">
+  <button class="fsc__dismiss" aria-label="Dispensar">
+    <i class="bi bi-x"></i>
+  </button>
+
+  <div class="fsc__avatar">
+    <% if suggestion.avatar_url.present? %>
+      <img src="<%= suggestion.avatar_url %>" alt="<%= suggestion.name %>" class="fsc__avatar-img">
+    <% else %>
+      <span class="fsc__avatar-initials"><%= suggestion.initials %></span>
+    <% end %>
+  </div>
+
+  <p class="fsc__username"><%= suggestion.username.present? ? "@#{suggestion.username}" : suggestion.name %></p>
+  <p class="fsc__name"><%= suggestion.name %></p>
+
+  <%= form_with url: dashboard_follows_path, method: :post, local: true, class: "fsc__form" do %>
+    <%= hidden_field_tag :followed_id, suggestion.id %>
+    <%= submit_tag "Seguir", class: "fsc__btn" %>
+  <% end %>
+</div>

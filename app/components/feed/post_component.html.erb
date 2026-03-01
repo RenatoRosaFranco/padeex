@@ -1,0 +1,71 @@
+<article class="fp">
+
+  <%# Header %>
+  <div class="fp__header">
+    <div class="fp__avatar">
+      <% if post.author_avatar_url.present? %>
+        <img src="<%= post.author_avatar_url %>" alt="<%= post.author_name %>" class="fp__avatar-img">
+      <% else %>
+        <span class="fp__avatar-initials"><%= post.author_initials %></span>
+      <% end %>
+    </div>
+
+    <div class="fp__meta">
+      <span class="fp__author">
+        <%= post.author_name %>
+        <% if post.author_official %>
+          <i class="bi bi-patch-check-fill fp__verified"></i>
+        <% end %>
+      </span>
+      <span class="fp__time"><%= time_ago_in_words(post.created_at) %></span>
+    </div>
+
+    <button class="fp__more" aria-label="Mais opções">
+      <i class="bi bi-three-dots"></i>
+    </button>
+  </div>
+
+  <%# Media %>
+  <% if has_image? %>
+    <div class="fp__media">
+      <img src="<%= post.image_url %>" alt="" class="fp__img">
+    </div>
+  <% end %>
+
+  <%# Toolbar %>
+  <div class="fp__toolbar">
+    <div class="fp__toolbar-left">
+      <button class="fp__action <%= 'fp__action--liked' if liked? %>" aria-label="Curtir">
+        <i class="bi bi-<%= heart_icon %>"></i>
+      </button>
+      <button class="fp__action" aria-label="Comentar">
+        <i class="bi bi-chat"></i>
+      </button>
+      <button class="fp__action" aria-label="Compartilhar">
+        <i class="bi bi-send"></i>
+      </button>
+    </div>
+    <button class="fp__action fp__action--save" aria-label="Salvar">
+      <i class="bi bi-bookmark"></i>
+    </button>
+  </div>
+
+  <%# Footer %>
+  <div class="fp__footer">
+    <p class="fp__likes"><%= post.likes_count %> curtidas</p>
+
+    <% if post.body.present? %>
+      <p class="fp__caption">
+        <span class="fp__caption-author"><%= post.author_username.presence || post.author_name %></span>
+        <%= post.body %>
+      </p>
+    <% end %>
+
+    <% if post.comments_count > 0 %>
+      <button class="fp__comments-link">Ver todos os <%= post.comments_count %> comentários</button>
+    <% end %>
+
+    <p class="fp__timestamp"><%= post.created_at.strftime("%d de %B") %></p>
+  </div>
+
+</article>

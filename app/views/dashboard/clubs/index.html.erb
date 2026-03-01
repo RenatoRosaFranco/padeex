@@ -1,0 +1,29 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Explore</p>
+  <h1 class="dash-welcome-title">Encontrar Clubes</h1>
+  <p class="dash-welcome-sub">Encontre clubes de padel perto de você e reserve uma quadra.</p>
+</div>
+
+<% if @clubs.empty? %>
+  <div class="sched-empty">
+    <i class="bi bi-building-x"></i>
+    <p>Nenhum clube cadastrado ainda.</p>
+  </div>
+<% else %>
+  <p class="dash-section-label">Clubes disponíveis (<%= @clubs.count %>)</p>
+  <div class="clubs-grid">
+    <% @clubs.each do |club| %>
+      <%= link_to dashboard_club_path(club), class: "club-card" do %>
+        <div class="club-card__avatar"><%= club.initials %></div>
+        <div class="club-card__body">
+          <h2 class="club-card__name"><%= club.name %></h2>
+          <span class="club-card__meta">
+            <i class="bi bi-grid-3x3-gap"></i>
+            <%= pluralize(club.courts.available.count, "quadra disponível", "quadras disponíveis") %>
+          </span>
+        </div>
+        <span class="club-card__arrow"><i class="bi bi-arrow-right-short"></i></span>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

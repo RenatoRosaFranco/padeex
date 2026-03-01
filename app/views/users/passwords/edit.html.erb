@@ -1,0 +1,39 @@
+<div class="auth-wrapper">
+  <%= link_to root_path, class: "auth-logo-link" do %>
+    <%= image_tag "logo_padex_branco.png", alt: "PADEX", class: "auth-logo" %>
+  <% end %>
+
+  <div class="auth-card">
+    <h1 class="auth-title">Nova senha</h1>
+    <p class="auth-sub">Escolha uma senha segura para sua conta</p>
+
+    <% if alert %>
+      <div class="auth-alert-error"><%= alert %></div>
+    <% end %>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <%= f.hidden_field :reset_password_token %>
+
+      <div class="auth-field">
+        <%= f.label :password, "Nova senha", class: "auth-label" %>
+        <%= f.password_field :password, autofocus: true, autocomplete: "new-password",
+              class: "auth-input", placeholder: "Mínimo 8 caracteres" %>
+        <% if @minimum_password_length %>
+          <span class="auth-hint">Mínimo <%= @minimum_password_length %> caracteres</span>
+        <% end %>
+      </div>
+
+      <div class="auth-field">
+        <%= f.label :password_confirmation, "Confirmar nova senha", class: "auth-label" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password",
+              class: "auth-input", placeholder: "Repita a nova senha" %>
+      </div>
+
+      <%= f.submit "Redefinir senha", class: "auth-btn" %>
+    <% end %>
+  </div>
+
+  <p class="auth-footer">
+    <%= link_to "Voltar para o login", new_user_session_path, class: "auth-link" %>
+  </p>
+</div>

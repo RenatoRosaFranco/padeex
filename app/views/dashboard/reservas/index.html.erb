@@ -1,0 +1,73 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Meu Clube</p>
+  <h1 class="dash-welcome-title">Reservas</h1>
+  <p class="dash-welcome-sub">Visualize e gerencie os agendamentos das suas quadras.</p>
+</div>
+
+<% if flash[:notice] %>
+  <div class="sched-flash sched-flash--success"><%= flash[:notice] %></div>
+<% end %>
+
+<div class="cal-wrapper" data-controller="booking-calendar">
+
+  <%# Week navigation %>
+  <div class="cal-nav">
+    <%= link_to dashboard_reservas_path(week_start: (@week_start - 7).iso8601), class: "cal-nav-btn" do %>
+      <i class="bi bi-chevron-left"></i>
+    <% end %>
+    <span class="cal-nav-label">
+      <%= @week_start.strftime("%d/%m") %> – <%= @week_end.strftime("%d/%m/%Y") %>
+    </span>
+    <%= link_to dashboard_reservas_path(week_start: (@week_start + 7).iso8601), class: "cal-nav-btn" do %>
+      <i class="bi bi-chevron-right"></i>
+    <% end %>
+    <%= link_to "Hoje", dashboard_reservas_path, class: "sched-btn sched-btn--ghost sched-btn--sm", style: "margin-left: 0.5rem;" %>
+  </div>
+
+  <%# Calendar grid %>
+  <div class="cal-grid">
+
+    <%# Header row %>
+    <div class="cal-time-col"></div>
+    <% @week_days.each do |day| %>
+      <div class="cal-day-header <%= 'cal-day-header--today' if day == Date.current %>">
+        <span class="cal-day-name"><%= day.strftime("%a").upcase %></span>
+        <span class="cal-day-num"><%= day.day %></span>
+      </div>
+    <% end %>
+
+    <%# Time slot rows: 07:00 – 21:00 %>
+    <% (7..21).each do |hour| %>
+      <div class="cal-time-label"><%= sprintf("%02d:00", hour) %></div>
+
+      <% @week_days.each do |day| %>
+        <div class="cal-slot">
+          <% @bookings.select { |b| b.date == day && b.starts_at.hour == hour }.each do |booking| %>
+            <div class="cal-chip"
+                 data-action="click->booking-calendar#open"
+                 data-court="<%= booking.court.name %>"
+                 data-user="<%= booking.user.name %>"
+                 data-date="<%= booking.date.strftime('%d/%m/%Y') %>"
+                 data-time="<%= booking.starts_at.strftime('%H:%M') %> – <%= booking.ends_at.strftime('%H:%M') %>"
+                 data-cancel-url="<%= dashboard_reserva_path(booking, week_start: @week_start.iso8601) %>">
+              <span class="cal-chip__court"><%= booking.court.name %></span>
+              <span class="cal-chip__user"><%= booking.user.name %></span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+
+  </div>
+
+  <%# Slide-in detail panel %>
+  <div class="cal-panel" data-booking-calendar-target="panel">
+    <div class="cal-panel-inner">
+      <button class="cal-panel-close" data-action="click->booking-calendar#close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+      <div data-booking-calendar-target="content"></div>
+    </div>
+  </div>
+
+</div>

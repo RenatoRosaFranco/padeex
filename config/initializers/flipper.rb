@@ -34,6 +34,14 @@ Flipper.configure do |config|
   # config.use Flipper::Adapters::ActiveSupportCacheStore, Rails.cache, expires_in: 5.minutes
 end
 
+## Register all known feature flags from FeatureFlags::REGISTRY so Flipper
+## is aware of them without needing to enable/disable them first.
+Rails.application.config.after_initialize do
+  FeatureFlags::REGISTRY.each_key { |key| Flipper.add(key) }
+rescue StandardError => e
+  Rails.logger.warn("[FeatureFlags] Could not register flags: #{e.message}")
+end
+
 ## Register a group that can be used for enabling features.
 ##
 ##   Flipper.enable_group :my_feature, :admins

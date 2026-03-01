@@ -1,0 +1,78 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">
+    <%= link_to "Minhas Quadras", dashboard_courts_path, class: "back-link" %> / <%= @court.name %>
+  </p>
+  <h1 class="dash-welcome-title">Agendamentos</h1>
+  <p class="dash-welcome-sub"><%= @court.name %> · <span class="court-type-badge"><%= @court.court_type.humanize %></span></p>
+</div>
+
+<% if flash[:notice] %>
+  <div class="sched-flash sched-flash--success"><%= flash[:notice] %></div>
+<% end %>
+
+<%# Upcoming bookings %>
+<div class="sched-bookings-header">
+  <p class="dash-section-label">Próximos Agendamentos (<%= @upcoming.count %>)</p>
+</div>
+
+<% if @upcoming.empty? %>
+  <div class="sched-empty" style="padding: 2rem;">
+    <i class="bi bi-calendar-x"></i>
+    <p>Nenhum agendamento futuro para esta quadra.</p>
+  </div>
+<% else %>
+  <div class="bookings-list" style="margin-bottom: 2.5rem;">
+    <% @upcoming.each do |booking| %>
+      <div class="booking-card" id="booking_<%= booking.id %>">
+        <div class="booking-card__icon">
+          <i class="bi bi-person-fill"></i>
+        </div>
+        <div class="booking-card__info">
+          <span class="booking-card__court"><%= booking.user.name %></span>
+          <span class="booking-card__datetime">
+            <%= booking.date.strftime("%d/%m/%Y") %> · <%= booking.starts_at.strftime("%H:%M") %> – <%= booking.ends_at.strftime("%H:%M") %>
+          </span>
+        </div>
+        <div class="booking-card__actions">
+          <span class="booking-badge booking-badge--active">Ativa</span>
+          <%= button_to "Cancelar",
+                dashboard_court_booking_path(court_id: @court, id: booking),
+                method: :delete,
+                data: { turbo_confirm: "Cancelar a reserva de #{booking.user.name}?" },
+                class: "sched-btn sched-btn--danger sched-btn--sm" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<%# Past bookings %>
+<div class="sched-bookings-header">
+  <p class="dash-section-label">Histórico</p>
+</div>
+
+<% if @past.empty? %>
+  <div class="sched-empty" style="padding: 2rem;">
+    <i class="bi bi-clock-history"></i>
+    <p>Nenhum histórico disponível.</p>
+  </div>
+<% else %>
+  <div class="bookings-list">
+    <% @past.each do |booking| %>
+      <div class="booking-card booking-card--past">
+        <div class="booking-card__icon">
+          <i class="bi bi-person-fill"></i>
+        </div>
+        <div class="booking-card__info">
+          <span class="booking-card__court"><%= booking.user.name %></span>
+          <span class="booking-card__datetime">
+            <%= booking.date.strftime("%d/%m/%Y") %> · <%= booking.starts_at.strftime("%H:%M") %> – <%= booking.ends_at.strftime("%H:%M") %>
+          </span>
+        </div>
+        <div class="booking-card__actions">
+          <span class="booking-badge booking-badge--locked">Concluída</span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

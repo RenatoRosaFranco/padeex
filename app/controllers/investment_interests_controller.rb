@@ -7,9 +7,10 @@ class InvestmentInterestsController < ApplicationController
   verify_recaptcha only: [:create]
 
   def create
-    @interest = InvestmentInterest.new(interest_params)
-    @success = @interest.save
-    @error_msg = @interest.errors.full_messages.first unless @success
+    result = Actions::Create.call(model: InvestmentInterest, attributes: interest_params)
+    @success = result.success?
+    @interest = result.record
+    @error_msg = result.errors&.first unless @success
 
     respond_to do |format|
       format.turbo_stream

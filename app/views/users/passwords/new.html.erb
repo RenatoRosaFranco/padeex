@@ -1,0 +1,32 @@
+<div class="auth-wrapper">
+  <%= link_to root_path, class: "auth-logo-link" do %>
+    <%= image_tag "logo_padex_branco.png", alt: "PADEX", class: "auth-logo" %>
+  <% end %>
+
+  <div class="auth-card">
+    <h1 class="auth-title">Esqueci minha senha</h1>
+    <p class="auth-sub">Enviaremos um link para redefinir sua senha</p>
+
+    <% if alert %>
+      <div class="auth-alert-error"><%= alert %></div>
+    <% end %>
+    <% if notice %>
+      <div class="auth-alert-notice"><%= notice %></div>
+    <% end %>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <div class="auth-field">
+        <%= f.label :email, "E-mail", class: "auth-label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email",
+              class: "auth-input", placeholder: "seu@email.com" %>
+      </div>
+
+      <%= f.submit "Enviar instruções", class: "auth-btn" %>
+    <% end %>
+  </div>
+
+  <p class="auth-footer">
+    Lembrou a senha?
+    <%= link_to "Entrar", new_user_session_path, class: "auth-link" %>
+  </p>
+</div>

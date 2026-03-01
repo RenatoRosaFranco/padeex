@@ -1,31 +1,165 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
+---
 en:
   hello: "Hello world"
+
+  onboarding:
+    welcome: "Welcome to Padex!"
+
+  flash:
+    booking:
+      cancelled: "Booking cancelled"
+      confirmed: "Reservation confirmed for %{date} at %{time}"
+    court:
+      created: "Court \"%{name}\" created successfully"
+      updated: "Court \"%{name}\" updated"
+    time_block:
+      created: "Time block created"
+      removed: "Time block removed"
+    feature_flag:
+      enabled: "Flag '%{key}' enabled"
+      disabled: "Flag '%{key}' disabled"
+    instructor:
+      created: "Instructor \"%{name}\" added"
+      updated: "Instructor updated"
+      removed: "Instructor removed"
+    profile:
+      updated: "Profile updated successfully"
+    tournament:
+      created: "Tournament \"%{name}\" created successfully"
+      updated: "Tournament updated"
+      removed: "Tournament removed"
+    tournament_category:
+      created: "Category \"%{name}\" created"
+      updated: "Category updated"
+      removed: "Category removed"
+    tournament_registration:
+      created: "Registration completed! Awaiting confirmation."
+      status_updated: "Status updated"
+      removed: "Registration removed"
+    tournament_match:
+      created: "Match created"
+      updated: "Match updated"
+      removed: "Match removed"
+    tournament_group:
+      created: "Group \"%{name}\" created"
+      updated: "Group updated"
+      removed: "Group removed"
+    tournament_group_membership:
+      created: "%{member} added to %{group}"
+      removed: "Pair removed from group"
+
+  tournament_category:
+    gender_labels:
+      masculine: "Men's"
+      feminine: "Women's"
+      mixed: "Mixed"
+
+  tournament_registration:
+    status_labels:
+      pending: "Pending Registration"
+      confirmed: "Confirmed Registration"
+      waitlisted: "Waitlist"
+
+  activerecord:
+    errors:
+      models:
+        court:
+          attributes:
+            name:
+              taken_in_club: "already exists in this club"
+
+        instructor:
+          attributes:
+            internal_code:
+              taken: "is already in use at this club"
+
+        booking:
+          attributes:
+            date:
+              invalid_past: "cannot be in the past"
+            starts_at:
+              out_of_hours: "outside business hours (%{hours})"
+              already_reserved: "time slot already reserved"
+              blocked: "time slot is blocked"
+
+        tournament_match:
+          attributes:
+            base:
+              different_pairs: "The pairs must be different"
+
+        tournament:
+          attributes:
+            ends_on:
+              after_start: "must be after start date"
+
+        time_block:
+          attributes:
+            date:
+              invalid_past: "cannot be in the past"
+            ends_at:
+              before_start: "must be after start time"
+
+        investment_interest:
+          attributes:
+            email:
+              invalid: "Invalid email"
+
+        waitlist_entry:
+          attributes:
+            email:
+              invalid: "Invalid email"
+              taken: "is already on the list"
+
+        tournament_registration:
+          attributes:
+            user_id:
+              already_registered: "is already registered in this category"
+
+        follow:
+          attributes:
+            base:
+              cannot_follow_self: "You cannot follow yourself"
+
+        user:
+          attributes:
+            accepted_terms:
+              accepted: "must be accepted to create an account"
+
+        user_profile:
+          attributes:
+            username:
+              invalid: "can only contain letters, numbers, dots and underscores"
+
+  errors:
+    not_found: "Not found"
+    court_not_found: "Court not found"
+    time_block_not_found: "Time block not found"
+    admin_required: "Access restricted to administrators"
+    club_required: "Area exclusive to clubs"
+    invalid_date_or_time: "Invalid date or time"
+    unauthorized: "Unauthorized"
+    cancellation_not_allowed: "Cancellation not allowed. Minimum notice: %{hours} hours before start."
+    booking_not_found: "Booking not found"
+    date_invalid_past: "Date cannot be in the past"
+    date_invalid_format: "Invalid date. Use YYYY-MM-DD format"
+    post_not_found: "Article not found"
+    instructor_not_found: "Instructor not found"
+    tournament_not_found: "Tournament not found"
+    tournament_category_not_found: "Category not found"
+    tournament_registration_not_found: "Registration not found"
+    tournament_registration_already_registered: "You are already registered in this category"
+    tournament_registration_club_only: "Only the club can change the status"
+    tournament_registration_status_failed: "Failed to update status"
+    tournament_match_not_found: "Match not found"
+    tournament_group_not_found: "Group not found"
+    tournament_group_membership_not_found: "Pair not found"
+    messages:
+      blank:          "can't be blank"
+      taken:          "has already been taken"
+      too_short:      "is too short (minimum is %{count} characters)"
+      too_long:       "is too long (maximum is %{count} characters)"
+      invalid:        "is invalid"
+      confirmation:   "doesn't match"
+      accepted:       "must be accepted"
+      not_a_number:   "is not a number"
+      record_invalid: "Validation failed: %{errors}"

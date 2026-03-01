@@ -1,0 +1,88 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow"><%= link_to "Quadras", dashboard_admin_courts_path, class: "back-link" %> / Bloqueios</p>
+  <h1 class="dash-welcome-title"><%= @court.name %></h1>
+  <p class="dash-welcome-sub">Gerencie bloqueios de horário para manutenção ou eventos.</p>
+</div>
+
+<% if flash[:notice] %>
+  <div class="sched-flash sched-flash--success"><%= flash[:notice] %></div>
+<% end %>
+
+<%# Date filter %>
+<div class="sched-date-picker" style="margin-bottom: 2rem;">
+  <label class="sched-label">Filtrar por data</label>
+  <input type="date"
+         class="sched-date-input"
+         value="<%= @date %>"
+         onchange="window.location = '<%= dashboard_admin_court_time_blocks_path(@court) %>?date=' + this.value">
+</div>
+
+<%# New block form %>
+<p class="dash-section-label">Novo Bloqueio</p>
+<div class="analytics-card" style="margin-bottom: 2rem; max-width: 560px;">
+  <% if @time_block.errors.any? %>
+    <div class="sched-flash sched-flash--error"><%= @time_block.errors.full_messages.first %></div>
+  <% end %>
+
+  <%= form_with model: [:dashboard, :admin, @court, @time_block], local: true, class: "sched-form sched-form--inline" do |f| %>
+    <div class="sched-field">
+      <%= f.label :date, "Data", class: "sched-label" %>
+      <%= f.date_field :date, class: "sched-input", value: @date, min: Date.current %>
+    </div>
+    <div class="sched-form-row">
+      <div class="sched-field">
+        <%= f.label :starts_at, "Início", class: "sched-label" %>
+        <%= f.time_field :starts_at, class: "sched-input" %>
+      </div>
+      <div class="sched-field">
+        <%= f.label :ends_at, "Fim", class: "sched-label" %>
+        <%= f.time_field :ends_at, class: "sched-input" %>
+      </div>
+    </div>
+    <div class="sched-field">
+      <%= f.label :reason, "Motivo", class: "sched-label" %>
+      <%= f.text_field :reason, class: "sched-input", placeholder: "Ex: Manutenção, Torneio..." %>
+    </div>
+    <div class="sched-form-actions">
+      <%= f.submit "Bloquear horário", class: "sched-btn sched-btn--primary" %>
+    </div>
+  <% end %>
+</div>
+
+<%# Existing blocks %>
+<p class="dash-section-label">Bloqueios em <%= l(@date, format: :long) %></p>
+<% if @time_blocks.empty? %>
+  <div class="sched-empty">
+    <i class="bi bi-calendar-check"></i>
+    <p>Nenhum bloqueio para esta data.</p>
+  </div>
+<% else %>
+  <div class="analytics-card analytics-table-card">
+    <table class="analytics-table">
+      <thead>
+        <tr>
+          <th>Início</th>
+          <th>Fim</th>
+          <th>Motivo</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @time_blocks.each do |block| %>
+          <tr>
+            <td><%= block.starts_at.strftime("%H:%M") %></td>
+            <td><%= block.ends_at.strftime("%H:%M") %></td>
+            <td><%= block.reason %></td>
+            <td>
+              <%= button_to "Remover",
+                            dashboard_admin_court_time_block_path(@court, block),
+                            method: :delete,
+                            data: { turbo_confirm: "Remover este bloqueio?" },
+                            class: "sched-btn sched-btn--danger sched-btn--sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

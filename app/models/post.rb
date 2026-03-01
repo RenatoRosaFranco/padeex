@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
+  include BelongsToTenant
+
+  # Friendly ID
   extend FriendlyId
   friendly_id :title, use: :slugged
 
@@ -12,17 +15,15 @@ class Post < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
 
-  COVER_PLACEHOLDER = "https://placehold.co/800x400/0f1022/4ade80?text=PADEX"
-
-  # @return [Boolean] true se o post tem data de publicação e já foi publicada
-  def published?
-    published_at.present? && published_at <= Time.current
+  # @param width [Integer] placeholder width (default 800)
+  # @param height [Integer] placeholder height (default 400)
+  # @param text [String] placeholder text (default: post title or "PADEX")
+  # @return [String] cover image URL or placeholder when absent
+  def cover_url(width: 800, height: 400, text: nil)
+    cover.presence || PlaceholderImage.url(width: width, height: height, text: text)
   end
 
-  def cover_url
-    cover.presence || COVER_PLACEHOLDER
-  end
-
+  # @return [String] author initials (first letters of the first two names)
   def author_initials
     author.split.first(2).map { |w| w[0].upcase }.join
   end

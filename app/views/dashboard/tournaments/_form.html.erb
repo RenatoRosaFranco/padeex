@@ -1,0 +1,83 @@
+<% if tournament.errors.any? %>
+  <div class="sched-flash sched-flash--error">
+    <%= tournament.errors.full_messages.first %>
+  </div>
+<% end %>
+
+<%= form_with model: [:dashboard, tournament], local: true, multipart: true, class: "sched-form" do |f| %>
+  <div class="sched-form-grid">
+    <div class="sched-field" style="grid-column: 1 / -1;">
+      <%= f.label :name, "Nome do Torneio", class: "sched-label" %>
+      <%= f.text_field :name, class: "sched-input", placeholder: "Ex: Copa Verão de Padel" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :starts_on, "Data de Início", class: "sched-label" %>
+      <%= f.date_field :starts_on, class: "sched-input" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :ends_on, "Data de Término", class: "sched-label" %>
+      <%= f.date_field :ends_on, class: "sched-input" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :status, "Status", class: "sched-label" %>
+      <%= f.select :status,
+                   Tournament.status_labels.map { |k, l| [l, k.to_s] },
+                   {},
+                   class: "sched-input" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :format, "Formato", class: "sched-label" %>
+      <%= f.select :format,
+                   Tournament.format_labels.map { |k, l| [l, k.to_s] },
+                   { include_blank: "Selecione..." },
+                   class: "sched-input" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :max_teams, "Máx. de Times", class: "sched-label" %>
+      <%= f.number_field :max_teams, class: "sched-input", placeholder: "Ex: 16", min: 2 %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :entry_fee, "Taxa de Inscrição (R$)", class: "sched-label" %>
+      <%= f.number_field :entry_fee, class: "sched-input", placeholder: "0,00", step: "0.01", min: 0 %>
+    </div>
+
+    <div class="sched-field" style="grid-column: 1 / -1;">
+      <%= f.label :description, "Descrição", class: "sched-label" %>
+      <%= f.text_area :description, class: "sched-input sched-textarea", placeholder: "Informações adicionais sobre o torneio..." %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :banner, "Banner do Torneio", class: "sched-label" %>
+      <p class="sched-hint" style="margin-bottom: .4rem;">Imagem de destaque (JPG, PNG — recomendado 1200×400px)</p>
+      <% if tournament.banner.attached? %>
+        <div class="tnmt-form-preview">
+          <%= image_tag tournament.banner, class: "tnmt-form-preview__img" %>
+        </div>
+      <% end %>
+      <%= f.file_field :banner, class: "sched-input", accept: "image/*" %>
+    </div>
+
+    <div class="sched-field">
+      <%= f.label :edital, "Edital (PDF)", class: "sched-label" %>
+      <p class="sched-hint" style="margin-bottom: .4rem;">Regulamento e regras do torneio em formato PDF</p>
+      <% if tournament.edital.attached? %>
+        <div class="tnmt-form-preview tnmt-form-preview--file">
+          <i class="bi bi-file-earmark-pdf-fill"></i>
+          <%= link_to tournament.edital.filename, url_for(tournament.edital), target: "_blank", class: "tnmt-file-link" %>
+        </div>
+      <% end %>
+      <%= f.file_field :edital, class: "sched-input", accept: "application/pdf" %>
+    </div>
+  </div>
+
+  <div class="sched-form-actions">
+    <%= f.submit tournament.new_record? ? "Criar Torneio" : "Salvar Alterações", class: "sched-btn sched-btn--primary" %>
+    <%= link_to "Cancelar", tournament.new_record? ? dashboard_tournaments_path : dashboard_tournament_path(tournament), class: "sched-btn sched-btn--ghost" %>
+  </div>
+<% end %>

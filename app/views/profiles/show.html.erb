@@ -1,0 +1,213 @@
+<div class="prf">
+
+  <%# ── Cover + Avatar ─────────────────────────────── %>
+  <div class="prf-cover">
+    <div class="prf-cover__bg"></div>
+    <div class="prf-avatar-wrap">
+      <% if @target_user.club? && @profile&.logo&.attached? %>
+        <%= image_tag @profile.logo, class: "prf-avatar prf-avatar--img", alt: @profile.club_name %>
+      <% elsif !@target_user.club? && @profile&.avatar&.attached? %>
+        <%= image_tag @profile.avatar, class: "prf-avatar prf-avatar--img", alt: @target_user.name %>
+      <% else %>
+        <div class="prf-avatar prf-avatar--initials">
+          <%= @target_user.initials %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%# ── Body ───────────────────────────────────────── %>
+  <div class="prf-body">
+
+    <%# Top: info + action %>
+    <div class="prf-top">
+      <div class="prf-info">
+        <h1 class="prf-name"><%= @target_user.club? ? @profile&.club_name : @target_user.name %></h1>
+
+        <% if !@target_user.club? && @profile&.username.present? %>
+          <span class="prf-username">@<%= @profile.username %></span>
+        <% end %>
+
+        <% blurb = @target_user.club? ? @profile&.description : @profile&.bio %>
+        <% if blurb.present? %>
+          <p class="prf-bio"><%= blurb %></p>
+        <% end %>
+
+        <div class="prf-meta">
+          <% if @target_user.club? %>
+            <% if @profile&.address.present? %>
+              <span class="prf-meta-item"><i class="bi bi-geo-alt-fill"></i> <%= @profile.address %></span>
+            <% end %>
+            <% if @profile&.website.present? %>
+              <%= link_to @profile.website, class: "prf-meta-item prf-meta-item--link", target: "_blank", rel: "noopener" do %>
+                <i class="bi bi-globe"></i> <%= @profile.website.gsub(/https?:\/\//, "") %>
+              <% end %>
+            <% end %>
+          <% else %>
+            <% if @profile&.gender.present? %>
+              <% label = { "male" => "Masculino", "female" => "Feminino", "other" => "Outro" }[@profile.gender] %>
+              <span class="prf-meta-item"><i class="bi bi-person-fill"></i> <%= label || @profile.gender %></span>
+            <% end %>
+            <% if @profile&.birth_date.present? %>
+              <% age = ((Date.today - @profile.birth_date) / 365.25).floor %>
+              <span class="prf-meta-item"><i class="bi bi-cake2-fill"></i> <%= age %> anos</span>
+            <% end %>
+          <% end %>
+          <span class="prf-meta-item"><i class="bi bi-calendar3"></i> Desde <%= @target_user.created_at.strftime("%b %Y") %></span>
+        </div>
+      </div>
+
+      <div class="prf-actions">
+        <% if @is_owner %>
+          <%= link_to edit_my_profile_path, class: "prf-btn prf-btn--outline" do %>
+            <i class="bi bi-pencil-fill"></i> Editar perfil
+          <% end %>
+        <% elsif @follow_record&.accepted? %>
+          <%= button_to dashboard_follow_path(@follow_record), method: :delete,
+                class: "prf-btn prf-btn--outline",
+                data: { turbo_confirm: "Deixar de seguir #{@target_user.name}?" } do %>
+            <i class="bi bi-person-check-fill"></i> Seguindo
+          <% end %>
+        <% elsif @follow_record&.pending? %>
+          <%= button_to dashboard_follow_path(@follow_record), method: :delete,
+                class: "prf-btn prf-btn--muted" do %>
+            <i class="bi bi-hourglass-split"></i> Solicitado
+          <% end %>
+        <% else %>
+          <%= form_with url: dashboard_follows_path, method: :post, local: true do %>
+            <%= hidden_field_tag :followed_id, @target_user.id %>
+            <%= submit_tag "Seguir", class: "prf-btn prf-btn--primary" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Stats %>
+    <div class="prf-stats">
+      <% if @target_user.club? %>
+        <div class="prf-stat">
+          <span class="prf-stat__value"><%= @target_user.courts.count %></span>
+          <span class="prf-stat__label">Quadras</span>
+        </div>
+        <div class="prf-stat">
+          <span class="prf-stat__value"><%= @target_user.tournaments.count %></span>
+          <span class="prf-stat__label">Torneios</span>
+        </div>
+        <div class="prf-stat">
+          <span class="prf-stat__value"><%= @target_user.instructors.count %></span>
+          <span class="prf-stat__label">Instrutores</span>
+        </div>
+      <% else %>
+        <div class="prf-stat">
+          <span class="prf-stat__value"><%= @target_user.bookings.count %></span>
+          <span class="prf-stat__label">Partidas</span>
+        </div>
+        <div class="prf-stat">
+          <span class="prf-stat__value"><%= @following_count || @target_user.following.count %></span>
+          <span class="prf-stat__label">Seguindo</span>
+        </div>
+        <div class="prf-stat">
+          <span class="prf-stat__value"><%= @followers_count || @target_user.followers.count %></span>
+          <span class="prf-stat__label">Seguidores</span>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Content ────────────────────────────────────── %>
+    <div class="prf-content">
+
+      <% if @target_user.club? %>
+        <%# Club: contact card %>
+        <% if @profile.present? %>
+          <section class="prf-section">
+            <h2 class="prf-section__title">Informações do Clube</h2>
+            <ul class="prf-info-list">
+              <% if @profile.phone.present? %>
+                <li class="prf-info-item">
+                  <i class="bi bi-telephone-fill"></i>
+                  <span><%= @profile.phone %></span>
+                </li>
+              <% end %>
+              <% if @profile.email.present? %>
+                <li class="prf-info-item">
+                  <i class="bi bi-envelope-fill"></i>
+                  <%= link_to @profile.email, "mailto:#{@profile.email}", class: "prf-info-link" %>
+                </li>
+              <% end %>
+              <% if @profile.address.present? %>
+                <li class="prf-info-item">
+                  <i class="bi bi-geo-alt-fill"></i>
+                  <span><%= @profile.address %></span>
+                </li>
+              <% end %>
+              <% if @profile.website.present? %>
+                <li class="prf-info-item">
+                  <i class="bi bi-globe"></i>
+                  <%= link_to @profile.website, @profile.website, class: "prf-info-link", target: "_blank", rel: "noopener" %>
+                </li>
+              <% end %>
+            </ul>
+          </section>
+        <% end %>
+
+        <%# Club: courts %>
+        <% courts = @target_user.courts %>
+        <% if courts.any? %>
+          <section class="prf-section">
+            <h2 class="prf-section__title">Quadras</h2>
+            <div class="prf-courts-grid">
+              <% courts.each do |court| %>
+                <div class="prf-court-card">
+                  <div class="prf-court-card__icon"><i class="bi bi-grid-3x3-gap-fill"></i></div>
+                  <div>
+                    <p class="prf-court-card__name"><%= court.name %></p>
+                    <p class="prf-court-card__type"><%= court.respond_to?(:surface) ? court.surface : "Padel" %></p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </section>
+        <% end %>
+
+        <%# Club: active tournaments %>
+        <% tournaments = @target_user.tournaments.where(status: [:registration_open, :in_progress]) rescue @target_user.tournaments %>
+        <% if tournaments.any? %>
+          <section class="prf-section">
+            <h2 class="prf-section__title">Torneios</h2>
+            <div class="prf-tournament-list">
+              <% tournaments.each do |t| %>
+                <div class="prf-tournament-item">
+                  <div class="prf-tournament-item__info">
+                    <p class="prf-tournament-item__name"><%= t.name %></p>
+                    <p class="prf-tournament-item__dates"><%= t.starts_on&.strftime("%d/%m/%Y") %> – <%= t.ends_on&.strftime("%d/%m/%Y") %></p>
+                  </div>
+                  <span class="prf-badge"><%= t.status.to_s.humanize %></span>
+                </div>
+              <% end %>
+            </div>
+          </section>
+        <% end %>
+
+      <% else %>
+        <%# User: info card %>
+        <section class="prf-section">
+          <h2 class="prf-section__title">Sobre</h2>
+          <% if @profile.blank? || (@profile.bio.blank? && @profile.gender.blank?) %>
+            <p class="prf-empty"><%= @is_owner ? "Complete seu perfil para aparecer aqui." : "Nenhuma informação disponível." %></p>
+          <% else %>
+            <ul class="prf-info-list">
+              <% if @profile&.bio.present? %>
+                <li class="prf-info-item"><i class="bi bi-chat-quote-fill"></i><span><%= @profile.bio %></span></li>
+              <% end %>
+              <% if @is_owner && @target_user.mobile_number.present? %>
+                <li class="prf-info-item"><i class="bi bi-telephone-fill"></i><span><%= @target_user.mobile_number %></span></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </section>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>

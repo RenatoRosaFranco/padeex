@@ -1,0 +1,12 @@
+<section class="fsugg">
+  <div class="fsugg__header">
+    <span class="fsugg__title">Sugestões para você</span>
+    <a href="#" class="fsugg__see-all">Ver tudo</a>
+  </div>
+
+  <div class="fsugg__scroll">
+    <% suggestions.each do |suggestion| %>
+      <%= render Feed::SuggestionCardComponent.new(suggestion: suggestion) %>
+    <% end %>
+  </div>
+</section>
