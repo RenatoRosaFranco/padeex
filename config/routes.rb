@@ -28,6 +28,10 @@ Rails.application.routes.draw do
     mount Lookbook::Engine, at: "/lookbook"
   end
 
+  # Payment webhooks (no CSRF, no auth).
+  post "webhooks/stripe",  to: "webhooks/stripe#create"
+  post "webhooks/openpix", to: "webhooks/openpix#create"
+
   # Root.
   root "landing#index"
   resource :waitlist, only: [:create]
@@ -128,6 +132,13 @@ Rails.application.routes.draw do
 
     # For all users: their own bookings.
     resources :bookings, only: [:index, :destroy], path: "minhas-reservas"
+
+    # Payments.
+    namespace :payments do
+      resources :checkouts, only: [:create]
+      resources :pix,       only: [:show]
+    end
+    resources :orders, only: [:index], path: "pedidos"
 
     # System admin: manage all courts and time blocks.
     namespace :admin do

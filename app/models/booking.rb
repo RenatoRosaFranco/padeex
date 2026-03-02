@@ -7,9 +7,10 @@ class Booking < ApplicationRecord
   # Associations
   belongs_to :court
   belongs_to :user
+  has_one :order, as: :orderable, dependent: :destroy
 
   # Enums
-  enum :status, { active: "active", cancelled: "cancelled" }
+  enum :status, { pending_payment: "pending_payment", active: "active", cancelled: "cancelled" }
 
   # Validations
   validates :date, presence: true
@@ -25,6 +26,12 @@ class Booking < ApplicationRecord
   # Scopes
   scope :active,    -> { where(status: :active) }
   scope :for_date,  ->(date) { where(date: date) }
+  scope :occupying, -> { where(status: [:active, :pending_payment]) }
+
+  # @return [Boolean] true when court, date, starts_at and ends_at are present (required for schedule validations)
+  def schedule_attributes_present?
+    court_id.present? && date.present? && starts_at.present? && ends_at.present?
+  end
 
   # @return [Boolean] true when booking is active and within cancellation window
   def cancellable?

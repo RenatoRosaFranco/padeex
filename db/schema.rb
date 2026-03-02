@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_28_200015) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_01_000005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,6 +78,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_28_200015) do
     t.bigint "club_id"
     t.string "court_type", null: false
     t.datetime "created_at", null: false
+    t.integer "hourly_rate_cents"
     t.string "name", null: false
     t.string "status", default: "active", null: false
     t.bigint "tenant_id"
@@ -144,6 +145,47 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_28_200015) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_investment_interests_on_email"
     t.index ["tenant_id"], name: "index_investment_interests_on_tenant_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "amount_cents", null: false
+    t.string "cancel_url"
+    t.datetime "created_at", null: false
+    t.string "currency", default: "brl", null: false
+    t.string "openpix_correlation_id"
+    t.bigint "orderable_id", null: false
+    t.string "orderable_type", null: false
+    t.datetime "paid_at"
+    t.text "pix_brcode"
+    t.datetime "pix_expires_at"
+    t.string "pix_qrcode_url"
+    t.string "status", default: "pending", null: false
+    t.string "stripe_checkout_session_id"
+    t.string "success_url"
+    t.bigint "tenant_id"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["openpix_correlation_id"], name: "index_orders_on_openpix_correlation_id", unique: true, where: "(openpix_correlation_id IS NOT NULL)"
+    t.index ["orderable_type", "orderable_id"], name: "index_orders_on_orderable"
+    t.index ["stripe_checkout_session_id"], name: "index_orders_on_stripe_checkout_session_id", unique: true
+    t.index ["tenant_id"], name: "index_orders_on_tenant_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "amount_cents", null: false
+    t.datetime "created_at", null: false
+    t.string "currency", default: "brl", null: false
+    t.bigint "order_id", null: false
+    t.string "payment_method_type"
+    t.string "status", null: false
+    t.string "stripe_payment_intent_id"
+    t.jsonb "stripe_raw"
+    t.bigint "tenant_id"
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_payments_on_order_id"
+    t.index ["stripe_payment_intent_id"], name: "index_payments_on_stripe_payment_intent_id", unique: true, where: "(stripe_payment_intent_id IS NOT NULL)"
+    t.index ["tenant_id"], name: "index_payments_on_tenant_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -355,6 +397,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_28_200015) do
   add_foreign_key "instructors", "users"
   add_foreign_key "instructors", "users", column: "club_id"
   add_foreign_key "investment_interests", "tenants"
+  add_foreign_key "orders", "users"
+  add_foreign_key "payments", "orders"
   add_foreign_key "posts", "tenants"
   add_foreign_key "time_blocks", "courts"
   add_foreign_key "time_blocks", "tenants"

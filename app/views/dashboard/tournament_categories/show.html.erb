@@ -109,7 +109,9 @@
 
     <%# Registration form for regular users %>
     <% unless is_club_owner %>
-      <div class="analytics-card" style="margin-bottom: 1rem;">
+      <% paid = @category.entry_fee&.positive? %>
+      <div class="analytics-card" style="margin-bottom: 1rem;"
+           <%= "data-controller=payment-modal".html_safe if paid %>>
         <% if @my_registration %>
           <div class="tnmt-my-reg">
             <div>
@@ -131,7 +133,11 @@
           <p class="tournament-detail-label" style="margin-bottom: 1rem;">Inscrever-se nesta categoria</p>
           <%= form_with url: dashboard_tournament_category_registrations_path(@tournament, @category),
                 method: :post, local: true, class: "sched-form",
-                data: { controller: "onboarding-form" } do %>
+                data: { controller: "onboarding-form", **(paid ? { "payment-modal-target": "form" } : {}) } do %>
+            <% if paid %>
+              <input type="hidden" name="payment_method" value="card"
+                     data-payment-modal-target="paymentMethod">
+            <% end %>
             <div class="sched-form-grid">
               <div class="sched-field">
                 <%= label_tag :partner_name, "Nome do parceiro(a)", class: "sched-label" %>
@@ -147,7 +153,45 @@
               </div>
             </div>
             <div class="sched-form-actions">
-              <%= submit_tag "Solicitar Inscrição", class: "sched-btn sched-btn--primary" %>
+              <% if paid %>
+                <button type="button" class="sched-btn sched-btn--primary"
+                        data-action="click->payment-modal#open">
+                  <i class="bi bi-credit-card"></i> Inscrever e Pagar
+                </button>
+              <% else %>
+                <%= submit_tag "Solicitar Inscrição", class: "sched-btn sched-btn--primary" %>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% if paid %>
+            <div data-payment-modal-target="modal" hidden>
+              <div class="pay-modal-overlay">
+                <div class="pay-modal">
+                  <p class="pay-modal__title">Confirmar inscrição</p>
+                  <p class="pay-modal__desc"><%= @category.name %></p>
+                  <p class="pay-modal__amount">R$ <%= number_with_precision(@category.entry_fee, precision: 2, delimiter: ".", separator: ",") %></p>
+                  <p class="pay-modal__label">Forma de pagamento</p>
+                  <div class="pay-modal__options">
+                    <button type="button" class="pay-option"
+                            data-action="click->payment-modal#confirm"
+                            data-payment-modal-method-param="card">
+                      <i class="bi bi-credit-card-2-front-fill"></i>
+                      Cartão de Crédito
+                    </button>
+                    <button type="button" class="pay-option"
+                            data-action="click->payment-modal#confirm"
+                            data-payment-modal-method-param="pix">
+                      <i class="bi bi-qr-code"></i>
+                      PIX
+                    </button>
+                  </div>
+                  <button type="button" class="pay-modal__cancel"
+                          data-action="click->payment-modal#close">
+                    Cancelar
+                  </button>
+                </div>
+              </div>
             </div>
           <% end %>
         <% elsif @category.full? %>

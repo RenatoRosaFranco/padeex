@@ -17,12 +17,13 @@ class BookingCreatorService < ApplicationService
   end
 
   # Creates booking with row-level lock to prevent race conditions.
-  # @return [Booking] the created booking
+  # @return [Booking] the booking — check +persisted?+ or +errors+ on failure
   def call
     booking = nil
 
     @court.with_lock do
       ends_at = Time.zone.parse("#{@date} #{@starts_at}") + BookingSchedule::SLOT_DURATION.minutes
+      paid_court = @court.hourly_rate_cents.to_i > 0
 
       booking = Booking.new(
         court:     @court,
@@ -30,10 +31,16 @@ class BookingCreatorService < ApplicationService
         date:      @date,
         starts_at: @starts_at,
         ends_at:   ends_at.strftime("%H:%M:%S"),
-        status:    :active
+        status:    paid_court ? :pending_payment : :active
       )
 
       booking.save
+
+      if booking.persisted? && paid_court
+        Payments::ExpirePendingBookingJob
+          .set(wait: 15.minutes)
+          .perform_later(booking.id)
+      end
     end
 
     booking

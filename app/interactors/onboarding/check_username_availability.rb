@@ -2,12 +2,15 @@
 
 module Onboarding
   # Checks if a username is available for the current user.
-  # Sets context.available (Boolean) and context.reason (:invalid when format/length invalid).
+  # Normalizes the input, validates format, and performs a DB lookup.
+  #
+  # This interactor always succeeds — it never calls fail_with!.
+  # Read result.available, not result.success?, to determine availability.
   #
   # @example
   #   result = Onboarding::CheckUsernameAvailability.call(username: "johndoe", current_user: user)
   #   result.available # => true/false
-  #   result.reason    # => :invalid when username format invalid
+  #   result.reason    # => :invalid when username format is invalid, nil otherwise
   class CheckUsernameAvailability < BaseInteractor
     delegate :username, :current_user, to: :context
 
@@ -22,13 +25,13 @@ module Onboarding
 
       existing = UserProfile.where("LOWER(username) = ?", normalized).first
       context.available = existing.nil? || existing.user_id == current_user.id
-      context.reason = nil
     end
 
     private
 
-    def invalid_format?(str)
-      str.length < 3 || !str.match?(/\A[a-z0-9._]+\z/)
+    # @return [Boolean] true when length < 3 or contains invalid chars
+    def invalid_format?(normalized)
+      normalized.length < 3 || !normalized.match?(/\A[a-z0-9._]+\z/)
     end
   end
 end

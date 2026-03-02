@@ -7,7 +7,7 @@ class InvestmentInterestsController < ApplicationController
   verify_recaptcha only: [:create]
 
   def create
-    result = Actions::Create.call(model: InvestmentInterest, attributes: interest_params)
+    result = Actions::Create.call(scope: InvestmentInterest, attributes: interest_params)
     @success = result.success?
     @interest = result.record
     @error_msg = result.errors&.first unless @success

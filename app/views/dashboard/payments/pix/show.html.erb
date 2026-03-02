@@ -1,0 +1,86 @@
+<% if @order.paid? %>
+  <%# ── Success state ─────────────────────────────────── %>
+  <div class="dash-welcome" style="text-align: center;">
+    <div style="font-size: 3rem; color: var(--px-green); margin-bottom: 1rem;">
+      <i class="bi bi-patch-check-fill"></i>
+    </div>
+    <h1 class="dash-welcome-title"><%= t("flash.payment.success") %></h1>
+    <p class="dash-welcome-sub"><%= @order.description %></p>
+    <div style="margin-top: 1.5rem;">
+      <%= link_to t("pix.back_to_dashboard"), dashboard_path, class: "sched-btn sched-btn--primary" %>
+    </div>
+  </div>
+
+<% else %>
+  <%# Auto-refresh while processing %>
+  <meta http-equiv="refresh" content="8">
+
+  <div class="dash-welcome">
+    <h1 class="dash-welcome-title"><%= t("pix.title") %></h1>
+    <p class="dash-welcome-sub"><%= @order.description %></p>
+  </div>
+
+  <div class="pix-layout" data-controller="pix-copy">
+
+    <%# QR Code card %>
+    <div class="analytics-card pix-card">
+      <div class="pix-card__amount">
+        R$ <%= number_with_precision(@order.amount_brl, precision: 2, delimiter: ".", separator: ",") %>
+      </div>
+
+      <div class="pix-card__qr">
+        <% if @order.pix_qrcode_url.present? %>
+          <%= image_tag @order.pix_qrcode_url, alt: "QR Code PIX", class: "pix-card__qr-img" %>
+        <% else %>
+          <div class="pix-card__qr-placeholder">
+            <i class="bi bi-qr-code"></i>
+          </div>
+        <% end %>
+      </div>
+
+      <p class="pix-card__hint"><%= t("pix.scan_hint") %></p>
+
+      <% if @order.pix_expires_at.present? %>
+        <p class="pix-card__expiry">
+          <i class="bi bi-clock"></i>
+          <%= t("pix.expires_at", time: l(@order.pix_expires_at, format: :short)) %>
+        </p>
+      <% end %>
+    </div>
+
+    <%# Copy-paste card %>
+    <div class="analytics-card pix-card">
+      <p class="pix-card__label"><%= t("pix.copy_paste_label") %></p>
+
+      <div class="pix-copy-field">
+        <textarea class="pix-copy-field__code" rows="3" readonly
+                  data-pix-copy-target="code"><%= @order.pix_brcode %></textarea>
+        <button type="button" class="sched-btn sched-btn--primary pix-copy-field__btn"
+                data-pix-copy-target="button"
+                data-action="click->pix-copy#copy">
+          <i class="bi bi-clipboard"></i>
+          <%= t("pix.copy_btn") %>
+        </button>
+      </div>
+
+      <div class="pix-card__steps">
+        <p class="pix-card__steps-title"><%= t("pix.steps_title") %></p>
+        <ol class="pix-card__steps-list">
+          <li><%= t("pix.step_1") %></li>
+          <li><%= t("pix.step_2") %></li>
+          <li><%= t("pix.step_3") %></li>
+          <li><%= t("pix.step_4") %></li>
+        </ol>
+      </div>
+
+      <div class="pix-card__status">
+        <span class="pix-status pix-status--processing">
+          <i class="bi bi-arrow-repeat"></i>
+          <%= t("pix.status_waiting") %>
+        </span>
+        <p class="pix-card__auto-refresh"><%= t("pix.auto_refresh") %></p>
+      </div>
+    </div>
+
+  </div>
+<% end %>

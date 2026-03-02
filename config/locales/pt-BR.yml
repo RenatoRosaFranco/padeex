@@ -1,9 +1,38 @@
 ---
 pt-BR:
+  feature_flags:
+    descriptions:
+      smart_assistant: "Assistente inteligente na plataforma"
+      feed: "Feed de publicações (estilo Instagram) no dashboard"
+      released_app: "App lançado publicamente (exibe landing page de lançamento)"
+      store: "Loja de produtos de padel (navbar + página /loja)"
+
+  pix:
+    title: "Pague com PIX"
+    scan_hint: "Abra o app do seu banco e escaneie o QR Code"
+    copy_paste_label: "PIX Copia e Cola"
+    copy_btn: "Copiar código"
+    steps_title: "Como pagar com PIX Copia e Cola:"
+    step_1: "Copie o código acima"
+    step_2: "Abra o app do seu banco"
+    step_3: 'Escolha "PIX" → "Pagar" → "Copia e Cola"'
+    step_4: "Cole o código e confirme o pagamento"
+    status_waiting: "Aguardando pagamento..."
+    auto_refresh: "Esta página atualiza automaticamente"
+    expires_at: "Válido até %{time}"
+    back_to_dashboard: "Voltar ao início"
+
   onboarding:
     welcome: "Bem-vindo ao Padex!"
 
+  oauth:
+    invalid_data: "Dados OAuth inválidos"
+
   flash:
+    payment:
+      processing: "Pagamento em processamento. Sua inscrição será confirmada em instantes."
+      cancelled: "Pagamento cancelado."
+      success: "Pagamento confirmado!"
     booking:
       cancelled: "Reserva cancelada"
       confirmed: "Reserva confirmada para %{date} às %{time}"
@@ -278,7 +307,11 @@ pt-BR:
               blank: "não pode ficar em branco"
 
   errors:
+    payment_already_paid: "Este item já foi pago."
+    payment_not_authorized: "Não autorizado para pagar este item."
+    payment_failed: "Falha ao processar pagamento."
     not_found: "Não encontrado"
+    record_destroy_failed: "Falha ao remover registro"
     court_not_found: "Quadra não encontrada"
     time_block_not_found: "Bloqueio não encontrado"
     admin_required: "Acesso restrito a administradores"

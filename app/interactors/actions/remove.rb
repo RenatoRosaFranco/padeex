@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
 module Actions
-  class Remove
-    include Interactor
-
+  # Destroys a record. Fails if destruction is unsuccessful (e.g. blocked by callbacks).
+  #
+  # Context inputs:
+  #   - record [ActiveRecord::Base] record to destroy
+  class Remove < BaseInteractor
     def call
       context.record.destroy
-      context.fail! unless context.record.destroyed?
+      return if context.record.destroyed?
+
+      fail_with!(error: I18n.t("errors.record_destroy_failed"))
     end
   end
 end

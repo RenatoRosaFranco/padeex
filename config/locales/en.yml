@@ -2,10 +2,39 @@
 en:
   hello: "Hello world"
 
+  feature_flags:
+    descriptions:
+      smart_assistant: "Smart assistant on the platform"
+      feed: "Publication feed (Instagram-style) on the dashboard"
+      released_app: "App publicly released (shows launch landing page)"
+      store: "Padel products store (navbar + /store page)"
+
+  pix:
+    title: "Pay with PIX"
+    scan_hint: "Open your bank app and scan the QR Code"
+    copy_paste_label: "PIX Copy and Paste"
+    copy_btn: "Copy code"
+    steps_title: "How to pay with PIX Copy and Paste:"
+    step_1: "Copy the code above"
+    step_2: "Open your bank app"
+    step_3: 'Choose "PIX" → "Pay" → "Copy and Paste"'
+    step_4: "Paste the code and confirm the payment"
+    status_waiting: "Waiting for payment..."
+    auto_refresh: "This page updates automatically"
+    expires_at: "Valid until %{time}"
+    back_to_dashboard: "Back to home"
+
   onboarding:
     welcome: "Welcome to Padex!"
 
+  oauth:
+    invalid_data: "Invalid OAuth data"
+
   flash:
+    payment:
+      processing: "Payment processing. Your registration will be confirmed shortly."
+      cancelled: "Payment cancelled."
+      success: "Payment confirmed!"
     booking:
       cancelled: "Booking cancelled"
       confirmed: "Reservation confirmed for %{date} at %{time}"
@@ -131,7 +160,11 @@ en:
               invalid: "can only contain letters, numbers, dots and underscores"
 
   errors:
+    payment_already_paid: "This item has already been paid."
+    payment_not_authorized: "Not authorized to pay for this item."
+    payment_failed: "Failed to process payment."
     not_found: "Not found"
+    record_destroy_failed: "Failed to destroy record"
     court_not_found: "Court not found"
     time_block_not_found: "Time block not found"
     admin_required: "Access restricted to administrators"

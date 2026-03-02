@@ -4,9 +4,15 @@ require "rails/all"
 
 Bundler.require(*Rails.groups)
 
+# Define Resolvers antes dos initializers (necessário para push_dir com namespace)
+require File.expand_path("../lib/resolvers", __dir__)
+
 module Padeex
   class Application < Rails::Application
     config.load_defaults 8.1
+
+    # Exclui app/resolvers do autoload padrão (será carregado com namespace em initializers/resolvers.rb)
+    excl = config.paths["app"].instance_variable_get(:@exclude) and excl << "resolvers"
 
     config.autoload_lib(ignore: %w[assets tasks])
 

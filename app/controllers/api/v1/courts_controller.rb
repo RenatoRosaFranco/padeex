@@ -12,7 +12,7 @@ module Api
       end
 
       def create
-        result = Actions::Create.call(model: Court, attributes: court_params)
+        result = Actions::Create.call(scope: Court, attributes: court_params)
 
         if result.success?
           render json: result.record, serializer: CourtSerializer, status: :created

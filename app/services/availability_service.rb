@@ -57,11 +57,11 @@ class AvailabilityService < ApplicationService
 
   # @param slot_start [Time] slot start time
   # @param slot_end [Time] slot end time
-  # @return [Boolean] true when an active booking overlaps the slot
+  # @return [Boolean] true when an active or pending_payment booking overlaps the slot
   def booking_exists?(slot_start, slot_end)
     starts = slot_start.strftime("%H:%M:%S")
     ends   = slot_end.strftime("%H:%M:%S")
-    @court.bookings.active.where(date: @date)
+    @court.bookings.where(status: %i[active pending_payment], date: @date)
           .where("starts_at < ? AND ends_at > ?", ends, starts)
           .exists?
   end

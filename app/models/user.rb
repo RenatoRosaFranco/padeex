@@ -48,14 +48,20 @@ class User < ApplicationRecord
     name.split.first(2).map { |w| w[0] }.join.upcase
   end
 
+  # @param other [User] User to check
+  # @return [Boolean] true if following other with accepted status
   def following?(other)
     active_follows.accepted.exists?(followed_id: other.id)
   end
 
+  # @param other [User] User to check
+  # @return [Boolean] true if follow request to other is pending
   def requested?(other)
     active_follows.pending.exists?(followed_id: other.id)
   end
 
+  # @param other [User] User to find follow record with
+  # @return [Follow, nil] Follow record or nil if none exists
   def follow_record_with(other)
     active_follows.find_by(followed_id: other.id)
   end

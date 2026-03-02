@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "author_name": "Padeex",
+    "author_username": "padeex",
+    "author_initials": "PX",
+    "author_official": true,
+    "author_avatar_url": null,
+    "body": "Bem-vindo ao Padeex! Acompanhe torneios, reserve quadras e conecte-se com a comunidade do padel brasileiro. 🎾",
+    "image_url": "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=560&q=80",
+    "likes_count": 128,
+    "comments_count": 14,
+    "created_at": "2_hours_ago",
+    "liked": false
+  },
+  {
+    "id": 2,
+    "author_name": "Carlos Silva",
+    "author_username": "carlospadel",
+    "author_initials": "CS",
+    "author_official": false,
+    "author_avatar_url": null,
+    "body": "Treino incrível hoje no clube! Trabalhando o bandeja e o vibora. Quem quiser um racha, me chama! 💪",
+    "image_url": null,
+    "likes_count": 34,
+    "comments_count": 6,
+    "created_at": "5_hours_ago",
+    "liked": true
+  },
+  {
+    "id": 3,
+    "author_name": "Padeex",
+    "author_username": "padeex",
+    "author_initials": "PX",
+    "author_official": true,
+    "author_avatar_url": null,
+    "body": "🏆 Novo torneio disponível em São Paulo! Inscrições abertas até dia 10. Corra e garanta sua vaga.",
+    "image_url": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=560&q=80",
+    "likes_count": 87,
+    "comments_count": 22,
+    "created_at": "1_day_ago",
+    "liked": false
+  },
+  {
+    "id": 4,
+    "author_name": "Ana Rodrigues",
+    "author_username": "anapadel",
+    "author_initials": "AR",
+    "author_official": false,
+    "author_avatar_url": null,
+    "body": "Primeira vitória no torneio feminino do Padeex! 🥇 Muito obrigada a todos que torceram. Essa conquista é nossa!",
+    "image_url": null,
+    "likes_count": 61,
+    "comments_count": 18,
+    "created_at": "2_days_ago",
+    "liked": false
+  }
+]

@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class BookingSerializer < ActiveModel::Serializer
-  attributes :id, :court_id, :user_id, :date, :starts_at, :ends_at, :status, :tenant_id, :created_at
+  # Attributes
+  attributes :id, :court_id, :user_id, :date, :starts_at, :ends_at, 
+             :status, :tenant_id, :created_at, :updated_at
 
   # @return [String] start time formatted as "HH:MM"
   def starts_at

@@ -4498,3 +4498,130 @@
   transform: translateX(22px);
   background: #fff;
 }
+
+/* ── Payment modal ──────────────────────────────────────── */
+.pay-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(7, 8, 15, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.18s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.pay-modal {
+  background: #0f1022;
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  border-radius: 18px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  animation: fadeUp 0.22s ease;
+}
+.pay-modal__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--px-text);
+  margin-bottom: 0.25rem;
+}
+.pay-modal__desc {
+  font-size: 0.83rem;
+  color: var(--px-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+.pay-modal__amount {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--px-green);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.pay-modal__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--px-muted);
+  margin-bottom: 0.65rem;
+}
+.pay-modal__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-bottom: 1.1rem;
+}
+.pay-modal__cancel {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: none;
+  border: none;
+  color: var(--px-muted);
+  font-size: 0.83rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  font-family: "Inter", sans-serif;
+  border-radius: 8px;
+  transition: color 0.15s;
+}
+.pay-modal__cancel:hover {
+  color: var(--px-text);
+}
+
+.pay-option {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.85rem 1.1rem;
+  color: var(--px-text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  text-align: left;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+}
+.pay-option i {
+  font-size: 1.25rem;
+  color: var(--px-green);
+  flex-shrink: 0;
+}
+.pay-option:hover:not(:disabled) {
+  background: rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+.pay-option--soon {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+.pay-option--soon i {
+  color: var(--px-muted);
+}
+.pay-option__badge {
+  margin-left: auto;
+  font-size: 0.68rem;
+  background: rgba(136, 146, 176, 0.12);
+  color: var(--px-muted);
+  padding: 0.15rem 0.45rem;
+  border-radius: 5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}

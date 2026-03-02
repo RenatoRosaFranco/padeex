@@ -804,6 +804,7 @@ DEPENDENCIES
   draper
   factory_bot_rails
   faker
+  faraday (~> 2.0)
   ffaker
   flipper
   flipper-active_record

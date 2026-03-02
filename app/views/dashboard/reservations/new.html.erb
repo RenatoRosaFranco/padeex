@@ -1,11 +1,14 @@
+<% paid_court = @court.hourly_rate_cents.to_i > 0 %>
+
 <div class="dash-welcome">
   <p class="dash-welcome-eyebrow"><%= link_to "Quadras", dashboard_courts_path, class: "back-link" %> / Reservar</p>
   <h1 class="dash-welcome-title"><%= @court.name %></h1>
   <p class="dash-welcome-sub">Selecione a data e o horário desejado.</p>
 </div>
 
-<div class="sched-layout" data-controller="slot-picker"
-                          data-slot-picker-base-path-value="<%= new_dashboard_court_reservation_path(@court) %>">
+<div class="sched-layout"
+     data-controller="slot-picker<%= " payment-modal" if paid_court %>"
+     data-slot-picker-base-path-value="<%= new_dashboard_court_reservation_path(@court) %>">
 
   <%# Date picker %>
   <div class="sched-date-picker">
@@ -31,9 +34,14 @@
 
   <%# Confirmation panel (Stimulus-controlled, persists across frame updates) %>
   <div class="sched-confirm" data-slot-picker-target="confirm">
-    <%= form_with url: dashboard_court_reservation_path(@court), method: :post, local: true do |f| %>
+    <%= form_with url: dashboard_court_reservation_path(@court), method: :post, local: true,
+          data: paid_court ? { "payment-modal-target": "form" } : {} do |f| %>
       <%= f.hidden_field :starts_at, data: { "slot-picker-target": "selectedSlot" } %>
       <%= f.hidden_field :date, data: { "slot-picker-target": "dateHidden" } %>
+      <% if paid_court %>
+        <input type="hidden" name="payment_method" value="card"
+               data-payment-modal-target="paymentMethod">
+      <% end %>
 
       <div class="sched-confirm__header">
         <i class="bi bi-calendar-check-fill"></i>
@@ -41,10 +49,22 @@
           <strong data-slot-picker-target="timeDisplay"></strong>
           em <strong><%= @court.name %></strong>
         </span>
+        <% if paid_court %>
+          <span style="margin-left: auto; color: var(--px-green); font-weight: 700;">
+            R$ <%= number_with_precision(@court.hourly_rate_cents / 100.0, precision: 2, delimiter: ".", separator: ",") %>
+          </span>
+        <% end %>
       </div>
 
       <div class="sched-confirm__actions">
-        <%= f.submit "Confirmar reserva", class: "sched-btn sched-btn--primary" %>
+        <% if paid_court %>
+          <button type="button" class="sched-btn sched-btn--primary"
+                  data-action="click->payment-modal#open">
+            <i class="bi bi-credit-card"></i> Ir para pagamento
+          </button>
+        <% else %>
+          <%= f.submit "Confirmar reserva", class: "sched-btn sched-btn--primary" %>
+        <% end %>
         <button type="button" class="sched-btn sched-btn--ghost"
                 data-action="click->slot-picker#cancelSelection">
           Cancelar
@@ -52,5 +72,37 @@
       </div>
     <% end %>
   </div>
+
+  <%# Payment modal (paid courts only) %>
+  <% if paid_court %>
+    <div data-payment-modal-target="modal" hidden>
+      <div class="pay-modal-overlay">
+        <div class="pay-modal">
+          <p class="pay-modal__title">Confirmar reserva</p>
+          <p class="pay-modal__desc"><%= @court.name %></p>
+          <p class="pay-modal__amount">R$ <%= number_with_precision(@court.hourly_rate_cents / 100.0, precision: 2, delimiter: ".", separator: ",") %></p>
+          <p class="pay-modal__label">Forma de pagamento</p>
+          <div class="pay-modal__options">
+            <button type="button" class="pay-option"
+                    data-action="click->payment-modal#confirm"
+                    data-payment-modal-method-param="card">
+              <i class="bi bi-credit-card-2-front-fill"></i>
+              Cartão de Crédito
+            </button>
+            <button type="button" class="pay-option"
+                    data-action="click->payment-modal#confirm"
+                    data-payment-modal-method-param="pix">
+              <i class="bi bi-qr-code"></i>
+              PIX
+            </button>
+          </div>
+          <button type="button" class="pay-modal__cancel"
+                  data-action="click->payment-modal#close">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
 </div>

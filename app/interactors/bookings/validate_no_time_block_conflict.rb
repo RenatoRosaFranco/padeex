@@ -10,25 +10,19 @@ module Bookings
     delegate :booking, to: :context
 
     def call
-      return unless booking.court_id && booking.date && booking.starts_at && booking.ends_at
+      return unless booking.schedule_attributes_present?
 
-      if block_exists?
-        context.fail!(
-          message: I18n.t("activerecord.errors.models.booking.attributes.starts_at.blocked"),
-          attribute: :starts_at
-        )
-      end
-    end
+      result = TimeBlocks::OverlapsWithRange.call(
+        court_id:  booking.court_id,
+        date:      booking.date,
+        starts_at: booking.starts_at,
+        ends_at:   booking.ends_at
+      )
 
-    private
+      return unless result.overlaps
 
-    def block_exists?
-      starts = booking.starts_at.strftime("%H:%M:%S")
-      ends   = booking.ends_at.strftime("%H:%M:%S")
-
-      TimeBlock.where(court_id: booking.court_id, date: booking.date)
-               .where("starts_at < ? AND ends_at > ?", ends, starts)
-               .exists?
+      message = I18n.t("activerecord.errors.models.booking.attributes.starts_at.blocked")
+      fail_with!(error: message, message: message, attribute: :starts_at)
     end
   end
 end

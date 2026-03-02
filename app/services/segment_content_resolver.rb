@@ -12,12 +12,13 @@ class SegmentContentResolver < ApplicationService
   # @param config [Hash] Full segment content config (symbolized keys).
   # @param segment_key [Symbol] Segment slug (athletes, clubs, investors, companies).
   # @param tenant_slug [Symbol] Tenant slug (padel, handball, etc).
-  def initialize(config:, segment_key:, tenant_slug: self.class::DEFAULT_TENANT_SLUG)
+  def initialize(config:, segment_key:, tenant_slug: DEFAULT_TENANT_SLUG)
     @config = config
     @segment_key = segment_key
     @tenant_slug = tenant_slug
   end
 
+  # @return [Hash] resolved content for the segment, or {} when not found
   def call
     # Nested: padel: { athletes: {...} }
     tenant_content = @config[@tenant_slug]

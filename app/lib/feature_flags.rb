@@ -1,13 +1,18 @@
 # frozen_string_literal: true
 
 module FeatureFlags
-  # Central registry — add new flags here with a description.
-  REGISTRY = {
-    feed:         "Feed de publicações (estilo Instagram) no dashboard",
-    released_app: "App lançado publicamente (exibe landing page de lançamento)",
-    store:        "Loja de produtos de padel (navbar + página /loja)"
-  }.freeze
+  # Central registry — add new flags here.
+  # @return [Array<Symbol>]
+  REGISTRY = %i[smart_assistant feed released_app store].freeze
 
+  # @param flag [Symbol] Feature flag key from REGISTRY
+  # @return [String] Localized description for the flag
+  def self.description(flag)
+    I18n.t("feature_flags.descriptions.#{flag}")
+  end
+
+  # @param flag [Symbol] Feature flag key from REGISTRY
+  # @return [Boolean] Whether the flag is enabled (false on error)
   def self.enabled?(flag)
     Flipper.enabled?(flag)
   rescue StandardError

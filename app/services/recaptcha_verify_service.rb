@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "net/http"
+require "json"
+
 # Verifies reCAPTCHA v3 token with Google API.
 #
 # @example

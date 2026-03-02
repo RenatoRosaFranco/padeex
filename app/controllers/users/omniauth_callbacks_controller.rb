@@ -28,7 +28,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # @param provider_name [String] Provider display name.
   # @return [void]
   def handle_callback(provider_name)
-    result = Oauth::HandleCallback.call(auth: request.env["omniauth.auth"])
+    result = Oauth::FindOrCreateUser.call(auth: request.env["omniauth.auth"])
 
     if result.success?
       sign_in_and_redirect result.user, event: :authentication

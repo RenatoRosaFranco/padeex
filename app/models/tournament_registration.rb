@@ -6,6 +6,7 @@ class TournamentRegistration < ApplicationRecord
   # Associations
   belongs_to :tournament_category
   belongs_to :user
+  has_one :order, as: :orderable, dependent: :destroy
   has_one :group_membership, class_name: "TournamentGroupMembership", dependent: :destroy
   has_one :group, through: :group_membership, class_name: "TournamentGroup"
 

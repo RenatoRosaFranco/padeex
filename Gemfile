@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
 gem "rails", "~> 8.1.2"
@@ -67,7 +69,8 @@ gem "interactor", "~> 3.0"
 gem "interactor-rails", "~> 2.0"
 
 # Payments
-gem "stripe", "~> 12.0"  # Stripe Ruby SDK (card payments)
+gem "stripe",  "~> 12.0"
+gem "faraday", "~> 2.0"
 gem "flipper-active_record"
 gem "flipper-ui"
 

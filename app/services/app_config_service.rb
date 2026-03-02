@@ -20,3 +20,4 @@ class AppConfigService
   
   private_class_method :config
 end
+

@@ -10,22 +10,30 @@ module Bookings
     delegate :booking, to: :context
 
     def call
-      return unless booking.starts_at && booking.ends_at
+      return unless booking.schedule_attributes_present?
 
-      if out_of_hours?
-        context.fail!(
-          message: I18n.t("activerecord.errors.models.booking.attributes.starts_at.out_of_hours",
-            hours: "#{BookingSchedule::BUSINESS_HOURS_START}h–#{BookingSchedule::BUSINESS_HOURS_END}h"),
-          attribute: :starts_at
-        )
-      end
+      return unless out_of_hours?
+
+      message = I18n.t("activerecord.errors.models.booking.attributes.starts_at.out_of_hours",
+        hours: "#{BookingSchedule::BUSINESS_HOURS_START}h–#{BookingSchedule::BUSINESS_HOURS_END}h")
+      fail_with!(error: message, message: message, attribute: :starts_at)
     end
 
     private
 
+    # @return [Boolean] true when booking is outside business hours
     def out_of_hours?
-      booking.starts_at.hour < BookingSchedule::BUSINESS_HOURS_START ||
-        booking.ends_at.hour > BookingSchedule::BUSINESS_HOURS_END
+      starts_before_opening? || ends_after_closing?
+    end
+
+    # @return [Boolean] true when starts_at is before BUSINESS_HOURS_START
+    def starts_before_opening?
+      booking.starts_at.hour < BookingSchedule::BUSINESS_HOURS_START
+    end
+
+    # @return [Boolean] true when ends_at is after BUSINESS_HOURS_END
+    def ends_after_closing?
+      booking.ends_at.hour > BookingSchedule::BUSINESS_HOURS_END
     end
   end
 end

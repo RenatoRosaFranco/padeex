@@ -7,5 +7,6 @@
 #   Current.tenant = Tenant.find_by(slug: "padel")
 #   Current.tenant # => #<Tenant slug: "padel">
 class Current < ActiveSupport::CurrentAttributes
+  # @attribute tenant [Tenant] Current tenant
   attribute :tenant
 end

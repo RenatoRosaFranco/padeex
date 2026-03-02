@@ -2,14 +2,14 @@
 
 class Dashboard::Admin::FeatureFlagsController < Dashboard::Admin::BaseController
   def index
-    @flags = FeatureFlags::REGISTRY.map do |key, description|
-      { key: key, description: description, enabled: Flipper.enabled?(key) }
+    @flags = FeatureFlags::REGISTRY.map do |key|
+      { key: key, description: FeatureFlags.description(key), enabled: Flipper.enabled?(key) }
     end
   end
 
   def toggle
     key = params[:key].to_sym
-    return head :bad_request unless FeatureFlags::REGISTRY.key?(key)
+    return head :bad_request unless FeatureFlags::REGISTRY.include?(key)
 
     Flipper.enabled?(key) ? Flipper.disable(key) : Flipper.enable(key)
 

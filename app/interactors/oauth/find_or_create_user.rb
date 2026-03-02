@@ -8,22 +8,21 @@ module Oauth
   class FindOrCreateUser < BaseInteractor
     delegate :auth, to: :context
 
-    RESOLVERS = [
-      Oauth::FindUserByIdentity,
-      Oauth::LinkIdentityToUser,
-      Oauth::CreateUserWithIdentity
-    ].freeze
-
     def call
-      RESOLVERS.each do |resolver|
+      context.user = resolve_user
+      fail_with!(error: I18n.t("oauth.invalid_data")) unless context.user
+    end
+
+    private
+
+    # Tries each resolver in priority order and returns the first user found.
+    # @return [User, nil]
+    def resolve_user
+      Resolvers::Oauth.list.each do |resolver|
         result = resolver.call(auth: auth)
-        next unless result.user
-
-        context.user = result.user
-        return
+        return result.user if result.user
       end
-
-      context.fail!(error: "Invalid OAuth data")
+      nil
     end
   end
 end
