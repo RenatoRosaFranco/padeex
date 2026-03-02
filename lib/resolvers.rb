@@ -7,6 +7,10 @@ module Resolvers
   end
 end
 
+# BaseInteractor must be loaded explicitly here because lib/resolvers.rb is required
+# during early boot (before Zeitwerk autoloading is active).
+require_relative "../app/interactors/base_interactor"
+
 # Load resolvers (per-context implementations + list registry)
 require_relative "../app/resolvers/oauth/find_user_by_identity"
 require_relative "../app/resolvers/oauth/link_identity_to_user"
