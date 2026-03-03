@@ -10,8 +10,12 @@
 module BookingSchedule
   extend ActiveSupport::Concern
 
-  SLOT_DURATION        = 60 # minutes
-  CANCELLATION_WINDOW  = 2  # hours before start
-  BUSINESS_HOURS_START = 7  # 07:00
-  BUSINESS_HOURS_END   = 22 # 22:00
+  # Slot duration in minutes.
+  SLOT_DURATION        = 60 
+  # Cancellation window in hours before start.
+  CANCELLATION_WINDOW  = 3
+  # Business hours start in hours.
+  BUSINESS_HOURS_START = 7 
+  # Business hours end in hours.
+  BUSINESS_HOURS_END   = 22
 end

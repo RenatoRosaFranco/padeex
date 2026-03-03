@@ -96,6 +96,18 @@
             <%= text_area_tag "club_profile[description]", @profile&.description, class: "sched-input sched-textarea",
                   placeholder: "Conte sobre seu clube...", rows: 4 %>
           </div>
+
+          <div class="sched-field">
+            <%= label_tag "club_profile[cancellation_hours]", "Prazo de cancelamento", class: "sched-label" %>
+            <%= select_tag "club_profile[cancellation_hours]",
+                  options_for_select(
+                    [["1 hora", 1], ["2 horas", 2], ["3 horas", 3], ["6 horas", 6],
+                     ["12 horas", 12], ["24 horas", 24], ["48 horas", 48]],
+                    @profile&.cancellation_hours || 3
+                  ),
+                  class: "sched-input" %>
+            <span class="sched-hint">Tempo mínimo de antecedência para cancelamento com reembolso.</span>
+          </div>
         </div>
         <div class="sched-form-actions">
           <%= submit_tag "Salvar alterações", class: "sched-btn sched-btn--primary" %>

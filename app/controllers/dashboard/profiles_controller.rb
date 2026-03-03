@@ -56,6 +56,6 @@ class Dashboard::ProfilesController < Dashboard::BaseController
   end
 
   def club_profile_params
-    params.fetch(:club_profile, {}).permit(:club_name, :cnpj, :address, :phone, :email, :website, :description, :logo)
+    params.fetch(:club_profile, {}).permit(:club_name, :cnpj, :address, :phone, :email, :website, :description, :logo, :cancellation_hours)
   end
 end

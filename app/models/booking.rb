@@ -33,10 +33,15 @@ class Booking < ApplicationRecord
     court_id.present? && date.present? && starts_at.present? && ends_at.present?
   end
 
+  # @return [Integer] cancellation window in hours
+  def cancellation_window
+    court.club&.club_profile&.cancellation_hours || CANCELLATION_WINDOW
+  end
+
   # @return [Boolean] true when booking is active and within cancellation window
   def cancellable?
     return false unless active?
-    Time.current < booking_start_datetime - CANCELLATION_WINDOW.hours
+    Time.current < booking_start_datetime - cancellation_window.hours
   end
 
   # Cancels the booking. Raises RecordInvalid if not cancellable.

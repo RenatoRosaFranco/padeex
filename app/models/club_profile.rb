@@ -12,4 +12,12 @@ class ClubProfile < ApplicationRecord
   validates :cnpj,      presence: true
   validates :address,   presence: true
   validates :phone,     presence: true
+  
+  validates :cancellation_hours, 
+            presence: true,
+            numericality: { 
+              only_integer: true, 
+              greater_than: 0, 
+              less_than_or_equal_to: 168 
+            }
 end

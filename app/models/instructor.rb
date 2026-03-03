@@ -16,9 +16,14 @@ class Instructor < ApplicationRecord
   validates :internal_code, uniqueness: { scope: :club_id }, allow_blank: true
 
   # Callbacks
+  before_validation :normalize_internal_code
   before_save :link_platform_account
 
   private
+
+  def normalize_internal_code
+    self.internal_code = nil if internal_code.blank?
+  end
 
   # Links instructor to platform user by matching email within the same tenant.
   # @return [void]

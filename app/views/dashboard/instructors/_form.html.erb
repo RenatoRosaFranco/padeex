@@ -5,6 +5,7 @@
 <% end %>
 
 <%= form_with model: [:dashboard, instructor], local: true, class: "sched-form",
+              data: { controller: "onboarding-form" },
               html: { enctype: "multipart/form-data" } do |f| %>
   <div class="sched-form-grid">
     <div class="sched-field" style="grid-column: 1 / -1;">
@@ -31,7 +32,8 @@
 
     <div class="sched-field">
       <%= f.label :phone, "Telefone", class: "sched-label" %>
-      <%= f.telephone_field :phone, class: "sched-input", placeholder: "(11) 99999-9999" %>
+      <%= f.telephone_field :phone, class: "sched-input", placeholder: "(11) 99999-9999",
+                            inputmode: "numeric", data: { action: "input->onboarding-form#formatPhone" } %>
     </div>
 
     <div class="sched-field" style="grid-column: 1 / -1;">

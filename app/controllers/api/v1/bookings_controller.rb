@@ -36,7 +36,7 @@ module Api
           @booking.cancel!
           head :no_content
         else
-          render json: { error: I18n.t("errors.cancellation_not_allowed", hours: BookingSchedule::CANCELLATION_WINDOW) },
+          render json: { error: I18n.t("errors.cancellation_not_allowed", hours: @booking.cancellation_window) },
                  status: :unprocessable_entity
         end
       end

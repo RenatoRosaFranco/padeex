@@ -22,7 +22,7 @@ class Dashboard::BookingsController < Dashboard::BaseController
       end
     else
       redirect_to dashboard_bookings_path,
-                  alert: t("errors.cancellation_not_allowed", hours: BookingSchedule::CANCELLATION_WINDOW)
+                  alert: t("errors.cancellation_not_allowed", hours: @booking.cancellation_window)
     end
   end
 
