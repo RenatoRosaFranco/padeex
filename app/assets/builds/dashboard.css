@@ -5408,6 +5408,155 @@ html[data-theme=light] .notif-modal__close:hover {
 }
 
 /* ======================================================
+   Help Center
+   ====================================================== */
+.help-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.help-modal {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(580px, 96vw);
+  max-height: 85vh;
+  background: #0f1022;
+  border: 1px solid var(--px-border);
+  border-radius: 20px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+  padding: 0;
+  overflow: hidden;
+  flex-direction: column;
+}
+.help-modal::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.help-modal[open] {
+  display: flex;
+}
+
+.help-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--px-border);
+  flex-shrink: 0;
+}
+
+.help-modal__title {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--px-text);
+  letter-spacing: 0.04em;
+}
+
+.help-modal__body {
+  overflow-y: auto;
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.help-modal__body::-webkit-scrollbar {
+  width: 4px;
+}
+.help-modal__body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.help-modal__body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.help-modal__subtitle {
+  font-size: 0.875rem;
+  color: var(--px-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.help-form__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.help-contacts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.help-contact-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--px-border);
+  border-radius: 14px;
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+.help-contact-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.help-contact-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--px-purple-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--px-purple);
+  font-size: 1.2rem;
+}
+.help-contact-card__icon--wa {
+  background: rgba(74, 222, 128, 0.1);
+  color: var(--px-green);
+}
+
+.help-contact-card__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--px-muted);
+}
+
+.help-contact-card__value {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--px-text);
+  text-decoration: none;
+  word-break: break-all;
+}
+.help-contact-card__value:hover {
+  color: var(--px-green);
+}
+
+html[data-theme=light] .help-modal {
+  background: #fff;
+}
+html[data-theme=light] .help-contact-card {
+  background: rgba(0, 0, 0, 0.03);
+}
+html[data-theme=light] .help-contact-card:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* ======================================================
    Theme Toggle Component
    ====================================================== */
 .theme-toggle {

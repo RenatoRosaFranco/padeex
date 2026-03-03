@@ -1,0 +1,54 @@
+<div class="help-wrap" data-controller="help">
+  <button class="notif-btn" data-action="click->help#open" aria-label="Central de ajuda">
+    <i class="bi bi-question-circle"></i>
+  </button>
+
+  <dialog class="help-modal" data-help-target="modal">
+    <div class="help-modal__header">
+      <h2 class="help-modal__title">Central de Ajuda</h2>
+      <button class="notif-modal__close" data-action="click->help#close" aria-label="Fechar">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="help-modal__body">
+      <p class="help-modal__subtitle">Descreva o que você precisa de ajuda e entraremos em contato o mais breve possível.</p>
+
+      <div class="sched-field">
+        <label class="sched-label" for="help-message">Como podemos te ajudar?</label>
+        <textarea id="help-message" class="sched-input sched-textarea"
+                  placeholder="Descreva sua dúvida ou problema..." rows="4"></textarea>
+      </div>
+
+      <div class="help-form__actions">
+        <button class="sched-btn sched-btn--primary">Enviar mensagem</button>
+      </div>
+
+      <div class="help-contacts">
+        <div class="help-contact-card">
+          <div class="help-contact-card__icon">
+            <i class="bi bi-envelope-fill"></i>
+          </div>
+          <span class="help-contact-card__label">E-mail</span>
+          <a href="mailto:suporte@padeex.com.br" class="help-contact-card__value">suporte@padeex.com.br</a>
+        </div>
+
+        <div class="help-contact-card">
+          <div class="help-contact-card__icon">
+            <i class="bi bi-telephone-fill"></i>
+          </div>
+          <span class="help-contact-card__label">Telefone</span>
+          <a href="tel:+551140000000" class="help-contact-card__value">(11) 4000-0000</a>
+        </div>
+
+        <div class="help-contact-card">
+          <div class="help-contact-card__icon help-contact-card__icon--wa">
+            <i class="bi bi-whatsapp"></i>
+          </div>
+          <span class="help-contact-card__label">WhatsApp</span>
+          <a href="https://wa.me/5511940000000" target="_blank" rel="noopener noreferrer" class="help-contact-card__value">(11) 94000-0000</a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</div>
