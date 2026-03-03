@@ -446,3 +446,50 @@ select.ob-input option { background: $surface; }
     &:hover { color: $text; border-color: $muted; }
   }
 }
+
+// ─────────────────────────────────────────────
+// Theme Toggle
+// ─────────────────────────────────────────────
+
+.ob-header {
+  justify-content: space-between;
+}
+
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border: 1px solid $border;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: $muted;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+
+  &:hover { background: rgba(255, 255, 255, 0.1); color: $text; }
+}
+
+.theme-toggle__moon { display: block; }
+.theme-toggle__sun  { display: none; }
+
+// ─────────────────────────────────────────────
+// Light Mode
+// ─────────────────────────────────────────────
+
+html[data-theme="light"] {
+  .theme-toggle {
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+    &:hover { background: rgba(0, 0, 0, 0.09); }
+  }
+  .theme-toggle__moon { display: none; }
+  .theme-toggle__sun  { display: block; }
+
+  .ob-body     { background: #f4f6fb; color: #0f1022; }
+  .ob-header   { background: rgba(255, 255, 255, 0.95); border-bottom-color: rgba(0, 0, 0, 0.08); }
+  .ob-logo     { filter: brightness(0); }
+}

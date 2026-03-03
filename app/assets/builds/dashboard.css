@@ -317,6 +317,12 @@
   color: var(--px-green);
 }
 
+.dash-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .dash-user-menu {
   position: relative;
   display: flex;
@@ -4624,4 +4630,496 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   flex-shrink: 0;
+}
+
+/* ── PIX payment page ───────────────────────────────────── */
+.pix-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+@media (max-width: 720px) {
+  .pix-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pix-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.pix-card__amount {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--px-green);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-align: center;
+}
+.pix-card__qr {
+  display: flex;
+  justify-content: center;
+}
+.pix-card__qr-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+  background: #fff;
+  padding: 8px;
+}
+.pix-card__qr-placeholder {
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  color: var(--px-muted);
+}
+.pix-card__hint {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--px-muted);
+}
+.pix-card__expiry {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--px-muted);
+}
+.pix-card__expiry i {
+  margin-right: 0.3rem;
+}
+.pix-card__label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--px-muted);
+}
+.pix-card__steps {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  padding: 1rem;
+}
+.pix-card__steps-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--px-text);
+  margin-bottom: 0.6rem;
+}
+.pix-card__steps-list {
+  padding-left: 1.1rem;
+  margin: 0;
+}
+.pix-card__steps-list li {
+  font-size: 0.82rem;
+  color: var(--px-muted);
+  line-height: 1.6;
+}
+.pix-card__status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--px-border);
+}
+.pix-card__auto-refresh {
+  font-size: 0.74rem;
+  color: var(--px-muted);
+  opacity: 0.6;
+}
+
+.pix-copy-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.pix-copy-field__code {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--px-border);
+  border-radius: 10px;
+  padding: 0.75rem;
+  color: var(--px-muted);
+  font-family: "Courier New", monospace;
+  font-size: 0.75rem;
+  resize: none;
+  line-height: 1.5;
+}
+.pix-copy-field__code:focus {
+  outline: none;
+  border-color: rgba(74, 222, 128, 0.4);
+}
+.pix-copy-field__btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.pix-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+}
+.pix-status i {
+  font-size: 0.9rem;
+}
+.pix-status--processing {
+  background: rgba(251, 191, 36, 0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+.pix-status--processing i {
+  animation: spin 1.2s linear infinite;
+}
+.pix-status--paid {
+  background: rgba(74, 222, 128, 0.1);
+  color: var(--px-green);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+}
+
+/* ======================================================
+   2FA Settings
+   ====================================================== */
+.twofa-card {
+  background: rgba(15, 16, 34, 0.6);
+  border: 1px solid var(--px-border);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.twofa-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--px-border);
+}
+
+.twofa-status__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.5rem;
+}
+.twofa-status__icon--on {
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--px-green);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+}
+.twofa-status__icon--off {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--px-muted);
+  border: 1px solid var(--px-border);
+}
+
+.twofa-status__title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--px-text);
+  margin-bottom: 0.3rem;
+}
+
+.twofa-status__desc {
+  font-size: 0.85rem;
+  color: var(--px-muted);
+  line-height: 1.5;
+}
+
+.twofa-actions {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--px-border);
+}
+
+.twofa-info__title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--px-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+.twofa-info__title i {
+  margin-right: 0.35rem;
+}
+
+.twofa-info__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.twofa-info__list li {
+  font-size: 0.85rem;
+  color: var(--px-muted);
+  padding-left: 1.1rem;
+  position: relative;
+}
+.twofa-info__list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--px-purple);
+  font-size: 0.75rem;
+}
+
+/* 2FA Setup steps */
+.twofa-setup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.twofa-setup__step {
+  display: flex;
+  gap: 1.1rem;
+  align-items: flex-start;
+}
+
+.twofa-setup__num {
+  width: 28px;
+  height: 28px;
+  background: var(--px-purple-dim);
+  border: 1px solid rgba(54, 40, 197, 0.35);
+  color: #a78bfa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.twofa-setup__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--px-text);
+  margin-bottom: 0.35rem;
+}
+
+.twofa-setup__desc {
+  font-size: 0.85rem;
+  color: var(--px-muted);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.twofa-setup__qr {
+  display: inline-block;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 0.75rem;
+}
+.twofa-setup__qr svg {
+  display: block;
+}
+
+.twofa-setup__manual-wrap {
+  font-size: 0.82rem;
+}
+.twofa-setup__manual-wrap summary {
+  cursor: pointer;
+  color: var(--px-muted);
+  user-select: none;
+  margin-bottom: 0.5rem;
+}
+.twofa-setup__manual-wrap summary:hover {
+  color: var(--px-text);
+}
+
+.twofa-setup__secret {
+  display: block;
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  color: var(--px-green);
+  background: rgba(74, 222, 128, 0.06);
+  border: 1px solid rgba(74, 222, 128, 0.18);
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  word-break: break-all;
+}
+
+.twofa-setup__form {
+  margin-top: 0.25rem;
+}
+
+.twofa-setup__otp-input {
+  max-width: 180px;
+  text-align: center;
+  letter-spacing: 0.2em;
+  font-size: 1.15rem;
+  font-family: "Courier New", monospace;
+}
+
+/* Green badge variant for sidebar */
+.dash-sidebar-badge--green {
+  background: rgba(74, 222, 128, 0.18);
+  color: var(--px-green);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* ======================================================
+   Theme Toggle Component
+   ====================================================== */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--px-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--px-text);
+}
+
+.theme-toggle__moon {
+  display: block;
+}
+
+.theme-toggle__sun {
+  display: none;
+}
+
+/* ======================================================
+   Light Mode
+   ====================================================== */
+html[data-theme=light] {
+  --px-bg: #f4f6fb;
+  --px-surface: #ffffff;
+  --px-text: #0f1022;
+  --px-muted: #6b7494;
+  --px-border: rgba(0, 0, 0, 0.08);
+  --px-purple-dim: rgba(54, 40, 197, 0.06);
+}
+html[data-theme=light] .theme-toggle {
+  border-color: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.05);
+}
+html[data-theme=light] .theme-toggle:hover {
+  background: rgba(0, 0, 0, 0.09);
+}
+html[data-theme=light] .theme-toggle__moon {
+  display: none;
+}
+html[data-theme=light] .theme-toggle__sun {
+  display: block;
+}
+html[data-theme=light] .dashboard-body {
+  background: var(--px-bg);
+}
+html[data-theme=light] .dash-navbar {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+html[data-theme=light] .dash-logo {
+  filter: brightness(0);
+}
+html[data-theme=light] .dash-navbar-link {
+  color: var(--px-muted);
+}
+html[data-theme=light] .dash-navbar-link:hover {
+  color: var(--px-purple);
+}
+html[data-theme=light] .dash-dropdown {
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+html[data-theme=light] .dash-dropdown__item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+html[data-theme=light] .dash-dropdown__item:hover i {
+  color: var(--px-text);
+}
+html[data-theme=light] .dash-sidebar {
+  background: rgba(255, 255, 255, 0.95);
+  border-right-color: rgba(0, 0, 0, 0.08);
+}
+html[data-theme=light] .dash-sidebar-title {
+  color: rgba(0, 0, 0, 0.3);
+}
+html[data-theme=light] .dash-sidebar-link:hover {
+  color: var(--px-text);
+  background: rgba(0, 0, 0, 0.04);
+}
+html[data-theme=light] .dash-sidebar-link.active {
+  background: rgba(54, 40, 197, 0.08);
+}
+html[data-theme=light] .sidebar-user-card {
+  background: rgba(0, 0, 0, 0.02);
+}
+html[data-theme=light] .sidebar-user-card:hover {
+  background: rgba(54, 40, 197, 0.06);
+}
+html[data-theme=light] .sched-input,
+html[data-theme=light] .sched-textarea {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: var(--px-text);
+}
+html[data-theme=light] .sched-input::placeholder,
+html[data-theme=light] .sched-textarea::placeholder {
+  color: rgba(0, 0, 0, 0.25);
+}
+html[data-theme=light] .sched-input:focus,
+html[data-theme=light] .sched-textarea:focus {
+  border-color: var(--px-purple);
+  background: #fff;
+}
+html[data-theme=light] .sched-label {
+  color: var(--px-muted);
+}
+html[data-theme=light] .sched-btn--ghost {
+  border-color: rgba(0, 0, 0, 0.15);
+  color: var(--px-text);
+}
+html[data-theme=light] .sched-btn--ghost:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+html[data-theme=light] .twofa-card {
+  background: #fff;
+}
+html[data-theme=light] .sched-flash--success {
+  background: rgba(74, 222, 128, 0.08);
+  color: #166534;
+  border-color: rgba(74, 222, 128, 0.2);
+}
+html[data-theme=light] .sched-flash--error {
+  background: rgba(248, 113, 113, 0.08);
+  color: #991b1b;
+  border-color: rgba(248, 113, 113, 0.2);
 }

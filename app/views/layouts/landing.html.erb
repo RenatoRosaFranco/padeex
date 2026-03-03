@@ -24,11 +24,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag "landing", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <script>(function(){var t=localStorage.getItem("padeex-theme");if(t)document.documentElement.setAttribute("data-theme",t);})()</script>
   </head>
 
   <body class="padeex-body">
     <%= yield %>
-    <%= render "shared/chat_widget" %>
+    <%= render "shared/chat_widget" if FeatureFlags.enabled?(:smart_assistant) %>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

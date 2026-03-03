@@ -30,14 +30,17 @@
     <% end %>
   </div>
 
-  <% if Flipper.enabled?(:released_app) %>
-    <div class="navbar-auth-actions">
-      <%= link_to "Entrar", new_user_session_path, class: "navbar-btn-login" %>
-      <%= link_to "Criar conta", new_user_registration_path, class: "navbar-btn-signup" %>
-    </div>
-  <% else %>
-    <span class="badge-coming-soon">Em Breve</span>
-  <% end %>
+  <div class="navbar-right">
+    <%= render "shared/theme_toggle" %>
+    <% if Flipper.enabled?(:released_app) %>
+      <div class="navbar-auth-actions">
+        <%= link_to "Entrar", new_user_session_path, class: "navbar-btn-login" %>
+        <%= link_to "Criar conta", new_user_registration_path, class: "navbar-btn-signup" %>
+      </div>
+    <% else %>
+      <span class="badge-coming-soon">Em Breve</span>
+    <% end %>
+  </div>
 </nav>
 
 <section class="hero-section">

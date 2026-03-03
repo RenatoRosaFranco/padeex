@@ -1,0 +1,63 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Segurança</p>
+  <h1 class="dash-welcome-title">Ativar Autenticação em Dois Fatores</h1>
+</div>
+
+<% if flash[:alert] %>
+  <div class="sched-flash sched-flash--error"><p><%= flash[:alert] %></p></div>
+<% end %>
+
+<div class="twofa-card">
+  <div class="twofa-setup">
+
+    <div class="twofa-setup__step">
+      <span class="twofa-setup__num">1</span>
+      <div class="twofa-setup__content">
+        <h3 class="twofa-setup__title">Instale um aplicativo autenticador</h3>
+        <p class="twofa-setup__desc">Use Google Authenticator, Authy, Microsoft Authenticator ou qualquer app compatível com TOTP.</p>
+      </div>
+    </div>
+
+    <div class="twofa-setup__step">
+      <span class="twofa-setup__num">2</span>
+      <div class="twofa-setup__content">
+        <h3 class="twofa-setup__title">Escaneie o QR code</h3>
+        <p class="twofa-setup__desc">Abra o aplicativo, adicione uma nova conta e escaneie o código abaixo.</p>
+        <div class="twofa-setup__qr">
+          <%= @qr_svg.html_safe %>
+        </div>
+        <details class="twofa-setup__manual-wrap">
+          <summary class="twofa-setup__manual-toggle">Não consegue escanear? Inserir chave manualmente</summary>
+          <code class="twofa-setup__secret"><%= @otp_secret.scan(/.{1,4}/).join(" ").upcase %></code>
+        </details>
+      </div>
+    </div>
+
+    <div class="twofa-setup__step">
+      <span class="twofa-setup__num">3</span>
+      <div class="twofa-setup__content">
+        <h3 class="twofa-setup__title">Confirme com um código</h3>
+        <p class="twofa-setup__desc">Digite o código de 6 dígitos gerado pelo app para ativar o 2FA.</p>
+
+        <%= form_with url: dashboard_two_factor_path, method: :post, class: "twofa-setup__form" do |f| %>
+          <div class="sched-field">
+            <%= f.label :otp_attempt, "Código de verificação", class: "sched-label" %>
+            <%= f.text_field :otp_attempt,
+                  autofocus: true,
+                  autocomplete: "one-time-code",
+                  inputmode: "numeric",
+                  pattern: "[0-9 ]*",
+                  maxlength: 7,
+                  class: "sched-input twofa-setup__otp-input",
+                  placeholder: "000 000" %>
+          </div>
+          <div class="sched-form-actions">
+            <%= f.submit "Confirmar e Ativar", class: "sched-btn sched-btn--primary" %>
+            <%= link_to "Cancelar", dashboard_two_factor_path, class: "sched-btn sched-btn--ghost" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</div>

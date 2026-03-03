@@ -55,6 +55,10 @@ Rails.application.routes.draw do
   get "para-empresas",     to: "segments#show", as: :para_empresas,     defaults: { slug: "companies" }
   get "para-investidores", to: "segments#show", as: :para_investidores, defaults: { slug: "investors" }
 
+  # 2FA challenge during login.
+  get  "conta/verificacao-2fa", to: "users/two_factor#new",    as: :new_user_two_factor
+  post "conta/verificacao-2fa", to: "users/two_factor#create",  as: :user_two_factor
+
   # Devise.
   devise_for :users,
     path: "conta",
@@ -132,6 +136,9 @@ Rails.application.routes.draw do
 
     # For all users: their own bookings.
     resources :bookings, only: [:index, :destroy], path: "minhas-reservas"
+
+    # 2FA settings.
+    resource :two_factor, only: [:show, :new, :create, :destroy], path: "seguranca/2fa", controller: "two_factor"
 
     # Payments.
     namespace :payments do

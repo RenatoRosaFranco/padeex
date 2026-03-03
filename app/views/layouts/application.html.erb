@@ -30,6 +30,6 @@
 
   <body>
     <%= yield %>
-    <%= render "shared/chat_widget" %>
+    <%= render "shared/chat_widget" if FeatureFlags.enabled?(:smart_assistant) %>
   </body>
 </html>

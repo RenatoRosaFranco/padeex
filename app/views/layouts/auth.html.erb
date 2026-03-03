@@ -11,10 +11,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag "auth", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <script>(function(){var t=localStorage.getItem("padeex-theme");if(t)document.documentElement.setAttribute("data-theme",t);})()</script>
   </head>
 
   <body class="auth-body">
+    <%= render "shared/theme_toggle" %>
     <%= yield %>
-    <%= render "shared/chat_widget" %>
+    <%= render "shared/chat_widget" if FeatureFlags.enabled?(:smart_assistant) %>
   </body>
 </html>

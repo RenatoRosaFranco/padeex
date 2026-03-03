@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_01_000005) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_03_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -350,6 +350,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_01_000005) do
   create_table "users", force: :cascade do |t|
     t.boolean "accepted_terms", default: false, null: false
     t.boolean "admin", default: false, null: false
+    t.integer "consumed_timestep"
     t.string "cpf"
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
@@ -359,10 +360,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_01_000005) do
     t.string "mobile_number"
     t.string "name", default: "", null: false
     t.boolean "onboarding_completed", default: false, null: false
+    t.boolean "otp_required_for_login", default: false, null: false
+    t.string "otp_secret"
     t.string "provider"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
+    t.string "stripe_customer_id"
     t.bigint "tenant_id"
     t.string "uid"
     t.datetime "updated_at", null: false
@@ -371,6 +375,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_01_000005) do
     t.index ["kind"], name: "index_users_on_kind"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, where: "(provider IS NOT NULL)"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["stripe_customer_id"], name: "index_users_on_stripe_customer_id", unique: true, where: "(stripe_customer_id IS NOT NULL)"
     t.index ["tenant_id"], name: "index_users_on_tenant_id"
   end
 

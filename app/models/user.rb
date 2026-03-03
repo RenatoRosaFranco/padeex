@@ -19,12 +19,15 @@ class User < ApplicationRecord
 
   has_many :active_follows,  class_name: "Follow", foreign_key: :follower_id, dependent: :destroy
   has_many :passive_follows, class_name: "Follow", foreign_key: :followed_id, dependent: :destroy
+  
   has_many :following, -> { where(follows: { status: "accepted" }) },
            through: :active_follows, source: :followed
   has_many :followers, -> { where(follows: { status: "accepted" }) },
            through: :passive_follows, source: :follower
+  
   has_many :follow_requests_received, -> { pending },
            class_name: "Follow", foreign_key: :followed_id
+  
   has_many :follow_requests_sent, -> { pending },
            class_name: "Follow", foreign_key: :follower_id
 
@@ -32,7 +35,7 @@ class User < ApplicationRecord
   after_create_commit :send_welcome_email
 
   # Devise
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+  devise :two_factor_authenticatable, :registerable, :recoverable, :rememberable,
          :validatable, :omniauthable, :jwt_authenticatable,
          jwt_revocation_strategy: Devise::JWT::RevocationStrategies::JTIMatcher,
          omniauth_providers: %i[google_oauth2 facebook]

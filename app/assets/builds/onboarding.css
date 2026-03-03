@@ -435,3 +435,60 @@ select.ob-input option {
   color: #e2e8f0;
   border-color: #8892b0;
 }
+
+.ob-header {
+  justify-content: space-between;
+}
+
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #1e2130;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #8892b0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+.theme-toggle__moon {
+  display: block;
+}
+
+.theme-toggle__sun {
+  display: none;
+}
+
+html[data-theme=light] .theme-toggle {
+  border-color: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.05);
+}
+html[data-theme=light] .theme-toggle:hover {
+  background: rgba(0, 0, 0, 0.09);
+}
+html[data-theme=light] .theme-toggle__moon {
+  display: none;
+}
+html[data-theme=light] .theme-toggle__sun {
+  display: block;
+}
+html[data-theme=light] .ob-body {
+  background: #f4f6fb;
+  color: #0f1022;
+}
+html[data-theme=light] .ob-header {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+html[data-theme=light] .ob-logo {
+  filter: brightness(0);
+}

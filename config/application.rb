@@ -28,5 +28,9 @@ module Padeex
       "dashboard.scss"   => "dashboard.css",
       "onboarding.scss"  => "onboarding.css"
     }
+
+    config.active_record.encryption.primary_key         = ENV.fetch("AR_ENCRYPTION_PRIMARY_KEY",        "M7e4SwDu3wQAI5BFGZc634z4t9L0ROMZ")
+    config.active_record.encryption.deterministic_key   = ENV.fetch("AR_ENCRYPTION_DETERMINISTIC_KEY",  "iI03NQr27hzJfBsxEjYYm2CrSgdwK3pI")
+    config.active_record.encryption.key_derivation_salt = ENV.fetch("AR_ENCRYPTION_KEY_DERIVATION_SALT", "kr9yzL1KeoDJupV23z77mBW3sAlpn1vd")
   end
 end

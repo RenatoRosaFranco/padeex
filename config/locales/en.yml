@@ -30,6 +30,14 @@ en:
   oauth:
     invalid_data: "Invalid OAuth data"
 
+  users:
+    two_factor:
+      invalid_otp: "Invalid or expired code. Please try again."
+      invalid_setup_code: "Invalid code. Check your app and try again."
+      session_expired: "Session expired. Please start the process again."
+      enabled_success: "Two-factor authentication enabled successfully."
+      disabled: "Two-factor authentication disabled."
+
   flash:
     payment:
       processing: "Payment processing. Your registration will be confirmed shortly."

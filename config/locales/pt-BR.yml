@@ -28,6 +28,14 @@ pt-BR:
   oauth:
     invalid_data: "Dados OAuth inválidos"
 
+  users:
+    two_factor:
+      invalid_otp: "Código inválido ou expirado. Tente novamente."
+      invalid_setup_code: "Código inválido. Verifique o app e tente novamente."
+      session_expired: "Sessão expirada. Inicie o processo novamente."
+      enabled_success: "Autenticação em dois fatores ativada com sucesso."
+      disabled: "Autenticação em dois fatores desativada."
+
   flash:
     payment:
       processing: "Pagamento em processamento. Sua inscrição será confirmada em instantes."

@@ -487,6 +487,142 @@
 .auth-btn-google:hover { border-color: rgba(234, 67, 53, 0.4); }
 .auth-btn-facebook:hover { border-color: rgba(24, 119, 242, 0.4); }
 
+/* ---- Theme Toggle ---- */
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--px-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  font-size: 0.95rem;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--px-text);
+  }
+}
+
+.theme-toggle__moon { display: block; }
+.theme-toggle__sun  { display: none; }
+
+/* ---- Light Mode ---- */
+html[data-theme="light"] {
+  --px-bg:      #f0f2f8;
+  --px-surface: #ffffff;
+  --px-text:    #0f1022;
+  --px-muted:   #6b7494;
+  --px-border:  rgba(0, 0, 0, 0.1);
+
+  .theme-toggle {
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+    &:hover { background: rgba(0, 0, 0, 0.09); }
+  }
+  .theme-toggle__moon { display: none; }
+  .theme-toggle__sun  { display: block; }
+
+  .auth-body::before {
+    background: radial-gradient(ellipse at center, rgba(54, 40, 197, 0.1) 0%, transparent 68%);
+  }
+  .auth-body::after { opacity: 0.2; }
+
+  .auth-logo { filter: brightness(0); }
+
+  .auth-card {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .auth-title { color: var(--px-text); }
+  .auth-sub   { color: var(--px-muted); }
+  .auth-label { color: var(--px-muted); }
+  .auth-hint  { color: rgba(0, 0, 0, 0.35); }
+
+  .auth-input {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--px-text);
+    &::placeholder { color: rgba(0, 0, 0, 0.25); }
+    &:focus { border-color: rgba(54, 40, 197, 0.5); background: #fff; }
+  }
+
+  .auth-toggle       { color: var(--px-muted); }
+  .auth-toggle__track {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .auth-forgot { color: rgba(0, 0, 0, 0.35); &:hover { color: var(--px-purple); } }
+
+  .auth-btn-oauth {
+    border-color: rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--px-text);
+    &:hover { background: rgba(0, 0, 0, 0.06); }
+  }
+
+  .auth-divider {
+    color: rgba(0, 0, 0, 0.3);
+    &::before, &::after { background: rgba(0, 0, 0, 0.08); }
+  }
+
+  .auth-footer { color: rgba(0, 0, 0, 0.45); }
+  .auth-link   { color: var(--px-purple); }
+
+  .auth-terms-wrap {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+  .auth-terms__text { color: var(--px-muted); }
+  .auth-terms__box  {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.18);
+  }
+
+  .auth-alert-error  {
+    background: rgba(248, 113, 113, 0.08);
+    border-color: rgba(248, 113, 113, 0.2);
+  }
+  .auth-alert-notice {
+    background: rgba(74, 222, 128, 0.06);
+    border-color: rgba(74, 222, 128, 0.2);
+  }
+
+  .auth-input-wrap .auth-eye { color: var(--px-muted); }
+}
+
+/* ---- 2FA icon ---- */
+.auth-2fa-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+
+  i {
+    font-size: 2.5rem;
+    color: var(--px-green);
+    opacity: 0.85;
+  }
+}
+
+/* ---- OTP input ---- */
+.auth-input--otp {
+  text-align: center;
+  letter-spacing: 0.25em;
+  font-size: 1.4rem;
+  font-family: 'Courier New', monospace;
+  height: 56px;
+}
+
 /* ---- Divider ---- */
 .auth-divider {
   display: flex;

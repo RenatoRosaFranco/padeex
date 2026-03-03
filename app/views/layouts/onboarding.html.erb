@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag "onboarding", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <script>(function(){var t=localStorage.getItem("padeex-theme");if(t)document.documentElement.setAttribute("data-theme",t);})()</script>
   </head>
 
   <body class="ob-body">
@@ -19,6 +20,7 @@
         <%= link_to root_path, class: "ob-logo-link" do %>
           <%= image_tag "logo_padex_branco.png", alt: "Padeex", class: "ob-logo" %>
         <% end %>
+        <%= render "shared/theme_toggle" %>
       </header>
 
       <main class="ob-main">

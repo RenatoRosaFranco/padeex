@@ -81,6 +81,15 @@
         <li><%= link_to dashboard_meu_perfil_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_meu_perfil_path)}" do %><i class="bi bi-person-circle"></i> Meu Perfil<% end %></li>
         <li><%= link_to edit_my_profile_path, class: "dash-sidebar-link #{'active' if current_page?(edit_my_profile_path)}" do %><i class="bi bi-pencil-fill"></i> Editar Perfil<% end %></li>
         <li><%= link_to edit_user_registration_path, class: "dash-sidebar-link #{'active' if current_page?(edit_user_registration_path)}" do %><i class="bi bi-gear-fill"></i> Minha Conta<% end %></li>
+        <li>
+          <%= link_to dashboard_two_factor_path, class: "dash-sidebar-link #{'active' if request.path.start_with?(dashboard_two_factor_path)}" do %>
+            <i class="bi bi-shield-lock<%= '-fill' if current_user.otp_required_for_login? %>"></i>
+            Segurança
+            <% if current_user.otp_required_for_login? %>
+              <span class="dash-sidebar-badge dash-sidebar-badge--green">ON</span>
+            <% end %>
+          <% end %>
+        </li>
       </ul>
     </section>
 

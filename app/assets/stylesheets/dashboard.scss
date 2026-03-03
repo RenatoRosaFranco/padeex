@@ -74,6 +74,12 @@
   &:hover { color: var(--px-green); }
 }
 
+.dash-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .dash-user-menu {
   position: relative;
   display: flex;
@@ -4434,7 +4440,316 @@
   }
 }
 
+/* ======================================================
+   2FA Settings
+   ====================================================== */
+
+.twofa-card {
+  background: rgba(15, 16, 34, 0.6);
+  border: 1px solid var(--px-border);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.twofa-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--px-border);
+}
+
+.twofa-status__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.5rem;
+
+  &--on {
+    background: rgba(74, 222, 128, 0.12);
+    color: var(--px-green);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+  }
+
+  &--off {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--px-muted);
+    border: 1px solid var(--px-border);
+  }
+}
+
+.twofa-status__title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--px-text);
+  margin-bottom: 0.3rem;
+}
+
+.twofa-status__desc {
+  font-size: 0.85rem;
+  color: var(--px-muted);
+  line-height: 1.5;
+}
+
+.twofa-actions {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--px-border);
+}
+
+.twofa-info__title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--px-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+
+  i { margin-right: 0.35rem; }
+}
+
+.twofa-info__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  li {
+    font-size: 0.85rem;
+    color: var(--px-muted);
+    padding-left: 1.1rem;
+    position: relative;
+
+    &::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--px-purple);
+      font-size: 0.75rem;
+    }
+  }
+}
+
+/* 2FA Setup steps */
+.twofa-setup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.twofa-setup__step {
+  display: flex;
+  gap: 1.1rem;
+  align-items: flex-start;
+}
+
+.twofa-setup__num {
+  width: 28px;
+  height: 28px;
+  background: var(--px-purple-dim);
+  border: 1px solid rgba(54, 40, 197, 0.35);
+  color: #a78bfa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.twofa-setup__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--px-text);
+  margin-bottom: 0.35rem;
+}
+
+.twofa-setup__desc {
+  font-size: 0.85rem;
+  color: var(--px-muted);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.twofa-setup__qr {
+  display: inline-block;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 0.75rem;
+
+  svg { display: block; }
+}
+
+.twofa-setup__manual-wrap {
+  font-size: 0.82rem;
+
+  summary {
+    cursor: pointer;
+    color: var(--px-muted);
+    user-select: none;
+    margin-bottom: 0.5rem;
+
+    &:hover { color: var(--px-text); }
+  }
+}
+
+.twofa-setup__secret {
+  display: block;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  color: var(--px-green);
+  background: rgba(74, 222, 128, 0.06);
+  border: 1px solid rgba(74, 222, 128, 0.18);
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  word-break: break-all;
+}
+
+.twofa-setup__form {
+  margin-top: 0.25rem;
+}
+
+.twofa-setup__otp-input {
+  max-width: 180px;
+  text-align: center;
+  letter-spacing: 0.2em;
+  font-size: 1.15rem;
+  font-family: 'Courier New', monospace;
+}
+
+/* Green badge variant for sidebar */
+.dash-sidebar-badge--green {
+  background: rgba(74, 222, 128, 0.18);
+  color: var(--px-green);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
+}
+
+/* ======================================================
+   Theme Toggle Component
+   ====================================================== */
+
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--px-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--px-text);
+  }
+}
+
+.theme-toggle__moon { display: block; }
+.theme-toggle__sun  { display: none; }
+
+/* ======================================================
+   Light Mode
+   ====================================================== */
+
+html[data-theme="light"] {
+  --px-bg:          #f4f6fb;
+  --px-surface:     #ffffff;
+  --px-text:        #0f1022;
+  --px-muted:       #6b7494;
+  --px-border:      rgba(0, 0, 0, 0.08);
+  --px-purple-dim:  rgba(54, 40, 197, 0.06);
+
+  .theme-toggle {
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+    &:hover { background: rgba(0, 0, 0, 0.09); }
+  }
+  .theme-toggle__moon { display: none; }
+  .theme-toggle__sun  { display: block; }
+
+  .dashboard-body { background: var(--px-bg); }
+
+  .dash-navbar {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .dash-logo { filter: brightness(0); }
+
+  .dash-navbar-link {
+    color: var(--px-muted);
+    &:hover { color: var(--px-purple); }
+  }
+
+  .dash-dropdown {
+    background: #fff;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  .dash-dropdown__item {
+    &:hover { background: rgba(0, 0, 0, 0.04); i { color: var(--px-text); } }
+  }
+
+  .dash-sidebar {
+    background: rgba(255, 255, 255, 0.95);
+    border-right-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .dash-sidebar-title { color: rgba(0, 0, 0, 0.3); }
+
+  .dash-sidebar-link {
+    &:hover {
+      color: var(--px-text);
+      background: rgba(0, 0, 0, 0.04);
+    }
+    &.active { background: rgba(54, 40, 197, 0.08); }
+  }
+
+  .sidebar-user-card {
+    background: rgba(0, 0, 0, 0.02);
+    &:hover { background: rgba(54, 40, 197, 0.06); }
+  }
+
+  .sched-input,
+  .sched-textarea {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.12);
+    color: var(--px-text);
+    &::placeholder { color: rgba(0, 0, 0, 0.25); }
+    &:focus { border-color: var(--px-purple); background: #fff; }
+  }
+
+  .sched-label { color: var(--px-muted); }
+
+  .sched-btn--ghost {
+    border-color: rgba(0, 0, 0, 0.15);
+    color: var(--px-text);
+    &:hover { background: rgba(0, 0, 0, 0.05); }
+  }
+
+  .twofa-card { background: #fff; }
+
+  .sched-flash {
+    &--success { background: rgba(74, 222, 128, 0.08); color: #166534; border-color: rgba(74, 222, 128, 0.2); }
+    &--error   { background: rgba(248, 113, 113, 0.08); color: #991b1b; border-color: rgba(248, 113, 113, 0.2); }
+  }
 }

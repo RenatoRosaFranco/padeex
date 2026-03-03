@@ -1,0 +1,38 @@
+<div class="auth-wrapper">
+  <%= link_to root_path, class: "auth-logo-link" do %>
+    <%= image_tag "logo_padex_branco.png", alt: "PADEX", class: "auth-logo" %>
+  <% end %>
+
+  <div class="auth-card">
+    <h1 class="auth-title">Verificação</h1>
+    <p class="auth-sub">Digite o código do seu aplicativo autenticador</p>
+
+    <% if flash[:alert] %>
+      <div class="auth-alert-error"><%= flash[:alert] %></div>
+    <% end %>
+
+    <div class="auth-2fa-icon">
+      <i class="bi bi-shield-lock-fill"></i>
+    </div>
+
+    <%= form_with url: user_two_factor_path, method: :post do |f| %>
+      <div class="auth-field">
+        <%= f.label :otp_attempt, "Código de 6 dígitos", class: "auth-label" %>
+        <%= f.text_field :otp_attempt,
+              autofocus: true,
+              autocomplete: "one-time-code",
+              inputmode: "numeric",
+              pattern: "[0-9]*",
+              maxlength: 6,
+              class: "auth-input auth-input--otp",
+              placeholder: "000 000" %>
+      </div>
+
+      <%= f.submit "Verificar", class: "auth-btn" %>
+    <% end %>
+  </div>
+
+  <p class="auth-footer">
+    <%= link_to "← Voltar ao login", new_user_session_path, class: "auth-link" %>
+  </p>
+</div>

@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag "dashboard", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <script>(function(){var t=localStorage.getItem("padeex-theme");if(t)document.documentElement.setAttribute("data-theme",t);})()</script>
   </head>
 
   <body class="dashboard-body <%= controller_name %>-<%= action_name %>">
@@ -28,30 +29,33 @@
           <% end %>
         <% end %>
       </div>
-      <div class="dash-user-menu" data-controller="dropdown">
-        <button class="dash-avatar-btn" data-action="click->dropdown#toggle" aria-label="Menu do usuário">
-          <% avatar_profile = current_user.club? ? current_user.club_profile : current_user.user_profile %>
-          <% attached = current_user.club? ? avatar_profile&.logo&.attached? : avatar_profile&.avatar&.attached? %>
-          <% if attached %>
-            <% img = current_user.club? ? avatar_profile.logo : avatar_profile.avatar %>
-            <%= image_tag img, class: "dash-avatar dash-avatar--img", alt: current_user.name %>
-          <% else %>
-            <div class="dash-avatar"><%= current_user.initials %></div>
-          <% end %>
-        </button>
+      <div class="dash-navbar-right">
+        <%= render "shared/theme_toggle" %>
+        <div class="dash-user-menu" data-controller="dropdown">
+          <button class="dash-avatar-btn" data-action="click->dropdown#toggle" aria-label="Menu do usuário">
+            <% avatar_profile = current_user.club? ? current_user.club_profile : current_user.user_profile %>
+            <% attached = current_user.club? ? avatar_profile&.logo&.attached? : avatar_profile&.avatar&.attached? %>
+            <% if attached %>
+              <% img = current_user.club? ? avatar_profile.logo : avatar_profile.avatar %>
+              <%= image_tag img, class: "dash-avatar dash-avatar--img", alt: current_user.name %>
+            <% else %>
+              <div class="dash-avatar"><%= current_user.initials %></div>
+            <% end %>
+          </button>
 
-        <div class="dash-dropdown" data-dropdown-target="menu">
-          <div class="dash-dropdown__header">
-            <p class="dash-dropdown__name"><%= current_user.name %></p>
-            <p class="dash-dropdown__email"><%= current_user.email %></p>
+          <div class="dash-dropdown" data-dropdown-target="menu">
+            <div class="dash-dropdown__header">
+              <p class="dash-dropdown__name"><%= current_user.name %></p>
+              <p class="dash-dropdown__email"><%= current_user.email %></p>
+            </div>
+            <div class="dash-dropdown__divider"></div>
+            <%= link_to dashboard_meu_perfil_path, class: "dash-dropdown__item" do %>
+              <i class="bi bi-person-fill"></i> Meu Perfil
+            <% end %>
+            <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "dash-dropdown__item dash-dropdown__item--danger" do %>
+              <i class="bi bi-box-arrow-right"></i> Sair
+            <% end %>
           </div>
-          <div class="dash-dropdown__divider"></div>
-          <%= link_to dashboard_meu_perfil_path, class: "dash-dropdown__item" do %>
-            <i class="bi bi-person-fill"></i> Meu Perfil
-          <% end %>
-          <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "dash-dropdown__item dash-dropdown__item--danger" do %>
-            <i class="bi bi-box-arrow-right"></i> Sair
-          <% end %>
         </div>
       </div>
     </nav>
@@ -62,6 +66,6 @@
         <%= yield %>
       </main>
     </div>
-    <%= render "shared/chat_widget" %>
+    <%= render "shared/chat_widget" if FeatureFlags.enabled?(:smart_assistant) %>
   </body>
 </html>

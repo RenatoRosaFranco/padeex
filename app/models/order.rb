@@ -19,14 +19,7 @@ class Order < ApplicationRecord
 
   # @return [String] Description of the order
   def description
-    case orderable
-    when TournamentRegistration
-      orderable.tournament_category.name
-    when Booking
-      "#{orderable.court.name} – #{I18n.l(orderable.date, format: :short)} #{orderable.starts_at.strftime('%H:%M')}"
-    else
-      orderable.class.name
-    end
+    OrderPresenter.new(self).description
   end
 
   # @return [Float] Amount in BRL

@@ -1,0 +1,53 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Segurança</p>
+  <h1 class="dash-welcome-title">Autenticação em Dois Fatores</h1>
+</div>
+
+<% if notice %>
+  <div class="sched-flash sched-flash--success"><p><%= notice %></p></div>
+<% end %>
+<% if alert %>
+  <div class="sched-flash sched-flash--error"><p><%= alert %></p></div>
+<% end %>
+
+<div class="twofa-card">
+  <div class="twofa-status">
+    <div class="twofa-status__icon <%= current_user.otp_required_for_login? ? 'twofa-status__icon--on' : 'twofa-status__icon--off' %>">
+      <i class="bi bi-shield-<%= current_user.otp_required_for_login? ? 'lock-fill' : 'x' %>"></i>
+    </div>
+    <div class="twofa-status__body">
+      <h2 class="twofa-status__title">2FA está <%= current_user.otp_required_for_login? ? "ativo" : "inativo" %></h2>
+      <p class="twofa-status__desc">
+        <% if current_user.otp_required_for_login? %>
+          Sua conta está protegida. Um código será exigido a cada login.
+        <% else %>
+          Ative o 2FA para proteger sua conta com um código gerado pelo aplicativo autenticador.
+        <% end %>
+      </p>
+    </div>
+  </div>
+
+  <div class="twofa-actions">
+    <% if current_user.otp_required_for_login? %>
+      <%= button_to dashboard_two_factor_path, method: :delete,
+            class: "sched-btn sched-btn--danger",
+            data: { confirm: "Desativar o 2FA deixará sua conta menos segura. Confirmar?" } do %>
+        <i class="bi bi-shield-x"></i> Desativar 2FA
+      <% end %>
+    <% else %>
+      <%= link_to new_dashboard_two_factor_path, class: "sched-btn sched-btn--primary" do %>
+        <i class="bi bi-shield-lock"></i> Ativar 2FA
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="twofa-info">
+    <h3 class="twofa-info__title"><i class="bi bi-info-circle"></i> Como funciona</h3>
+    <ul class="twofa-info__list">
+      <li>Instale um aplicativo autenticador (Google Authenticator, Authy, etc.)</li>
+      <li>Escaneie o QR code para vincular sua conta Padeex</li>
+      <li>No login, informe o código de 6 dígitos gerado pelo app</li>
+      <li>O código muda a cada 30 segundos</li>
+    </ul>
+  </div>
+</div>
