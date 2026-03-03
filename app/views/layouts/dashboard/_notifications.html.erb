@@ -1,0 +1,68 @@
+<div class="notif-menu"
+     data-controller="notifications"
+     data-notifications-unread-count-value="<%= @unread_notifications_count.to_i %>">
+
+  <button class="notif-btn"
+          data-action="click->notifications#toggleDropdown"
+          aria-label="Notificações">
+    <i class="bi bi-bell-fill"></i>
+    <% if @unread_notifications_count.to_i > 0 %>
+      <span class="notif-badge" data-notifications-target="badge">
+        <%= @unread_notifications_count.to_i > 99 ? "99+" : @unread_notifications_count %>
+      </span>
+    <% end %>
+  </button>
+
+  <div class="notif-dropdown" data-notifications-target="dropdown">
+    <div class="notif-dropdown__header">
+      <span class="notif-dropdown__title">Notificações</span>
+      <button class="notif-dropdown__read-all"
+              data-action="click->notifications#markAllRead">
+        Marcar tudo como lido
+      </button>
+    </div>
+
+    <div class="notif-dropdown__list" data-notifications-target="dropdownList">
+      <% if @recent_notifications.blank? %>
+        <div class="notif-empty">
+          <i class="bi bi-bell-slash"></i>
+          <p>Nenhuma notificação</p>
+        </div>
+      <% else %>
+        <% @recent_notifications.to_a.each do |notification| %>
+          <%= render "dashboard/notifications/item", notification: notification %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="notif-dropdown__footer">
+      <button class="notif-dropdown__see-all"
+              data-action="click->notifications#openModal">
+        Ver todas as notificações
+      </button>
+    </div>
+  </div>
+
+  <dialog class="notif-modal" data-notifications-target="modal">
+    <div class="notif-modal__header">
+      <h2 class="notif-modal__title">Todas as Notificações</h2>
+      <div class="notif-modal__header-actions">
+        <button class="notif-modal__read-all"
+                data-action="click->notifications#markAllRead">
+          <i class="bi bi-check2-all"></i> Marcar tudo como lido
+        </button>
+        <button class="notif-modal__close"
+                data-action="click->notifications#closeModal"
+                aria-label="Fechar">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="notif-modal__body" data-notifications-target="modalList">
+      <div class="notif-modal__loading" data-notifications-target="loading">
+        <span class="notif-spinner"></span>
+      </div>
+    </div>
+  </dialog>
+</div>

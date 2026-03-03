@@ -31,6 +31,8 @@ class User < ApplicationRecord
   has_many :follow_requests_sent, -> { pending },
            class_name: "Follow", foreign_key: :follower_id
 
+  has_many :notifications, dependent: :destroy
+
   # Callbacks
   after_create_commit :send_welcome_email
 

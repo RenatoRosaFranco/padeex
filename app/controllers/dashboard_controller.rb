@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
-class DashboardController < ApplicationController
-  include ReleasedAppGate
-
-  before_action :authenticate_user!
-
-  layout "dashboard"
+class DashboardController < Dashboard::BaseController
 
   def index
   end

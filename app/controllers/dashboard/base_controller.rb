@@ -5,6 +5,7 @@ class Dashboard::BaseController < ApplicationController
 
   before_action :authenticate_user!
   before_action :require_onboarding_completed!
+  before_action :load_notifications
 
   layout "dashboard"
 
@@ -12,6 +13,11 @@ class Dashboard::BaseController < ApplicationController
 
   def require_onboarding_completed!
     redirect_to edit_onboarding_personal_info_path unless current_user.onboarding_completed?
+  end
+
+  def load_notifications
+    @unread_notifications_count = current_user.notifications.unread.count
+    @recent_notifications = current_user.notifications.recent.limit(8)
   end
 
   def require_club!

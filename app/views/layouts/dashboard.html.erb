@@ -30,6 +30,7 @@
         <% end %>
       </div>
       <div class="dash-navbar-right">
+        <%= render "layouts/dashboard/notifications" %>
         <%= render "shared/theme_toggle" %>
         <div class="dash-user-menu" data-controller="dropdown">
           <button class="dash-avatar-btn" data-action="click->dropdown#toggle" aria-label="Menu do usuário">

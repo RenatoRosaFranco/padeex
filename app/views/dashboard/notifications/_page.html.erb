@@ -1,0 +1,6 @@
+<% notifications.each do |notification| %>
+  <%= render "dashboard/notifications/item", notification: notification %>
+<% end %>
+<% if pagy.next %>
+  <div class="notif-sentinel" data-notifications-target="sentinel" data-page="<%= pagy.next %>"></div>
+<% end %>

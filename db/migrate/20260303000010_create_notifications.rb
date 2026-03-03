@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+class CreateNotifications < ActiveRecord::Migration[8.1]
+  def change
+    create_table :notifications do |t|
+      t.references :user, null: false, foreign_key: true
+      t.string  :title,       null: false
+      t.text    :body
+      t.string  :icon,        null: false, default: "bell-fill"
+      t.string  :icon_color,  null: false, default: "purple"
+      t.string  :url
+      t.datetime :read_at
+
+      t.timestamps
+    end
+
+    add_index :notifications, [:user_id, :read_at]
+    add_index :notifications, [:user_id, :created_at]
+  end
+end

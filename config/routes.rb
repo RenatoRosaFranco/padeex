@@ -140,6 +140,12 @@ Rails.application.routes.draw do
     # 2FA settings.
     resource :two_factor, only: [:show, :new, :create, :destroy], path: "seguranca/2fa", controller: "two_factor"
 
+    # Notifications.
+    resources :notifications, only: [:index] do
+      collection { patch :mark_all_read }
+      member      { patch :mark_read }
+    end
+
     # Payments.
     namespace :payments do
       resources :checkouts, only: [:create]

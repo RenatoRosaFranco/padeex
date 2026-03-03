@@ -1,0 +1,16 @@
+<div class="notif-item <%= 'notif-item--unread' if notification.unread? %>"
+     data-notification-id="<%= notification.id %>"
+     data-notification-url="<%= notification.url.to_s %>"
+     data-action="click->notifications#markRead">
+  <div class="notif-item__icon notif-item__icon--<%= notification.icon_color %>">
+    <i class="bi bi-<%= notification.icon %>"></i>
+  </div>
+  <div class="notif-item__body">
+    <p class="notif-item__title"><%= notification.title %></p>
+    <p class="notif-item__text"><%= notification.body %></p>
+    <span class="notif-item__time"><%= time_ago_in_words(notification.created_at) %> atrás</span>
+  </div>
+  <% if notification.unread? %>
+    <span class="notif-item__dot"></span>
+  <% end %>
+</div>
