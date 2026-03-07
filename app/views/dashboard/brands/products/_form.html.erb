@@ -52,9 +52,10 @@
               inputmode: "decimal" %>
       </div>
       <div class="sched-field">
-        <%= f.label :category, "Categoria", class: "sched-label" %>
-        <%= f.select :category,
-              BrandProduct::CATEGORIES.map { |c| [c.humanize, c] },
+        <%= f.label :brand_product_category_id, "Categoria", class: "sched-label" %>
+        <% brand_profile = product.brand_profile || current_brand_profile %>
+        <%= f.select :brand_product_category_id,
+              brand_profile&.product_categories&.order(:position)&.map { |c| [c.name, c.id] } || [],
               { include_blank: "Selecione..." },
               class: "sched-input sched-select" %>
       </div>

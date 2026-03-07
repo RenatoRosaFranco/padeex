@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 padel = Tenant.find_by!(slug: "padel")
 
 # Admin

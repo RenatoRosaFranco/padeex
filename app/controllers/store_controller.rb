@@ -22,6 +22,7 @@ class StoreController < ApplicationController
 
   private
 
+  # Loads the product by id into @product; redirects to loja_path if not found.
   def find_product
     @product = BrandProduct.active
                             .includes(:brand_profile, :brand_product_category)
@@ -29,6 +30,7 @@ class StoreController < ApplicationController
     redirect_to loja_path unless @product
   end
 
+  # Redirects to root_path if the store feature flag is disabled.
   def require_store_flag
     redirect_to root_path unless FeatureFlags.enabled?(:store)
   end

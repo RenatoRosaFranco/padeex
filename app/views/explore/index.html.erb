@@ -1,0 +1,67 @@
+<% content_for :title, "Explorar Clubes — Padeex" %>
+<% content_for :head do %>
+  <script>
+    window.__CLUBS__ = <%= raw @clubs_json %>;
+    window.__GMAPS_KEY__ = "<%= google_maps_api_key %>";
+  </script>
+<% end %>
+
+<%= render Landing::ExploreNavComponent.new %>
+
+<div class="explore-page" data-controller="club-map">
+
+  <%# Top bar %>
+  <div class="explore-topbar">
+    <div class="explore-topbar-search">
+      <i class="bi bi-search"></i>
+      <input type="text"
+             placeholder="Buscar por nome ou cidade..."
+             data-action="input->club-map#search"
+             data-club-map-target="searchInput">
+      <span class="explore-search-loader" data-club-map-target="loader"></span>
+    </div>
+    <p class="explore-topbar-count">
+      <strong data-club-map-target="count"><%= @clubs.size %></strong>
+      clubes encontrados
+    </p>
+  </div>
+
+  <%# Split view %>
+  <div class="explore-split">
+
+    <%# Cards panel %>
+    <div class="explore-cards-panel" data-club-map-target="panel">
+      <div class="explore-empty" data-club-map-target="empty" style="display:none;">
+        <i class="bi bi-search"></i>
+        <p>Nenhum clube encontrado</p>
+      </div>
+      <div class="explore-sentinel" data-club-map-target="sentinel"></div>
+    </div>
+
+    <%# Map panel %>
+    <div class="explore-map-panel">
+      <div class="explore-map" data-club-map-target="map"></div>
+    </div>
+
+  </div>
+
+  <%# Modal %>
+  <div class="explore-modal-overlay"
+       data-club-map-target="modalOverlay"
+       data-action="click->club-map#handleOverlayClick"
+       style="display:none;">
+    <div class="explore-modal">
+      <div class="explore-modal-header">
+        <h2 class="explore-modal-title" data-club-map-target="modalTitle"></h2>
+        <button class="explore-modal-x" data-action="click->club-map#closeModal">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="explore-modal-body" data-club-map-target="modalBody"></div>
+      <div class="explore-modal-footer">
+        <button class="explore-modal-close-btn" data-action="click->club-map#closeModal">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+</div>

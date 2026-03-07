@@ -11,8 +11,19 @@ module Feed
 
     attr_reader :post, :current_user
 
-    def liked? = post.liked
-    def has_image? = post.image_url.present?
-    def heart_icon = liked? ? "heart-fill" : "heart"
+    # @return [Boolean] whether the post is liked by the current user
+    def liked?
+      post.liked
+    end
+
+    # @return [Boolean] whether the post has an image
+    def has_image?
+      post.image_url.present?
+    end
+
+    # @return [String] "heart-fill" if liked, "heart" otherwise
+    def heart_icon
+      liked? ? "heart-fill" : "heart"
+    end
   end
 end

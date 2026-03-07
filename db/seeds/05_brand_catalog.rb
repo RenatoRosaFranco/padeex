@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 brand_profile = BrandProfile.find_by!(brand_name: "Wilson Padel Brasil")
 
 categories = [
@@ -21,13 +23,7 @@ end
 
 puts "  #{cats.size} categories"
 
-products = [
-  { name: "Raquete Wilson Pro Staff v2", category: "Raquetes",   price_cents: 89900, status: "active", position: 1, description: "Raquete profissional para alto rendimento." },
-  { name: "Tênis Wilson Rush Pro 4.0",  category: "Calçados",   price_cents: 64900, status: "active", position: 2, description: "Tênis de alta performance para quadra indoor." },
-  { name: "Camiseta Wilson Dry Fit",    category: "Vestuário",  price_cents: 18900, status: "active", position: 3, description: "Camiseta respirável para treinos intensos." },
-  { name: "Overgrip Wilson Pro Pack",   category: "Acessórios", price_cents:  3900, status: "active", position: 4, description: "Pack com 12 overgrips antiderrapantes." },
-  { name: "Bola Wilson Championship",   category: "Bolas",      price_cents:  5900, status: "draft",  position: 5, description: nil }
-]
+products = MockData.load("products")
 
 products.each do |attrs|
   BrandProduct.find_or_create_by!(brand_profile: brand_profile, name: attrs[:name]) do |p|

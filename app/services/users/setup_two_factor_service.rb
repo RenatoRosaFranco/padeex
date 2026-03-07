@@ -11,7 +11,8 @@ module Users
   #   @provisioning_uri = result[:provisioning_uri]
   #   @qr_svg = result[:qr_svg]
   class SetupTwoFactorService < ApplicationService
-    ISSUER = "Padeex"
+    # Constants
+    ISSUER = "Padex"
 
     QR_OPTIONS = {
       color: "000",

@@ -10,6 +10,7 @@ module Feed
 
     attr_reader :stories
 
+    # @return [String] JSON array of story hashes (index, name, username, initials, avatar_url, image_url, gradient, time_label, seen)
     def stories_json
       stories.map.with_index do |s, i|
         {

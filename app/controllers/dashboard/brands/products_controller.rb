@@ -55,7 +55,7 @@ class Dashboard::Brands::ProductsController < Dashboard::Brands::BaseController
   end
 
   def product_params
-    p = params.require(:brand_product).permit(:name, :description, :price_cents, :category, :status, :external_url, :position, :image)
+    p = params.require(:brand_product).permit(:name, :description, :price_cents, :brand_product_category_id, :status, :external_url, :position, :image)
     p[:price_cents] = (p[:price_cents].to_s.gsub(",", ".").to_f * 100).round if p[:price_cents].present?
     p
   end

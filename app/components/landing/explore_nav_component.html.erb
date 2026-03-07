@@ -1,0 +1,11 @@
+<nav class="explore-nav">
+  <%= link_to root_path, class: "explore-nav-logo" do %>
+    <%= image_tag "logo_padex_branco.png", alt: "Padeex" %>
+  <% end %>
+
+  <div class="explore-nav-actions">
+    <%= render "shared/theme_toggle" %>
+    <%= link_to "Entrar", new_user_session_path, class: "navbar-btn-login" %>
+    <%= link_to "Criar conta", new_user_registration_path, class: "navbar-btn-signup" %>
+  </div>
+</nav>

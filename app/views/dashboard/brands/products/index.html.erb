@@ -6,69 +6,81 @@
   <p class="dash-welcome-sub">Gerencie os produtos da sua marca na plataforma.</p>
 </div>
 
-<div class="brand-products-toolbar">
-  <span class="brand-products-count"><%= @pagy.count %> produto<%= @pagy.count == 1 ? "" : "s" %></span>
-  <% if current_brand_profile %>
-    <%= link_to new_dashboard_brands_product_path, class: "dash-btn dash-btn--primary" do %>
-      <i class="bi bi-plus-lg"></i> Adicionar Produto
-    <% end %>
-  <% end %>
-</div>
-
-<% if @products.any? %>
-  <div class="brand-products-grid">
-    <% @products.each do |product| %>
-      <div class="brand-product-card">
-        <div class="brand-product-img-placeholder">
-          <% if product.image.attached? %>
-            <%= image_tag product.image, class: "brand-product-img" %>
-          <% else %>
-            <i class="bi bi-image"></i>
-          <% end %>
-        </div>
-
-        <div class="brand-product-info">
-          <span class="brand-product-category"><%= product.category&.humanize || "Sem categoria" %></span>
-          <h3 class="brand-product-name"><%= product.name %></h3>
-          <p class="brand-product-price"><%= product.price_brl %></p>
-          <% if product.description.present? %>
-            <p class="brand-product-desc"><%= truncate(product.description, length: 70) %></p>
-          <% end %>
-        </div>
-
-        <div class="brand-product-actions">
-          <span class="brand-product-badge brand-product-badge--<%= product.status %>">
-            <%= { "active" => "Ativo", "draft" => "Rascunho", "archived" => "Arquivado" }[product.status] %>
-          </span>
-          <div class="brand-product-action-btns">
-            <%= link_to edit_dashboard_brands_product_path(product), class: "brand-product-btn" do %>
-              <i class="bi bi-pencil"></i>
-            <% end %>
-            <%= button_to dashboard_brands_product_path(product), method: :delete,
-                  class: "brand-product-btn brand-product-btn--danger",
-                  data: { turbo_confirm: "Remover \"#{product.name}\"?" } do %>
-              <i class="bi bi-trash"></i>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
-  <% if @pagy.pages > 1 %>
-    <div class="brand-pagination">
-      <%== pagy_nav(@pagy) %>
+<div class="analytics-table-card">
+  <div class="analytics-table-card__header">
+    <div>
+      <p class="analytics-table-card__title">Produtos</p>
+      <p class="analytics-table-card__sub"><%= @pagy.count %> <%= @pagy.count == 1 ? "produto" : "produtos" %> cadastrados</p>
     </div>
-  <% end %>
-<% else %>
-  <div class="brand-empty-state">
-    <i class="bi bi-bag-x brand-empty-state__icon"></i>
-    <p class="brand-empty-state__title">Nenhum produto cadastrado</p>
-    <p class="brand-empty-state__sub">Adicione seu primeiro produto para exibir na vitrine.</p>
     <% if current_brand_profile %>
-      <%= link_to new_dashboard_brands_product_path, class: "dash-btn dash-btn--primary" do %>
+      <%= link_to new_dashboard_brands_product_path, class: "sched-btn sched-btn--primary sched-btn--sm" do %>
         <i class="bi bi-plus-lg"></i> Adicionar Produto
       <% end %>
     <% end %>
   </div>
-<% end %>
+
+  <% if @products.any? %>
+    <table class="analytics-table">
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Categoria</th>
+          <th>Preço</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @products.each do |product| %>
+          <tr>
+            <td>
+              <div class="prod-table-name">
+                <% if product.image.attached? %>
+                  <%= image_tag product.image, class: "prod-table-thumb" %>
+                <% else %>
+                  <div class="prod-table-thumb prod-table-thumb--placeholder">
+                    <i class="bi bi-image"></i>
+                  </div>
+                <% end %>
+                <span class="prod-table-label"><%= product.name %></span>
+              </div>
+            </td>
+            <td>
+              <div class="prod-table-category">
+                <span class="prod-table-category__dot" style="background:<%= product.category_color %>;"></span>
+                <%= product.category_label %>
+              </div>
+            </td>
+            <td class="prod-table-price"><%= product.price_brl %></td>
+            <td>
+              <span class="brand-product-badge brand-product-badge--<%= product.status %>">
+                <%= { "active" => "Ativo", "draft" => "Rascunho", "archived" => "Arquivado" }[product.status] %>
+              </span>
+            </td>
+            <td class="admin-table-actions">
+              <%= link_to edit_dashboard_brands_product_path(product), class: "sched-btn sched-btn--ghost sched-btn--sm" do %>
+                <i class="bi bi-pencil"></i>
+              <% end %>
+              <%= button_to dashboard_brands_product_path(product), method: :delete,
+                    class: "sched-btn sched-btn--danger sched-btn--sm",
+                    data: { turbo_confirm: "Remover \"#{product.name}\"?" } do %>
+                <i class="bi bi-trash"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% if @pagy.pages > 1 %>
+      <div class="analytics-table-card__footer">
+        <%== pagy_nav(@pagy) %>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="sched-empty">
+      <i class="bi bi-bag-x"></i>
+      <p>Adicione seu primeiro produto para exibi-lo na vitrine.</p>
+    </div>
+  <% end %>
+</div>

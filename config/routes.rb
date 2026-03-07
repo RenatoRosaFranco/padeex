@@ -42,6 +42,9 @@ Rails.application.routes.draw do
     resources :posts, only: [:index, :show]
   end
 
+  # Explore
+  get "explore", to: "explore#index", as: :explore
+
   # Store
   get "loja",     to: "store#index", as: :loja
   get "loja/:id", to: "store#show",  as: :loja_produto

@@ -7,6 +7,8 @@ class ClubProfile < ApplicationRecord
   # Attachments
   has_one_attached :logo
 
+  scope :mappable, -> { where.not(latitude: nil, longitude: nil) }
+
   # Validations
   validates :club_name, presence: true
   validates :cnpj,      presence: true
