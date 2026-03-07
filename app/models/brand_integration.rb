@@ -7,6 +7,7 @@ class BrandIntegration < ApplicationRecord
   PROVIDERS = PROVIDER_META.keys.freeze
 
   # Associations
+  belongs_to :tenant
   belongs_to :brand_profile
 
   # Enums

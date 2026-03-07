@@ -2,6 +2,7 @@
 
 class BrandProduct < ApplicationRecord
   # Associations
+  belongs_to :tenant
   belongs_to :brand_profile
   belongs_to :brand_product_category, optional: true
 

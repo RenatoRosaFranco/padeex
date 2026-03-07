@@ -2,6 +2,7 @@
 
 class BrandProductCategory < ApplicationRecord
   # Associations
+  belongs_to :tenant
   belongs_to :brand_profile
   has_many :products, class_name: "BrandProduct",
                       foreign_key: :brand_product_category_id,

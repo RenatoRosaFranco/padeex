@@ -2,6 +2,7 @@
 
 class Notification < ApplicationRecord
   # Associations
+  belongs_to :tenant
   belongs_to :user
 
   # Scopes

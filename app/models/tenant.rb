@@ -8,13 +8,23 @@
 #   Current.tenant
 class Tenant < ApplicationRecord
   # Associations
-  has_many :waitlist_entries, dependent: :nullify
-  has_many :investment_interests, dependent: :nullify
-  has_many :posts, dependent: :nullify
-  has_many :users, dependent: :nullify
-  has_many :courts, dependent: :destroy
-  has_many :bookings, dependent: :destroy
-  has_many :time_blocks, dependent: :destroy
+  has_many :waitlist_entries,            dependent: :nullify
+  has_many :investment_interests,        dependent: :nullify
+  has_many :posts,                       dependent: :nullify
+  has_many :users,                       dependent: :nullify
+  has_many :courts,                      dependent: :destroy
+  has_many :bookings,                    dependent: :destroy
+  has_many :time_blocks,                 dependent: :destroy
+  has_many :club_profiles,               dependent: :nullify
+  has_many :brand_profiles,              dependent: :nullify
+  has_many :brand_products,              dependent: :nullify
+  has_many :brand_product_categories,    dependent: :nullify
+  has_many :brand_integrations,          dependent: :nullify
+  has_many :follows,                     dependent: :destroy
+  has_many :notifications,               dependent: :destroy
+  has_many :user_profiles,               dependent: :nullify
+  has_many :tournament_group_memberships, dependent: :destroy
+  has_many :user_identities,              dependent: :destroy
 
   # Validations
   validates :slug, presence: true, uniqueness: true

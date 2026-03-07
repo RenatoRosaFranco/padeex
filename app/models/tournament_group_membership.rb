@@ -2,6 +2,7 @@
 
 class TournamentGroupMembership < ApplicationRecord
   # Associations
+  belongs_to :tenant
   belongs_to :tournament_group
   belongs_to :tournament_registration
 

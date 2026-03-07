@@ -2,6 +2,7 @@
 
 class BrandProfile < ApplicationRecord
   # Associations
+  belongs_to :tenant
   belongs_to :user
   has_many :products,            class_name: "BrandProduct",         dependent: :destroy
   has_many :product_categories,  class_name: "BrandProductCategory",  dependent: :destroy

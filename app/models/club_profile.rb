@@ -2,6 +2,7 @@
 
 class ClubProfile < ApplicationRecord
   # Associations
+  belongs_to :tenant
   belongs_to :user
 
   # Attachments

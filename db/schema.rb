@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_07_000005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -68,9 +68,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
     t.string "provider", null: false
     t.string "status", default: "inactive", null: false
     t.string "store_url"
+    t.bigint "tenant_id"
     t.datetime "updated_at", null: false
     t.index ["brand_profile_id", "provider"], name: "index_brand_integrations_on_brand_profile_id_and_provider", unique: true
     t.index ["brand_profile_id"], name: "index_brand_integrations_on_brand_profile_id"
+    t.index ["tenant_id"], name: "index_brand_integrations_on_tenant_id"
   end
 
   create_table "brand_product_categories", force: :cascade do |t|
@@ -80,9 +82,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
     t.string "icon", default: "box-fill", null: false
     t.string "name", null: false
     t.integer "position", default: 0, null: false
+    t.bigint "tenant_id"
     t.datetime "updated_at", null: false
     t.index ["brand_profile_id", "name"], name: "index_brand_product_categories_on_profile_and_name", unique: true
     t.index ["brand_profile_id"], name: "index_brand_product_categories_on_brand_profile_id"
+    t.index ["tenant_id"], name: "index_brand_product_categories_on_tenant_id"
   end
 
   create_table "brand_products", force: :cascade do |t|
@@ -95,10 +99,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
     t.integer "position", default: 0, null: false
     t.integer "price_cents", default: 0, null: false
     t.string "status", default: "draft", null: false
+    t.bigint "tenant_id"
     t.datetime "updated_at", null: false
     t.index ["brand_product_category_id"], name: "index_brand_products_on_brand_product_category_id"
     t.index ["brand_profile_id", "status"], name: "index_brand_products_on_brand_profile_id_and_status"
     t.index ["brand_profile_id"], name: "index_brand_products_on_brand_profile_id"
+    t.index ["tenant_id"], name: "index_brand_products_on_tenant_id"
   end
 
   create_table "brand_profiles", force: :cascade do |t|
@@ -109,9 +115,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
     t.text "description"
     t.string "email"
     t.string "phone"
+    t.bigint "tenant_id"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.string "website"
+    t.index ["tenant_id"], name: "index_brand_profiles_on_tenant_id"
     t.index ["user_id"], name: "index_brand_profiles_on_user_id", unique: true
   end
 
@@ -126,10 +134,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
     t.string "phone"
+    t.bigint "tenant_id"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.string "website"
     t.index ["latitude", "longitude"], name: "index_club_profiles_on_latitude_and_longitude"
+    t.index ["tenant_id"], name: "index_club_profiles_on_tenant_id"
     t.index ["user_id"], name: "index_club_profiles_on_user_id", unique: true
   end
 
@@ -168,11 +178,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
     t.bigint "followed_id", null: false
     t.bigint "follower_id", null: false
     t.string "status", default: "pending", null: false
+    t.bigint "tenant_id"
     t.datetime "updated_at", null: false
     t.index ["followed_id", "status"], name: "index_follows_on_followed_id_and_status"
     t.index ["followed_id"], name: "index_follows_on_followed_id"
     t.index ["follower_id", "followed_id"], name: "index_follows_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_follows_on_follower_id"
+    t.index ["tenant_id"], name: "index_follows_on_tenant_id"
   end
 
   create_table "instructors", force: :cascade do |t|
@@ -212,10 +224,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
     t.string "icon", default: "bell-fill", null: false
     t.string "icon_color", default: "purple", null: false
     t.datetime "read_at"
+    t.bigint "tenant_id"
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.string "url"
     t.bigint "user_id", null: false
+    t.index ["tenant_id"], name: "index_notifications_on_tenant_id"
     t.index ["user_id", "created_at"], name: "index_notifications_on_user_id_and_created_at"
     t.index ["user_id", "read_at"], name: "index_notifications_on_user_id_and_read_at"
     t.index ["user_id"], name: "index_notifications_on_user_id"
@@ -280,9 +294,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
 
   create_table "tenants", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "domain"
     t.string "name", null: false
     t.string "slug", null: false
     t.datetime "updated_at", null: false
+    t.index ["domain"], name: "index_tenants_on_domain", unique: true
     t.index ["slug"], name: "index_tenants_on_slug", unique: true
   end
 
@@ -321,9 +337,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
   create_table "tournament_group_memberships", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "position", default: 0
+    t.bigint "tenant_id"
     t.bigint "tournament_group_id", null: false
     t.bigint "tournament_registration_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["tenant_id"], name: "index_tournament_group_memberships_on_tenant_id"
     t.index ["tournament_group_id", "tournament_registration_id"], name: "idx_unique_group_membership", unique: true
     t.index ["tournament_group_id"], name: "index_tournament_group_memberships_on_tournament_group_id"
     t.index ["tournament_registration_id"], name: "idx_on_tournament_registration_id_df8fb7aa22"
@@ -402,10 +420,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
   create_table "user_identities", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "provider", null: false
+    t.bigint "tenant_id"
     t.string "uid", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["provider", "uid"], name: "index_user_identities_on_provider_and_uid", unique: true
+    t.index ["tenant_id", "provider", "uid"], name: "index_user_identities_on_tenant_id_and_provider_and_uid", unique: true
+    t.index ["tenant_id"], name: "index_user_identities_on_tenant_id"
     t.index ["user_id"], name: "index_user_identities_on_user_id"
   end
 
@@ -414,9 +434,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
     t.date "birth_date"
     t.datetime "created_at", null: false
     t.string "gender"
+    t.bigint "tenant_id"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.string "username"
+    t.index ["tenant_id"], name: "index_user_profiles_on_tenant_id"
     t.index ["user_id"], name: "index_user_profiles_on_user_id", unique: true
     t.index ["username"], name: "index_user_profiles_on_username", unique: true
   end
@@ -476,19 +498,26 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
   add_foreign_key "bookings", "tenants"
   add_foreign_key "bookings", "users"
   add_foreign_key "brand_integrations", "brand_profiles"
+  add_foreign_key "brand_integrations", "tenants"
   add_foreign_key "brand_product_categories", "brand_profiles"
+  add_foreign_key "brand_product_categories", "tenants"
   add_foreign_key "brand_products", "brand_product_categories"
   add_foreign_key "brand_products", "brand_profiles"
+  add_foreign_key "brand_products", "tenants"
+  add_foreign_key "brand_profiles", "tenants"
   add_foreign_key "brand_profiles", "users"
+  add_foreign_key "club_profiles", "tenants"
   add_foreign_key "club_profiles", "users"
   add_foreign_key "courts", "tenants"
   add_foreign_key "courts", "users", column: "club_id"
+  add_foreign_key "follows", "tenants"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "instructors", "tenants"
   add_foreign_key "instructors", "users"
   add_foreign_key "instructors", "users", column: "club_id"
   add_foreign_key "investment_interests", "tenants"
+  add_foreign_key "notifications", "tenants"
   add_foreign_key "notifications", "users"
   add_foreign_key "orders", "users"
   add_foreign_key "payments", "orders"
@@ -496,6 +525,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
   add_foreign_key "time_blocks", "courts"
   add_foreign_key "time_blocks", "tenants"
   add_foreign_key "tournament_categories", "tournaments"
+  add_foreign_key "tournament_group_memberships", "tenants"
   add_foreign_key "tournament_group_memberships", "tournament_groups"
   add_foreign_key "tournament_group_memberships", "tournament_registrations"
   add_foreign_key "tournament_groups", "tournament_categories"
@@ -508,7 +538,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_000002) do
   add_foreign_key "tournament_registrations", "users"
   add_foreign_key "tournaments", "tenants"
   add_foreign_key "tournaments", "users", column: "club_id"
+  add_foreign_key "user_identities", "tenants"
   add_foreign_key "user_identities", "users"
+  add_foreign_key "user_profiles", "tenants"
   add_foreign_key "user_profiles", "users"
   add_foreign_key "users", "tenants"
   add_foreign_key "users", "users", column: "referred_by_id"

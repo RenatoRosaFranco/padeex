@@ -1,17 +1,14 @@
 # frozen_string_literal: true
 
-# Sets Current.tenant from subdomain, param, or default (padel).
-# Include in ApplicationController so all requests have tenant context.
+# Resolves Current.tenant from the request host or fallback param.
 #
 # Resolution order:
-#   1. Subdomain (e.g. handball.padeex.com)
-#   2. Param ?tenant=handball
+#   1. request.host matches tenant.domain  (e.g. padeex.com.br → padel)
+#   2. ?tenant= param                      (development / testing only)
 #   3. Default: padel
 module SetTenant
   extend ActiveSupport::Concern
 
-  # Default tenant slug when none is provided via subdomain or param.
-  # @return [String]
   DEFAULT_TENANT_SLUG = "padel"
 
   included do
@@ -20,25 +17,20 @@ module SetTenant
 
   private
 
-  # Resolves tenant slug and assigns Current.tenant.
-  # Falls back to default tenant if slug is not found.
   def set_current_tenant
-    slug = tenant_slug_from_subdomain || tenant_slug_from_param || DEFAULT_TENANT_SLUG
-    Current.tenant = Tenant.find_by(slug: slug) || Tenant.find_by(slug: DEFAULT_TENANT_SLUG)
+    Current.tenant =
+      tenant_from_domain ||
+      tenant_from_param  ||
+      Tenant.find_by(slug: DEFAULT_TENANT_SLUG) ||
+      Tenant.first
   end
 
-  # Extracts tenant slug from request subdomain (e.g. handball.padeex.com).
-  # Ignores "www" subdomain.
-  #
-  # @return [String, nil]
-  def tenant_slug_from_subdomain
-    request.subdomain.presence if request.subdomain != "www"
+  def tenant_from_domain
+    Tenant.find_by(domain: request.host)
   end
 
-  # Extracts tenant slug from ?tenant= query param.
-  #
-  # @return [String, nil]
-  def tenant_slug_from_param
-    params[:tenant].presence
+  def tenant_from_param
+    slug = params[:tenant].presence
+    Tenant.find_by(slug: slug) if slug
   end
 end

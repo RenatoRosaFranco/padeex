@@ -12,9 +12,10 @@ module FeatureFlags
   end
 
   # @param flag [Symbol] Feature flag key from REGISTRY
-  # @return [Boolean] Whether the flag is enabled (false on error)
-  def self.enabled?(flag)
-    Flipper.enabled?(flag)
+  # @param tenant [Tenant, nil] Tenant actor — defaults to Current.tenant
+  # @return [Boolean] Whether the flag is enabled for the given tenant (false on error)
+  def self.enabled?(flag, tenant = Current.tenant)
+    Flipper.enabled?(flag, tenant)
   rescue StandardError
     false
   end
