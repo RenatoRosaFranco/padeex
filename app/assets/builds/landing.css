@@ -1007,6 +1007,124 @@ html {
   }
 }
 /* ======================================================
+   Testimonials Section
+   ====================================================== */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.testimonials-section {
+  background: var(--px-bg);
+  padding: 64px 0 56px;
+  overflow: hidden;
+}
+
+.testimonials-header {
+  text-align: center;
+  margin-bottom: 36px;
+  padding: 0 24px;
+}
+
+.testimonials-track-wrap {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+.testimonials-track-wrap + .testimonials-track-wrap {
+  margin-top: 12px;
+}
+
+.testimonials-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+}
+.testimonials-track--left {
+  animation: marquee-left 40s linear infinite;
+}
+.testimonials-track--right {
+  animation: marquee-right 40s linear infinite;
+}
+.testimonials-track:hover {
+  animation-play-state: paused;
+}
+
+.testimonial-card {
+  width: 360px;
+  flex-shrink: 0;
+  background: var(--px-surface);
+  border: 1px solid var(--px-border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s ease;
+}
+.testimonial-card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.testimonial-text {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--px-text);
+  opacity: 0.8;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.testimonial-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--px-purple-dim);
+  border: 1px solid rgba(54, 40, 197, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--px-green);
+  font-family: "Inter", sans-serif;
+  flex-shrink: 0;
+}
+
+.testimonial-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--px-text);
+  white-space: nowrap;
+  margin: 0;
+}
+
+.testimonial-handle {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--px-muted);
+}
+
+/* ======================================================
    Coming Soon Section
    ====================================================== */
 .coming-soon-section {
@@ -2213,4 +2331,66 @@ html[data-theme=light] .navbar-btn-login:hover {
   color: var(--px-text);
   background: rgba(0, 0, 0, 0.04);
   border-color: rgba(0, 0, 0, 0.2);
+}
+
+/* ======================================================
+   Press Section ("Na Mídia")
+   ====================================================== */
+.press-section {
+  background: var(--px-bg);
+  border-top: 1px solid var(--px-border);
+  border-bottom: 1px solid var(--px-border);
+  padding: 40px 24px;
+}
+
+.press-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.press-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  font-family: "Inter", sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--px-muted);
+}
+
+.press-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 24px 0;
+}
+
+.press-logo {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--px-muted);
+  text-decoration: none;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+.press-logo:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 640px) {
+  .press-logos {
+    gap: 28px 36px;
+  }
+  .press-logo {
+    font-size: 1.1rem;
+  }
 }

@@ -20,6 +20,12 @@
       <span class="navbar-nav-prefix">para</span>
       <span class="navbar-nav-label">Investidores</span>
     <% end %>
+    <% if FeatureFlags.enabled?(:brand_released) %>
+      <%= link_to para_marcas_path, class: "navbar-nav-link #{'active' if @segment == 'brands'}" do %>
+        <span class="navbar-nav-prefix">para</span>
+        <span class="navbar-nav-label">Marcas</span>
+      <% end %>
+    <% end %>
     <%= link_to blog_posts_path, class: "navbar-nav-link" do %>
       <span class="navbar-nav-label">Blog</span>
     <% end %>

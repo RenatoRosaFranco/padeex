@@ -1,0 +1,11 @@
+<% content_for :title, "Novo Produto" %>
+
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow"><%= link_to "Vitrine de Produtos", dashboard_brands_products_path %></p>
+  <h1 class="dash-welcome-title">Novo Produto</h1>
+  <p class="dash-welcome-sub">Adicione um produto à sua vitrine na plataforma.</p>
+</div>
+
+<div class="prod-form-card">
+  <%= render "form", product: @product %>
+</div>

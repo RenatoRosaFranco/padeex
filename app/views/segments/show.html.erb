@@ -1,6 +1,8 @@
 <% content_for :title, "#{@segment.titleize} — Padeex" %>
 <%= render Landing::SegmentHeroComponent.new(segment: @segment) %>
+<%= render Landing::PressComponent.new %>
 <%= render Landing::SegmentFeaturesComponent.new(segment: @segment) %>
 <%= render Landing::InvestmentFormComponent.new if @segment == "investors" %>
+<%= render Landing::TestimonialsComponent.new %>
 <%= render Landing::SegmentComingSoonComponent.new(segment: @segment) %>
 <%= render Landing::FooterComponent.new %>

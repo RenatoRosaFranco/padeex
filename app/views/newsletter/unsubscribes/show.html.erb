@@ -1,0 +1,14 @@
+<div class="auth-wrapper">
+  <%= link_to root_path, class: "auth-logo-link" do %>
+    <%= image_tag "logo_padex_branco.png", alt: "PADEX", class: "auth-logo" %>
+  <% end %>
+
+  <div class="auth-card" style="text-align:center;">
+    <div style="font-size:2.5rem;margin-bottom:1rem;">✓</div>
+    <h1 class="auth-title">Descadastro confirmado</h1>
+    <p class="auth-sub" style="margin-bottom:1.5rem;">
+      Você foi removido da nossa lista de e-mails. Não enviaremos mais comunicações de marketing para este endereço.
+    </p>
+    <%= link_to "Voltar para o início", root_path, class: "auth-btn", style: "display:inline-block;text-decoration:none;" %>
+  </div>
+</div>

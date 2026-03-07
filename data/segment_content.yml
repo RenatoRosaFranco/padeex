@@ -144,6 +144,39 @@ companies:
       title: Métricas
       description: Acompanhe o retorno e o impacto das suas ações na plataforma.
 
+brands:
+  title: "Para Marcas"
+  section_eyebrow: "Em desenvolvimento"
+  cta_hint: "Registre seu e-mail acima e seja uma das primeiras marcas na plataforma."
+  section_headline: "Tudo que sua marca<br>precisa, num só lugar"
+  section_sub: "Vitrine de produtos, dados de performance e conexão direta com atletas de padel."
+  hero:
+    headline: "O ecossistema do padel"
+    headline_accent: "feito para quem vende"
+    subheadline: "Exponha seus produtos para milhares de atletas, acompanhe métricas e cresça junto com o padel."
+  feature_tags:
+    - icon: bi-bag-heart-fill
+      label: Vitrine
+    - icon: bi-graph-up-arrow
+      label: Insights
+    - icon: bi-search
+      label: Looker
+    - icon: bi-people-fill
+      label: Atletas
+  features:
+    - icon: bi-bag-heart-fill
+      title: Vitrine de Produtos
+      description: Exiba seu catálogo para atletas e clubes dentro da plataforma. Visibilidade onde seu público está.
+    - icon: bi-graph-up-arrow
+      title: Insights em Tempo Real
+      description: Acompanhe visualizações, cliques e alcance dos seus produtos com métricas detalhadas.
+    - icon: bi-search
+      title: Looker
+      description: Descubra como os atletas buscam produtos. Entenda demanda e otimize sua presença.
+    - icon: bi-people-fill
+      title: Comunidade de Atletas
+      description: Conecte sua marca a milhares de jogadores ativos em clubes por todo o Brasil.
+
 default:
   section_eyebrow: "Em desenvolvimento"
   cta_hint: "Registre seu e-mail acima e garanta seu lugar na lista de espera."

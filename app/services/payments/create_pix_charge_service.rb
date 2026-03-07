@@ -4,6 +4,7 @@ module Payments
   # Creates an OpenPix/Woovi PIX charge and stores the charge data on the order.
   # Updates order with brCode, QR code URL, expiry, and sets status to :processing.
   class CreatePixChargeService < ApplicationService
+    # Constants
     CORRELATION_PREFIX = "padeex"
 
     # @param order [Order] order to create a PIX charge for

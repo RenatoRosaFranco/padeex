@@ -1,0 +1,75 @@
+<% content_for :title, "Looker — Padeex" %>
+
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Minha Marca</p>
+  <h1 class="dash-welcome-title">Looker</h1>
+  <p class="dash-welcome-sub">Descubra como os atletas buscam produtos na plataforma.</p>
+</div>
+
+<div class="brand-looker-search-wrapper">
+  <%= form_with url: dashboard_brands_looker_index_path, method: :get, local: true, class: "brand-looker-form" do |f| %>
+    <div class="brand-looker-input-group">
+      <i class="bi bi-search brand-looker-icon"></i>
+      <%= f.text_field :q,
+            value: @query,
+            placeholder: "Buscar raquetes, calçados, marcas...",
+            class: "brand-looker-input",
+            autocomplete: "off",
+            autofocus: true %>
+      <% if @query.present? %>
+        <%= link_to dashboard_brands_looker_index_path, class: "brand-looker-clear" do %>
+          <i class="bi bi-x-lg"></i>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="brand-looker-chips">
+    <% ["Raquetes", "Calçados", "Bolas", "Acessórios", "Vestuário"].each do |cat| %>
+      <%= link_to dashboard_brands_looker_index_path(q: cat),
+            class: "brand-looker-chip #{'brand-looker-chip--active' if @query == cat}" do %>
+        <%= cat %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<% if @query.present? %>
+  <p class="brand-looker-results-count">
+    <% if @results.any? %>
+      <%= @results.count %> resultado<%= @results.count > 1 ? "s" : "" %> para "<strong><%= @query %></strong>"
+    <% else %>
+      Nenhum resultado para "<strong><%= @query %></strong>"
+    <% end %>
+  </p>
+
+  <% if @results.any? %>
+    <div class="brand-looker-results">
+      <% @results.each do |product| %>
+        <div class="brand-looker-result-card">
+          <div class="brand-looker-result-img"><i class="bi bi-image"></i></div>
+          <div class="brand-looker-result-info">
+            <span class="brand-looker-result-category"><%= product[:category] %></span>
+            <h3 class="brand-looker-result-name"><%= product[:name] %></h3>
+            <span class="brand-looker-result-brand"><%= product[:brand] %></span>
+          </div>
+          <div class="brand-looker-result-right">
+            <span class="brand-looker-result-price"><%= product[:price] %></span>
+            <span class="brand-looker-result-rating"><i class="bi bi-star-fill"></i> <%= product[:rating] %></span>
+            <span class="brand-looker-result-sold"><%= product[:sold] %> vendidos</span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="brand-looker-empty">
+      <i class="bi bi-search brand-looker-empty-icon"></i>
+      <p>Nenhum produto encontrado.<br>Tente outro termo ou categoria.</p>
+    </div>
+  <% end %>
+<% else %>
+  <div class="brand-looker-empty">
+    <i class="bi bi-search brand-looker-empty-icon"></i>
+    <p>Digite acima para buscar produtos na plataforma.</p>
+  </div>
+<% end %>

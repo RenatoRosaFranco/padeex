@@ -10,43 +10,37 @@
 
     <div class="product-hero">
 
-      <div class="product-hero__img" style="background: <%= @product.color %>;">
-        <% if @product.badge %>
-          <span class="product-hero__badge"><%= @product.badge %></span>
+      <div class="product-hero__img" style="background: <%= @product.category_color %>;">
+        <% if @product.image.attached? %>
+          <%= image_tag @product.image, class: "product-hero__img-photo" %>
+        <% else %>
+          <i class="bi bi-<%= @product.category_icon %> product-hero__img-icon"></i>
         <% end %>
-        <i class="bi bi-<%= @product.category == 'paletas' ? 'shield-fill' : @product.category == 'bolas' ? 'circle-fill' : @product.category == 'bolsas' ? 'bag-fill' : @product.category == 'vestuario' ? 'person-fill' : 'box-fill' %> product-hero__img-icon"></i>
       </div>
 
       <div class="product-hero__info">
-        <p class="product-hero__brand"><%= @product.brand %></p>
+        <p class="product-hero__brand"><%= @product.brand_profile.brand_name %></p>
         <h1 class="product-hero__name"><%= @product.name %></h1>
 
-        <% if @category %>
-          <span class="product-hero__category">
-            <i class="bi bi-tag"></i> <%= @category[:label] %>
-          </span>
-        <% end %>
+        <span class="product-hero__category">
+          <i class="bi bi-tag"></i> <%= @product.category_label %>
+        </span>
 
         <div class="product-hero__pricing">
-          <% if @product.original_price %>
-            <span class="product-hero__original">R$ <%= "%.2f" % @product.original_price %></span>
-            <span class="product-hero__discount">-<%= ((1 - @product.price / @product.original_price) * 100).round %>%</span>
-          <% end %>
           <span class="product-hero__price">R$ <%= "%.2f" % @product.price %></span>
         </div>
 
-        <% if @product.description %>
+        <% if @product.description.present? %>
           <p class="product-hero__desc"><%= @product.description %></p>
         <% end %>
 
-        <div class="product-hero__cta">
-          <button class="product-btn-primary">
-            <i class="bi bi-cart-plus"></i> Adicionar ao carrinho
-          </button>
-          <button class="product-btn-secondary">
-            <i class="bi bi-heart"></i>
-          </button>
-        </div>
+        <% if @product.external_url.present? %>
+          <div class="product-hero__cta">
+            <%= link_to @product.external_url, class: "product-btn-primary", target: "_blank", rel: "noopener noreferrer" do %>
+              <i class="bi bi-cart-plus"></i> Comprar
+            <% end %>
+          </div>
+        <% end %>
       </div>
 
     </div>
@@ -58,20 +52,18 @@
           <% @related.each do |product| %>
             <%= link_to loja_produto_path(product.id),
                   class: "store-card",
-                  data: { category: product.category } do %>
-              <div class="store-card__img" style="background: <%= product.color %>;">
-                <% if product.badge %>
-                  <span class="store-card__badge"><%= product.badge %></span>
+                  data: { category: product.brand_product_category_id.to_s } do %>
+              <div class="store-card__img" style="background: <%= product.category_color %>;">
+                <% if product.image.attached? %>
+                  <%= image_tag product.image, class: "store-card__img-photo" %>
+                <% else %>
+                  <i class="bi bi-<%= product.category_icon %> store-card__icon"></i>
                 <% end %>
-                <i class="bi bi-<%= product.category == 'paletas' ? 'shield-fill' : product.category == 'bolas' ? 'circle-fill' : product.category == 'bolsas' ? 'bag-fill' : product.category == 'vestuario' ? 'person-fill' : 'box-fill' %> store-card__icon"></i>
               </div>
               <div class="store-card__body">
-                <p class="store-card__brand"><%= product.brand %></p>
+                <p class="store-card__brand"><%= product.brand_profile.brand_name %></p>
                 <h3 class="store-card__name"><%= product.name %></h3>
                 <div class="store-card__pricing">
-                  <% if product.original_price %>
-                    <span class="store-card__original">R$ <%= "%.2f" % product.original_price %></span>
-                  <% end %>
                   <span class="store-card__price">R$ <%= "%.2f" % product.price %></span>
                 </div>
                 <span class="store-card__cta">Ver produto <i class="bi bi-arrow-right"></i></span>

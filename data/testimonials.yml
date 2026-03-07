@@ -1,0 +1,40 @@
+testimonials:
+  - name: "Rafael Mendes"
+    handle: "@rafamendes"
+    text: "O Padeex mudou como eu organizo minhas partidas. Encontro adversários do mesmo nível em minutos."
+
+  - name: "Carla Sousa"
+    handle: "@carlasousa"
+    text: "Finalmente um app que entende o padel brasileiro. O agendamento de quadras é incrível!"
+
+  - name: "Bruno Tavares"
+    handle: "@brunotavares"
+    text: "Uso todo dia para acompanhar o ranking. A evolução visível semana a semana me motiva demais."
+
+  - name: "Ana Lima"
+    handle: "@analimapadel"
+    text: "Como dona de clube, a gestão ficou muito mais simples. Economizo horas toda semana."
+
+  - name: "Pedro Alves"
+    handle: "@pedroalves"
+    text: "Participei do meu primeiro torneio pelo Padeex. A organização foi impecável do início ao fim."
+
+  - name: "Fernanda Costa"
+    handle: "@fecosta"
+    text: "A comunidade é ativa demais. Já fiz amigos pelo app e hoje jogo com eles toda semana."
+
+  - name: "Marcos Vieira"
+    handle: "@marcosvieira"
+    text: "Minha academia cresceu depois de entrar na plataforma. Os alunos encontram horários sozinhos."
+
+  - name: "Julia Ramos"
+    handle: "@juliaramos"
+    text: "O sistema de ranking é justo e transparente. Me sinto motivada a jogar mais e melhorar."
+
+  - name: "Thiago Nunes"
+    handle: "@thiagopadel"
+    text: "Nunca foi tão fácil desafiar alguém para uma partida. Mando o convite e em segundos está marcado."
+
+  - name: "Isabela Furtado"
+    handle: "@isabelafurtado"
+    text: "Plataforma completa para quem leva padel a sério. Não consigo imaginar jogar sem o Padeex."

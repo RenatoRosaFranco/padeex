@@ -6,6 +6,7 @@ pt-BR:
       feed: "Feed de publicações (estilo Instagram) no dashboard"
       released_app: "App lançado publicamente (exibe landing page de lançamento)"
       store: "Loja de produtos de padel (navbar + página /loja)"
+      brand_released: "Tipo de conta Marca (dashboard, vitrine de produtos e landing page)"
 
   pix:
     title: "Pague com PIX"
@@ -53,6 +54,14 @@ pt-BR:
     feature_flag:
       enabled: "Flag '%{key}' ativada"
       disabled: "Flag '%{key}' desativada"
+    brand_product:
+      created: "Produto \"%{name}\" adicionado"
+      updated: "Produto atualizado"
+      removed: "Produto removido"
+    brand_integration:
+      connected: "%{label} conectado com sucesso"
+      updated: "%{label} atualizado"
+      disconnected: "Integração desconectada"
     instructor:
       created: "Instrutor \"%{name}\" adicionado"
       updated: "Instrutor atualizado"
@@ -314,6 +323,15 @@ pt-BR:
             phone:
               blank: "não pode ficar em branco"
 
+        brand_profile:
+          attributes:
+            brand_name:
+              blank: "não pode ficar em branco"
+            cnpj:
+              blank: "não pode ficar em branco"
+            category:
+              blank: "não pode ficar em branco"
+
   errors:
     payment_already_paid: "Este item já foi pago."
     payment_not_authorized: "Não autorizado para pagar este item."
@@ -324,6 +342,7 @@ pt-BR:
     time_block_not_found: "Bloqueio não encontrado"
     admin_required: "Acesso restrito a administradores"
     club_required: "Área exclusiva para clubes"
+    brand_required: "Área exclusiva para marcas"
     invalid_date_or_time: "Data ou horário inválido"
     unauthorized: "Não autorizado"
     cancellation_not_allowed: "Cancelamento não permitido. Prazo mínimo: %{hours} horas antes do início."

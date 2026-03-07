@@ -35,10 +35,10 @@
         <%= render "shared/theme_toggle" %>
         <div class="dash-user-menu" data-controller="dropdown">
           <button class="dash-avatar-btn" data-action="click->dropdown#toggle" aria-label="Menu do usuário">
-            <% avatar_profile = current_user.club? ? current_user.club_profile : current_user.user_profile %>
-            <% attached = current_user.club? ? avatar_profile&.logo&.attached? : avatar_profile&.avatar&.attached? %>
+            <% avatar_profile = current_user.club? ? current_user.club_profile : (current_user.brand? ? current_user.brand_profile : current_user.user_profile) %>
+            <% attached = current_user.user? ? avatar_profile&.avatar&.attached? : avatar_profile&.logo&.attached? %>
             <% if attached %>
-              <% img = current_user.club? ? avatar_profile.logo : avatar_profile.avatar %>
+              <% img = current_user.user? ? avatar_profile.avatar : avatar_profile.logo %>
               <%= image_tag img, class: "dash-avatar dash-avatar--img", alt: current_user.name %>
             <% else %>
               <div class="dash-avatar"><%= current_user.initials %></div>

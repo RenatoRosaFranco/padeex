@@ -1,0 +1,13 @@
+<div class="auth-wrapper">
+  <%= link_to root_path, class: "auth-logo-link" do %>
+    <%= image_tag "logo_padex_branco.png", alt: "PADEX", class: "auth-logo" %>
+  <% end %>
+
+  <div class="auth-card" style="text-align:center;">
+    <h1 class="auth-title">Link inválido</h1>
+    <p class="auth-sub" style="margin-bottom:1.5rem;">
+      Este link de cancelamento não é válido ou já foi utilizado.
+    </p>
+    <%= link_to "Voltar para o início", root_path, class: "auth-btn", style: "display:inline-block;text-decoration:none;" %>
+  </div>
+</div>

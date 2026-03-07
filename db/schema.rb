@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_03_000020) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_07_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -58,6 +58,61 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_03_000020) do
     t.index ["tenant_id"], name: "index_bookings_on_tenant_id"
     t.index ["user_id", "date"], name: "index_bookings_on_user_id_and_date"
     t.index ["user_id"], name: "index_bookings_on_user_id"
+  end
+
+  create_table "brand_integrations", force: :cascade do |t|
+    t.string "api_key"
+    t.bigint "brand_profile_id", null: false
+    t.datetime "created_at", null: false
+    t.string "label"
+    t.string "provider", null: false
+    t.string "status", default: "inactive", null: false
+    t.string "store_url"
+    t.datetime "updated_at", null: false
+    t.index ["brand_profile_id", "provider"], name: "index_brand_integrations_on_brand_profile_id_and_provider", unique: true
+    t.index ["brand_profile_id"], name: "index_brand_integrations_on_brand_profile_id"
+  end
+
+  create_table "brand_product_categories", force: :cascade do |t|
+    t.bigint "brand_profile_id", null: false
+    t.string "color", default: "#3628c5", null: false
+    t.datetime "created_at", null: false
+    t.string "icon", default: "box-fill", null: false
+    t.string "name", null: false
+    t.integer "position", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["brand_profile_id", "name"], name: "index_brand_product_categories_on_profile_and_name", unique: true
+    t.index ["brand_profile_id"], name: "index_brand_product_categories_on_brand_profile_id"
+  end
+
+  create_table "brand_products", force: :cascade do |t|
+    t.bigint "brand_product_category_id"
+    t.bigint "brand_profile_id", null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "external_url"
+    t.string "name", null: false
+    t.integer "position", default: 0, null: false
+    t.integer "price_cents", default: 0, null: false
+    t.string "status", default: "draft", null: false
+    t.datetime "updated_at", null: false
+    t.index ["brand_product_category_id"], name: "index_brand_products_on_brand_product_category_id"
+    t.index ["brand_profile_id", "status"], name: "index_brand_products_on_brand_profile_id_and_status"
+    t.index ["brand_profile_id"], name: "index_brand_products_on_brand_profile_id"
+  end
+
+  create_table "brand_profiles", force: :cascade do |t|
+    t.string "brand_name"
+    t.string "category"
+    t.string "cnpj"
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "email"
+    t.string "phone"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.string "website"
+    t.index ["user_id"], name: "index_brand_profiles_on_user_id", unique: true
   end
 
   create_table "club_profiles", force: :cascade do |t|
@@ -375,24 +430,32 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_03_000020) do
     t.string "kind", default: "user", null: false
     t.string "mobile_number"
     t.string "name", default: "", null: false
+    t.boolean "newsletter_subscribed", default: true, null: false
     t.boolean "onboarding_completed", default: false, null: false
+    t.integer "onboarding_days_remaining", default: 7, null: false
     t.boolean "otp_required_for_login", default: false, null: false
     t.string "otp_secret"
     t.string "provider"
+    t.string "referral_code"
+    t.bigint "referred_by_id"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
     t.string "stripe_customer_id"
     t.bigint "tenant_id"
     t.string "uid"
+    t.string "unsubscribe_token"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["kind"], name: "index_users_on_kind"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, where: "(provider IS NOT NULL)"
+    t.index ["referral_code"], name: "index_users_on_referral_code", unique: true
+    t.index ["referred_by_id"], name: "index_users_on_referred_by_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["stripe_customer_id"], name: "index_users_on_stripe_customer_id", unique: true, where: "(stripe_customer_id IS NOT NULL)"
     t.index ["tenant_id"], name: "index_users_on_tenant_id"
+    t.index ["unsubscribe_token"], name: "index_users_on_unsubscribe_token", unique: true
   end
 
   create_table "waitlist_entries", force: :cascade do |t|
@@ -409,6 +472,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_03_000020) do
   add_foreign_key "bookings", "courts"
   add_foreign_key "bookings", "tenants"
   add_foreign_key "bookings", "users"
+  add_foreign_key "brand_integrations", "brand_profiles"
+  add_foreign_key "brand_product_categories", "brand_profiles"
+  add_foreign_key "brand_products", "brand_product_categories"
+  add_foreign_key "brand_products", "brand_profiles"
+  add_foreign_key "brand_profiles", "users"
   add_foreign_key "club_profiles", "users"
   add_foreign_key "courts", "tenants"
   add_foreign_key "courts", "users", column: "club_id"
@@ -440,5 +508,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_03_000020) do
   add_foreign_key "user_identities", "users"
   add_foreign_key "user_profiles", "users"
   add_foreign_key "users", "tenants"
+  add_foreign_key "users", "users", column: "referred_by_id"
   add_foreign_key "waitlist_entries", "tenants"
 end

@@ -41,7 +41,7 @@ class BaseInteractor
   # @param extra [Hash] additional context keys forwarded to context.fail!
   def fail_with!(error:, **extra)
     Rails.logger.warn("[#{self.class.name}] #{error}")
-    SentryFailureCaptureService.call(error: error, source: self.class.name, **extra)
+    SentryFailureCaptureService.call(error: error, source: self.class.name, extra_context: extra)
     context.fail!(error: error, _logged_by_fail_interactor: true, **extra)
   end
 end

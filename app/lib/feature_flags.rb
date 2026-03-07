@@ -3,7 +3,7 @@
 module FeatureFlags
   # Central registry — add new flags here.
   # @return [Array<Symbol>]
-  REGISTRY = %i[smart_assistant feed released_app store].freeze
+  REGISTRY = %i[smart_assistant feed released_app store brand_released].freeze
 
   # @param flag [Symbol] Feature flag key from REGISTRY
   # @return [String] Localized description for the flag

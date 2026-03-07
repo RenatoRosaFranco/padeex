@@ -6,6 +6,7 @@
 # @example
 #   SegmentContentService.fetch("athletes", tenant: Current.tenant)
 class SegmentContentService
+  # Constants
   PATH = Rails.root.join("data/segment_content.yml")
   DEFAULT_TENANT_SLUG = "padel"
 

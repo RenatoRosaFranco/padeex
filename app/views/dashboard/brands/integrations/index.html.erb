@@ -1,0 +1,178 @@
+<% content_for :title, "Integrações — #{current_brand_profile&.brand_name || 'Minha Marca'}" %>
+
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Minha Marca</p>
+  <h1 class="dash-welcome-title">Integrações</h1>
+  <p class="dash-welcome-sub">Conecte sua loja às plataformas de e-commerce e marketplace.</p>
+</div>
+
+<% if @admin_view %>
+  <div class="sched-flash sched-flash--info" style="margin-bottom: 1.5rem;">
+    <i class="bi bi-info-circle"></i>
+    Você está visualizando como admin. Para gerenciar integrações, acesse uma conta do tipo Marca.
+  </div>
+
+  <div class="brand-integrations-grid">
+    <% @integrations.each do |integration| %>
+      <% meta = BrandIntegration::PROVIDER_META[integration.provider] || BrandIntegration::PROVIDER_META["custom"] %>
+      <div class="brand-integration-card brand-integration-card--connected">
+        <div class="brand-integration-header">
+          <div class="brand-integration-icon" style="--int-color: <%= meta[:color] %>">
+            <i class="bi <%= meta[:icon] %>"></i>
+          </div>
+          <div class="brand-integration-title">
+            <h3><%= integration.display_label %></h3>
+            <span class="brand-integration-provider"><%= integration.brand_profile&.brand_name %></span>
+          </div>
+          <span class="brand-integration-status brand-integration-status--on">
+            <i class="bi bi-circle-fill"></i> <%= integration.status.capitalize %>
+          </span>
+        </div>
+        <% if integration.store_url.present? %>
+          <p class="brand-integration-meta"><i class="bi bi-link-45deg"></i> <%= integration.store_url %></p>
+        <% end %>
+      </div>
+    <% end %>
+    <% if @integrations.empty? %>
+      <p style="color: var(--px-muted); grid-column: 1 / -1; text-align: center; padding: 3rem 0;">Nenhuma integração cadastrada na plataforma.</p>
+    <% end %>
+  </div>
+
+<% else %>
+
+  <div class="brand-integrations-grid">
+    <% @integrations.each do |integration| %>
+      <% meta    = BrandIntegration::PROVIDER_META[integration.provider] || BrandIntegration::PROVIDER_META["custom"] %>
+      <% connected = integration.persisted? && integration.active? %>
+
+      <div class="brand-integration-card <%= 'brand-integration-card--connected' if connected %>"
+           data-controller="dialog">
+
+        <%# ── Card header ── %>
+        <div class="brand-integration-header">
+          <div class="brand-integration-icon" style="--int-color: <%= meta[:color] %>">
+            <i class="bi <%= meta[:icon] %>"></i>
+          </div>
+          <div class="brand-integration-title">
+            <h3><%= integration.display_label %></h3>
+            <% if connected && integration.store_url.present? %>
+              <span class="brand-integration-provider brand-integration-provider--url">
+                <i class="bi bi-link-45deg"></i> <%= integration.store_url %>
+              </span>
+            <% else %>
+              <span class="brand-integration-provider"><%= integration.provider %></span>
+            <% end %>
+          </div>
+          <% if connected %>
+            <span class="brand-integration-status brand-integration-status--on">
+              <i class="bi bi-circle-fill"></i> Ativo
+            </span>
+          <% else %>
+            <span class="brand-integration-status brand-integration-status--off">
+              <i class="bi bi-circle"></i> Inativo
+            </span>
+          <% end %>
+        </div>
+
+        <%# ── Card footer ── %>
+        <div class="brand-integration-footer">
+          <button class="sched-btn sched-btn--ghost sched-btn--sm"
+                  data-action="dialog#open">
+            <i class="bi bi-gear"></i> Configurar
+          </button>
+        </div>
+
+        <%# ── Dialog modal ── %>
+        <dialog class="brand-int-dialog" data-dialog-target="modal">
+          <div class="brand-int-dialog__header">
+            <div class="brand-int-dialog__header-left">
+              <div class="brand-integration-icon" style="--int-color: <%= meta[:color] %>; width:32px; height:32px; font-size:0.9rem;">
+                <i class="bi <%= meta[:icon] %>"></i>
+              </div>
+              <div>
+                <h3 class="brand-int-dialog__title"><%= integration.display_label %></h3>
+                <p class="brand-int-dialog__sub"><%= connected ? "Atualizar configuração" : "Conectar integração" %></p>
+              </div>
+            </div>
+            <button class="brand-int-dialog__close" data-action="dialog#close" type="button">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+
+          <div class="brand-int-dialog__body">
+            <% if connected %>
+              <%# Update form %>
+              <%= form_with model: integration,
+                    url: dashboard_brands_integration_path(integration),
+                    method: :patch, class: "brand-integration-form" do |f| %>
+                <%= f.hidden_field :provider %>
+                <div class="brand-integration-fields">
+                  <div class="sched-field">
+                    <%= f.label :store_url, "URL da loja", class: "sched-label" %>
+                    <%= f.url_field :store_url, class: "sched-input", placeholder: "https://minhaloja.com.br" %>
+                  </div>
+                  <div class="sched-field">
+                    <%= f.label :api_key, "Chave de API", class: "sched-label" %>
+                    <%= f.text_field :api_key, class: "sched-input", placeholder: "••••••••••••" %>
+                  </div>
+                  <% if integration.provider == "custom" %>
+                    <div class="sched-field">
+                      <%= f.label :label, "Nome da integração", class: "sched-label" %>
+                      <%= f.text_field :label, class: "sched-input", placeholder: "Ex: Minha Loja" %>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="brand-int-dialog__actions">
+                  <%= f.submit "Salvar", class: "sched-btn sched-btn--primary sched-btn--sm" %>
+                  <button type="button" class="sched-btn sched-btn--ghost sched-btn--sm" data-action="dialog#close">Cancelar</button>
+                </div>
+              <% end %>
+
+              <%# Disconnect — separate form, cannot nest inside update form %>
+              <div class="brand-int-dialog__disconnect">
+                <p class="brand-int-dialog__disconnect-label">
+                  <i class="bi bi-exclamation-triangle"></i> Zona de risco
+                </p>
+                <%= button_to dashboard_brands_integration_path(integration), method: :delete,
+                      class: "sched-btn sched-btn--danger sched-btn--sm",
+                      data: { turbo_confirm: "Desconectar #{integration.display_label}?" } do %>
+                  <i class="bi bi-plug"></i> Desconectar
+                <% end %>
+              </div>
+
+            <% else %>
+              <%# Connect form %>
+              <%= form_with model: integration,
+                    url: dashboard_brands_integrations_path, method: :post, class: "brand-integration-form" do |f| %>
+                <%= f.hidden_field :provider, value: integration.provider %>
+                <%= f.hidden_field :status, value: "active" %>
+                <div class="brand-integration-fields">
+                  <div class="sched-field">
+                    <%= f.label :store_url, "URL da loja", class: "sched-label" %>
+                    <%= f.url_field :store_url, class: "sched-input", placeholder: "https://minhaloja.com.br" %>
+                  </div>
+                  <div class="sched-field">
+                    <%= f.label :api_key, "Chave de API", class: "sched-label" %>
+                    <%= f.text_field :api_key, class: "sched-input", placeholder: "Insira a chave de API" %>
+                  </div>
+                  <% if integration.provider == "custom" %>
+                    <div class="sched-field">
+                      <%= f.label :label, "Nome da integração", class: "sched-label" %>
+                      <%= f.text_field :label, class: "sched-input", placeholder: "Ex: Minha Loja" %>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="brand-int-dialog__actions">
+                  <%= f.submit "Conectar", class: "sched-btn sched-btn--primary sched-btn--sm" %>
+                  <button type="button" class="sched-btn sched-btn--ghost sched-btn--sm" data-action="dialog#close">Cancelar</button>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </dialog>
+
+      </div>
+    <% end %>
+  </div>
+
+<% end %>

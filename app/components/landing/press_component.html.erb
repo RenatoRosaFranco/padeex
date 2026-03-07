@@ -1,0 +1,16 @@
+<section class="press-section">
+  <div class="press-inner">
+    <p class="press-eyebrow">Na Mídia</p>
+    <div class="press-logos">
+      <% outlets.each do |outlet| %>
+        <% if outlet[:url].present? %>
+          <%= link_to outlet[:url], class: "press-logo", target: "_blank", rel: "noopener noreferrer" do %>
+            <%= outlet[:name] %>
+          <% end %>
+        <% else %>
+          <span class="press-logo"><%= outlet[:name] %></span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>

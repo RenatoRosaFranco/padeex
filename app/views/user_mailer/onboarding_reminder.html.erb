@@ -1,0 +1,49 @@
+<!-- Eyebrow -->
+<p style="margin:0 0 12px 0;font-size:11px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#4ade80;">
+  Cadastro pendente
+</p>
+
+<!-- Headline -->
+<h1 style="margin:0 0 16px 0;font-size:28px;font-weight:800;text-transform:uppercase;letter-spacing:-0.01em;color:#f0f4ff;line-height:1.15;">
+  Olá, <%= @user.name.split.first %>!<br>
+  <span style="color:#4ade80;">Finalize seu cadastro.</span>
+</h1>
+
+<!-- Body -->
+<p style="margin:0 0 16px 0;font-size:15px;color:#8892b0;line-height:1.7;">
+  Você ainda não concluiu seu cadastro no PADEX. Leva menos de 2 minutos e libera
+  acesso completo à plataforma.
+</p>
+
+<!-- Days remaining badge -->
+<table cellpadding="0" cellspacing="0" style="margin:0 0 28px 0;">
+  <tr>
+    <td style="background:rgba(54,40,197,0.25);border:1px solid rgba(54,40,197,0.5);border-radius:8px;padding:14px 24px;">
+      <p style="margin:0;font-size:13px;color:#8892b0;letter-spacing:0.05em;">Tempo restante</p>
+      <p style="margin:4px 0 0 0;font-size:32px;font-weight:800;color:#f0f4ff;line-height:1;">
+        <%= @days %> <%= @days == 1 ? "dia" : "dias" %>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<!-- Divider -->
+<hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:0 0 28px 0;">
+
+<!-- CTA -->
+<table cellpadding="0" cellspacing="0" style="margin:0 0 28px 0;">
+  <tr>
+    <td align="center" style="background:linear-gradient(135deg,#3628c5,#22c55e);border-radius:8px;">
+      <a href="<%= @onboarding_url %>"
+         style="display:inline-block;padding:14px 32px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.13em;color:#ffffff;text-decoration:none;">
+        Finalizar cadastro
+      </a>
+    </td>
+  </tr>
+</table>
+
+<!-- Info -->
+<p style="margin:0;font-size:13px;color:#3a4255;line-height:1.6;">
+  Dúvidas? Fale com a gente em
+  <a href="mailto:contato@padeex.com.br" style="color:#4ade80;text-decoration:none;">contato@padeex.com.br</a>
+</p>

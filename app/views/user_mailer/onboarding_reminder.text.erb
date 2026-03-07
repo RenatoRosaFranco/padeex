@@ -1,0 +1,11 @@
+Olá, <%= @user.name.split.first %>!
+
+Você ainda não finalizou seu cadastro no PADEX.
+
+Você tem <%= @days %> <%= @days == 1 ? "dia" : "dias" %> restantes para concluir.
+
+Acesse: <%= @onboarding_url %>
+
+---
+Dúvidas? contato@padeex.com.br
+© <%= Time.current.year %> PADEX

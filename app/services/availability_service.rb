@@ -6,6 +6,7 @@
 #   AvailabilityService.call(court: court, date: Date.today)
 #   # => [{ starts_at: "07:00", ends_at: "08:00", available: true }, ...]
 class AvailabilityService < ApplicationService
+  # Constants
   SLOT_DURATION        = BookingSchedule::SLOT_DURATION
   BUSINESS_HOURS_START = BookingSchedule::BUSINESS_HOURS_START
   BUSINESS_HOURS_END   = BookingSchedule::BUSINESS_HOURS_END
@@ -21,6 +22,7 @@ class AvailabilityService < ApplicationService
   def call
     all_slots.map do |slot_start|
       slot_end = slot_start + SLOT_DURATION.minutes
+  
       {
         starts_at: slot_start.strftime("%H:%M"),
         ends_at:   slot_end.strftime("%H:%M"),
@@ -52,6 +54,7 @@ class AvailabilityService < ApplicationService
     return false if slot_start < Time.current
     return false if booking_exists?(slot_start, slot_end)
     return false if time_block_exists?(slot_start, slot_end)
+
     true
   end
 

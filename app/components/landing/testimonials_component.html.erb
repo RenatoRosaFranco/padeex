@@ -1,0 +1,40 @@
+<section class="testimonials-section">
+  <div class="testimonials-header">
+    <p class="section-eyebrow">Depoimentos</p>
+    <h2 class="section-headline">O que dizem sobre nós</h2>
+  </div>
+
+  <%# Row 1 — scrolls left %>
+  <div class="testimonials-track-wrap">
+    <div class="testimonials-track testimonials-track--left">
+      <% [row_one, row_one].flatten.each do |t| %>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"<%= t[:text] %>"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar"><%= initials(t[:name]) %></div>
+            <p class="testimonial-name">
+              <%= t[:name] %><% if t[:handle].present? %><span class="testimonial-handle"> · <%= t[:handle] %></span><% end %>
+            </p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Row 2 — scrolls right %>
+  <div class="testimonials-track-wrap">
+    <div class="testimonials-track testimonials-track--right">
+      <% [row_two, row_two].flatten.each do |t| %>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"<%= t[:text] %>"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar"><%= initials(t[:name]) %></div>
+            <p class="testimonial-name">
+              <%= t[:name] %><% if t[:handle].present? %><span class="testimonial-handle"> · <%= t[:handle] %></span><% end %>
+            </p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

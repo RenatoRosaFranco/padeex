@@ -68,6 +68,9 @@ gem "sentry-rails"
 gem "interactor", "~> 3.0"
 gem "interactor-rails", "~> 2.0"
 
+# SMS
+gem "twilio-ruby", "~> 7.0"
+
 # Payments
 gem "stripe",  "~> 12.0"
 gem "faraday", "~> 2.0"

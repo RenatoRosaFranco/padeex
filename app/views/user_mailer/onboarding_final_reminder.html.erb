@@ -1,0 +1,41 @@
+<!-- Eyebrow -->
+<p style="margin:0 0 12px 0;font-size:11px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#f87171;">
+  Último aviso
+</p>
+
+<!-- Headline -->
+<h1 style="margin:0 0 16px 0;font-size:28px;font-weight:800;text-transform:uppercase;letter-spacing:-0.01em;color:#f0f4ff;line-height:1.15;">
+  Olá, <%= @user.name.split.first %>!<br>
+  <span style="color:#f87171;">Sua conta será excluída amanhã.</span>
+</h1>
+
+<!-- Body -->
+<p style="margin:0 0 16px 0;font-size:15px;color:#8892b0;line-height:1.7;">
+  Este é seu último dia para concluir o cadastro no PADEX. Se o cadastro não for
+  finalizado até amanhã, sua conta será <strong style="color:#f0f4ff;">permanentemente excluída</strong>.
+</p>
+
+<p style="margin:0 0 28px 0;font-size:15px;color:#8892b0;line-height:1.7;">
+  Leva menos de 2 minutos. Não perca seu acesso.
+</p>
+
+<!-- Divider -->
+<hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:0 0 28px 0;">
+
+<!-- CTA -->
+<table cellpadding="0" cellspacing="0" style="margin:0 0 28px 0;">
+  <tr>
+    <td align="center" style="background:linear-gradient(135deg,#dc2626,#b91c1c);border-radius:8px;">
+      <a href="<%= @onboarding_url %>"
+         style="display:inline-block;padding:14px 32px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.13em;color:#ffffff;text-decoration:none;">
+        Finalizar cadastro agora
+      </a>
+    </td>
+  </tr>
+</table>
+
+<!-- Info -->
+<p style="margin:0;font-size:13px;color:#3a4255;line-height:1.6;">
+  Dúvidas? Fale com a gente em
+  <a href="mailto:contato@padeex.com.br" style="color:#4ade80;text-decoration:none;">contato@padeex.com.br</a>
+</p>

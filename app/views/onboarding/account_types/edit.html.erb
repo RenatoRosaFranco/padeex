@@ -35,6 +35,18 @@
             <span class="ob-kind-card__desc">Gerencie quadras, torneios e instrutores.</span>
           </div>
         </label>
+
+        <% if FeatureFlags.enabled?(:brand_released) %>
+          <label class="ob-kind-card">
+            <input type="radio" name="user[kind]" value="brand" class="ob-kind-card__radio"
+                   <%= "checked" if current_user.brand? %>>
+            <div class="ob-kind-card__body">
+              <i class="bi bi-bag-heart-fill ob-kind-card__icon"></i>
+              <span class="ob-kind-card__title">Marca</span>
+              <span class="ob-kind-card__desc">Exiba seus produtos e alcance atletas na plataforma.</span>
+            </div>
+          </label>
+        <% end %>
       </div>
 
       <div class="ob-actions">

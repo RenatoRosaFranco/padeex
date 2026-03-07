@@ -1,0 +1,62 @@
+<div class="dash-welcome">
+  <p class="dash-welcome-eyebrow">Padeex</p>
+  <h1 class="dash-welcome-title">Indicações</h1>
+</div>
+
+<%# ── Referral link card ───────────────────────────────── %>
+<div class="ref-card">
+  <div class="ref-card__header">
+    <i class="bi bi-gift ref-card__icon"></i>
+    <div>
+      <p class="ref-card__label">Seu link de convite</p>
+      <p class="ref-card__sub">Compartilhe e acompanhe quem entrou pelo seu link</p>
+    </div>
+  </div>
+
+  <div class="ref-link-wrap" data-controller="referral">
+    <input type="text" readonly
+           value="<%= new_user_registration_url(ref: current_user.referral_code) %>"
+           class="ref-link-input"
+           data-referral-target="input" />
+    <button type="button"
+            class="ref-link-copy"
+            data-action="click->referral#copy"
+            data-referral-target="btn">
+      <i class="bi bi-clipboard"></i>
+      <span>Copiar</span>
+    </button>
+  </div>
+
+  <div class="ref-stats">
+    <div class="ref-stat">
+      <span class="ref-stat__number"><%= @referrals.size %></span>
+      <span class="ref-stat__label">Convites aceitos</span>
+    </div>
+  </div>
+</div>
+
+<%# ── Referral list ────────────────────────────────────── %>
+<% if @referrals.any? %>
+  <p class="dash-section-label" style="margin: 1.5rem 0 .75rem">Usuários convidados</p>
+  <div class="frnd-list">
+    <% @referrals.each do |user| %>
+      <div class="frnd-card">
+        <div class="frnd-card__user">
+          <div class="frnd-card__avatar"><%= user.initials %></div>
+          <div class="frnd-card__info">
+            <p class="frnd-card__name"><%= user.name.presence || user.email %></p>
+            <p class="frnd-card__since">
+              <i class="bi bi-calendar3"></i>
+              Entrou <%= time_ago_in_words(user.created_at) %> atrás
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="sched-empty" style="margin-top: 2rem">
+    <i class="bi bi-people"></i>
+    <p>Nenhum usuário convidado ainda. Compartilhe seu link!</p>
+  </div>
+<% end %>

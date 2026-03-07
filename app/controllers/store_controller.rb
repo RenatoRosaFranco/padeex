@@ -7,26 +7,28 @@ class StoreController < ApplicationController
   before_action :find_product, only: [:show]
 
   def index
-    @categories = StoreProductService::CATEGORIES
-    @products   = StoreProductService.all
+    @categories = BrandProductCategory.filter_options
+    @products   = BrandProduct.active.by_position.includes(:brand_profile, :brand_product_category)
   end
 
   def show
-    @related  = StoreProductService.all.select { |p| p.category == @product.category && p.id != @product.id }.first(4)
-    @category = StoreProductService::CATEGORIES.find { |c| c[:key] == @product.category }
+    @related = BrandProduct.active
+                            .where(brand_product_category_id: @product.brand_product_category_id)
+                            .where.not(id: @product.id)
+                            .by_position
+                            .includes(:brand_profile, :brand_product_category)
+                            .limit(4)
   end
 
   private
 
-  # Loads product by id and redirects to store index when not found.
-  # @return [void]
   def find_product
-    @product = StoreProductService.find(params[:id])
+    @product = BrandProduct.active
+                            .includes(:brand_profile, :brand_product_category)
+                            .find_by(id: params[:id])
     redirect_to loja_path unless @product
   end
 
-  # Redirects to root when store feature flag is disabled.
-  # @return [void]
   def require_store_flag
     redirect_to root_path unless FeatureFlags.enabled?(:store)
   end

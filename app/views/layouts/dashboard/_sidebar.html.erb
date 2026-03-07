@@ -1,6 +1,19 @@
 <aside class="dash-sidebar">
   <nav class="dash-sidebar-nav" style="flex: 1; overflow-y: auto;">
-    <% if current_user.club? %>
+    <% if FeatureFlags.enabled?(:brand_released) && (current_user.brand? || current_user.admin?) %>
+
+      <section class="dash-sidebar-section">
+        <h3 class="dash-sidebar-title">Minha Marca</h3>
+        <ul class="dash-sidebar-links">
+          <li><%= link_to dashboard_brands_insights_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_brands_insights_path)}" do %><i class="bi bi-graph-up-arrow"></i> Insights<% end %></li>
+          <li><%= link_to dashboard_brands_products_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_brands_products_path)}" do %><i class="bi bi-bag-heart-fill"></i> Produtos<% end %></li>
+          <li><%= link_to dashboard_brands_looker_index_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_brands_looker_index_path)}" do %><i class="bi bi-search"></i> Looker<% end %></li>
+          <li><%= link_to dashboard_brands_integrations_path, class: "dash-sidebar-link #{'active' if request.path.start_with?(dashboard_brands_integrations_path)}" do %><i class="bi bi-plug-fill"></i> Integrações<% end %></li>
+          <li><%= link_to dashboard_meu_perfil_path, class: "dash-sidebar-link #{'active' if current_page?(dashboard_meu_perfil_path)}" do %><i class="bi bi-person-circle"></i> Meu Perfil<% end %></li>
+        </ul>
+      </section>
+
+    <% elsif current_user.club? %>
 
       <section class="dash-sidebar-section">
         <h3 class="dash-sidebar-title">Meu Clube</h3>

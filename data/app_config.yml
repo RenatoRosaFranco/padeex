@@ -4,6 +4,7 @@ segment_slugs:
   - clubs
   - companies
   - investors
+  - brands
 
 tournament_status_labels:
   draft: "Rascunho"

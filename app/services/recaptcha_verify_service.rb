@@ -10,6 +10,7 @@ require "json"
 class RecaptchaVerifyService < ApplicationService
   # reCAPTCHA verification URL
   VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
+  
   # Minimum score required for the token to be considered valid
   MIN_SCORE = 0.5
 

@@ -46,6 +46,9 @@ Rails.application.routes.draw do
   get "loja",     to: "store#index", as: :loja
   get "loja/:id", to: "store#show",  as: :loja_produto
 
+  # Newsletter opt-out (public, no auth required).
+  get "newsletter/cancelar/:token", to: "newsletter/unsubscribes#show", as: :newsletter_unsubscribe
+
   # Privacy.
   get "privacy/data-deletion", to: "privacy#data_deletion", as: :data_deletion
 
@@ -54,6 +57,7 @@ Rails.application.routes.draw do
   get "para-clubes",       to: "segments#show", as: :para_clubes,       defaults: { slug: "clubs"    }
   get "para-empresas",     to: "segments#show", as: :para_empresas,     defaults: { slug: "companies" }
   get "para-investidores", to: "segments#show", as: :para_investidores, defaults: { slug: "investors" }
+  get "para-marcas",       to: "segments#show", as: :para_marcas,       defaults: { slug: "brands"   }
 
   # 2FA challenge during login.
   get  "conta/verificacao-2fa", to: "users/two_factor#new",    as: :new_user_two_factor
@@ -95,6 +99,7 @@ Rails.application.routes.draw do
   namespace :dashboard do
     get "feed",   to: "feed#index",    as: :feed
     get "amigos", to: "friends#index", as: :friends
+    get "indicacoes", to: "referrals#index", as: :referrals
     resources :follows, only: [:create, :destroy, :update], path: "seguir"
     get "termos-e-condicoes",        to: "legal#terms",   as: :terms
     get "politicas-de-privacidade",  to: "legal#privacy", as: :privacy
@@ -152,6 +157,14 @@ Rails.application.routes.draw do
       resources :pix,       only: [:show]
     end
     resources :orders, only: [:index], path: "pedidos"
+
+    # For brand users.
+    namespace :brands do
+      get "insights", to: "insights#index", as: :insights
+      get "looker",   to: "looker#index",   as: :looker_index
+      resources :products,     path: "produtos",    as: :products
+      resources :integrations, path: "integracoes", as: :integrations, only: [:index, :create, :update, :destroy]
+    end
 
     # System admin: manage all courts and time blocks.
     namespace :admin do

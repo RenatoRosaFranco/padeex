@@ -1,0 +1,77 @@
+<div class="ob-card" data-controller="onboarding-form">
+  <div class="ob-card__icon"><i class="bi bi-bag-heart-fill"></i></div>
+  <h1 class="ob-card__title">Perfil da marca</h1>
+  <p class="ob-card__sub">Apresente sua marca para a comunidade Padeex.</p>
+
+  <% if @profile.errors.any? %>
+    <div class="ob-alert ob-alert--error">
+      <% @profile.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form_with model: @profile, url: onboarding_profile_path, method: :patch,
+        multipart: true, class: "ob-form" do |f| %>
+    <div class="ob-field">
+      <%= f.label :logo, "Logo da marca", class: "ob-label" %>
+      <%= f.file_field :logo, class: "ob-input ob-file", accept: "image/*" %>
+    </div>
+
+    <div class="ob-row-fields">
+      <div class="ob-field">
+        <%= f.label :brand_name, "Nome da marca", class: "ob-label" %>
+        <%= f.text_field :brand_name, class: "ob-input", placeholder: "Bullpadel Brasil" %>
+      </div>
+
+      <div class="ob-field">
+        <%= f.label :cnpj, "CNPJ", class: "ob-label" %>
+        <%= f.text_field :cnpj, class: "ob-input", placeholder: "00.000.000/0001-00", inputmode: "numeric",
+              data: { action: "input->onboarding-form#formatCnpj" } %>
+      </div>
+    </div>
+
+    <div class="ob-row-fields">
+      <div class="ob-field">
+        <%= f.label :category, "Categoria", class: "ob-label" %>
+        <%= f.select :category,
+              [["Raquetes", "raquetes"], ["Calçados", "calcados"], ["Vestuário", "vestuario"],
+               ["Acessórios", "acessorios"], ["Nutrição", "nutricao"], ["Outros", "outros"]],
+              { include_blank: "Selecione..." }, class: "ob-input ob-select" %>
+      </div>
+
+      <div class="ob-field">
+        <%= f.label :phone, "Telefone", class: "ob-label" %>
+        <%= f.telephone_field :phone, class: "ob-input", placeholder: "(11) 99999-9999", inputmode: "numeric",
+              data: { action: "input->onboarding-form#formatPhone" } %>
+      </div>
+    </div>
+
+    <div class="ob-row-fields">
+      <div class="ob-field">
+        <%= f.label :email, "E-mail da marca", class: "ob-label" %>
+        <%= f.email_field :email, class: "ob-input", placeholder: "contato@marca.com" %>
+      </div>
+
+      <div class="ob-field">
+        <%= f.label :website, "Site", class: "ob-label" %>
+        <%= f.url_field :website, class: "ob-input", placeholder: "https://suamarca.com.br" %>
+      </div>
+    </div>
+
+    <div class="ob-field">
+      <%= f.label :description, "Sobre a marca", class: "ob-label" %>
+      <%= f.text_area :description, class: "ob-input ob-textarea",
+            placeholder: "Conte um pouco sobre sua marca e produtos...", rows: 3 %>
+    </div>
+
+    <div class="ob-actions">
+      <%= link_to edit_onboarding_account_type_path, class: "ob-btn ob-btn--ghost" do %>
+        <i class="bi bi-arrow-left"></i> Voltar
+      <% end %>
+      <button type="submit" class="ob-btn ob-btn--primary">
+        Concluir <i class="bi bi-check-lg"></i>
+      </button>
+    </div>
+  <% end %>
+</div>

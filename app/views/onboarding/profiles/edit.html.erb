@@ -3,6 +3,8 @@
 
   <% if current_user.club? %>
     <%= render "club_form" %>
+  <% elsif current_user.brand? %>
+    <%= render "brand_form" %>
   <% else %>
     <%= render "user_form" %>
   <% end %>

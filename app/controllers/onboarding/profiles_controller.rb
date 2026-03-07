@@ -20,7 +20,13 @@ class Onboarding::ProfilesController < Onboarding::BaseController
   private
 
   def profile_params
-    current_user.club? ? club_profile_params : user_profile_params
+    if current_user.club?
+      club_profile_params
+    elsif current_user.brand?
+      brand_profile_params
+    else
+      user_profile_params
+    end
   end
 
   def complete_onboarding
@@ -33,7 +39,12 @@ class Onboarding::ProfilesController < Onboarding::BaseController
   end
 
   def club_profile_params
-    params.require(:club_profile).permit(:club_name, :cnpj, :address, :phone, 
+    params.require(:club_profile).permit(:club_name, :cnpj, :address, :phone,
     :email, :website, :description, :logo)
+  end
+
+  def brand_profile_params
+    params.require(:brand_profile).permit(:brand_name, :cnpj, :website, :phone,
+    :email, :category, :description, :logo)
   end
 end

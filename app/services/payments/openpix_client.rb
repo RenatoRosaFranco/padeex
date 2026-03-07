@@ -7,6 +7,7 @@ module Payments
   #   client = Payments::OpenpixClient.new
   #   charge = client.create_charge(correlation_id: "order-42", value: 5000)
   class OpenpixClient
+    # Constants
     API_BASE = "https://api.openpix.com.br/api/openpix/v1".freeze
 
     # Raised when the OpenPix API returns a non-2xx response or is unreachable.
