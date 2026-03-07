@@ -68,7 +68,7 @@ brand_user.assign_attributes(
 )
 brand_user.save!(validate: false)
 
-BrandProfile.find_or_create_by!(user: brand_user) do |p|
+brand_profile = BrandProfile.find_or_create_by!(user: brand_user) do |p|
   p.brand_name = "Wilson Padel Brasil"
   p.cnpj       = "98.765.432/0001-11"
   p.category   = "raquetes"
